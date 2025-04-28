@@ -2,7 +2,7 @@ import jwt from 'jsonwebtoken';
 import { db } from '../libs/db.js';
 import { ApiError } from '../utils/api-error.js';
 
-const authMiddleware = async (req, res, next) => {
+export const authMiddleware = async (req, res, next) => {
   try {
     const token = req.cookies.accessToken;
 
@@ -36,7 +36,7 @@ const authMiddleware = async (req, res, next) => {
     if (!user) {
       return res.status(404).json(new ApiError(404, 'User not found'));
     }
-    res.user = user;
+    req.user = user;
     next();
   } catch (error) {
     console.log(error);
@@ -46,4 +46,32 @@ const authMiddleware = async (req, res, next) => {
   }
 };
 
-export default authMiddleware;
+export const checkAdmin = async (req, res, next) => {
+  try {
+    const userId = req.user.id;
+    const user = await db.user.findUnique({
+      where: {
+        id: userId,
+      },
+      select: {
+        role: true,
+      },
+    });
+
+    if (!user || user.role !== 'ADMIN') {
+      return res
+        .status(403)
+        .json(
+          new ApiError(
+            403,
+            'Forbidden - You do not have access to this resource',
+          ),
+        );
+    }
+
+    next();
+  } catch (error) {
+    console.error('Error in checkAdmin middleware:', error);
+    return res.status(500).json(new ApiError(500, 'Error checking admin role'));
+  }
+};

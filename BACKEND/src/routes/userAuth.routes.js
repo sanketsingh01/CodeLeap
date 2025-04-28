@@ -11,7 +11,7 @@ import {
   TokenRefresh,
   verifyUser,
 } from '../constrollers/auth.controllers.js';
-import authMiddleware from '../middleware/auth.middleware.js';
+import { authMiddleware } from '../middleware/auth.middleware.js';
 
 const router = express.Router();
 
