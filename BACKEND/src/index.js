@@ -4,6 +4,7 @@ import userAuthRoutes from './routes/userAuth.routes.js';
 import cors from 'cors';
 import cookieParser from 'cookie-parser';
 import problemRoutes from './routes/problem.routes.js';
+import executionRoute from './routes/execute-code.routes.js';
 
 dotenv.config();
 
@@ -27,6 +28,7 @@ app.get('/', (req, res) => {
 
 app.use('/api/v1/auth', userAuthRoutes);
 app.use('/api/v1/problems', problemRoutes);
+app.use('/api/v1/execute-code', executionRoute);
 
 app.listen(process.env.PORT, () => {
   console.log(`Server is running on port ${process.env.PORT}`);
