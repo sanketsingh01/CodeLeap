@@ -50,7 +50,7 @@ export const getAllTheSubmissionsForProblem = async (req, res) => {
   try {
     const problemId = req.params.problemId;
 
-    const submissions = await db.submission.findMany({
+    const submissions = await db.submission.count({
       where: {
         problemId: problemId,
       },
