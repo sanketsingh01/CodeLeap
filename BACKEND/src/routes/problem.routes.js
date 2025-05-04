@@ -6,7 +6,7 @@ import {
   getAllProblems,
   getProblemById,
   updateProblem,
-} from '../constrollers/problem.controllers.js';
+} from '../controllers/problem.controllers.js';
 
 const problemRoutes = express.Router();
 
