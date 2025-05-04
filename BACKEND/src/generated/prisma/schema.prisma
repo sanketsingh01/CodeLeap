@@ -38,7 +38,7 @@ model User {
   passwordResetExpiry DateTime?
   refreshToken        String?
   createdAt           DateTime  @default(now())
-  updatedAt           DateTime  @default(now())
+  updatedAt           DateTime  @updatedAt
 
   problems      Problem[]
   submission    Submission[]
@@ -77,8 +77,8 @@ model Submission {
   language      String
   stdin         String?
   stdout        String?
-  strerr        String?
-  compileOutput String
+  stderr        String?
+  compileOutput String?
   status        String
   memory        String?
   time          String?
@@ -97,7 +97,7 @@ model TestCaseResult {
   submissionId  String
   testcase      Int
   passed        Boolean
-  strout        String?
+  stdout        String?
   expected      String
   stderr        String?
   compileOutput String?
