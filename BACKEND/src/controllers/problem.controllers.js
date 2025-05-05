@@ -274,7 +274,33 @@ const deleteProblem = async (req, res) => {
   }
 };
 
-const getAllProblemsSolvedByUser = async (req, res) => {};
+const getAllProblemsSolvedByUser = async (req, res) => {
+  try {
+    const problems = await db.problem.findMany({
+      where: {
+        solvedBy: {
+          some: {
+            userId: req.user.id,
+          },
+        },
+      },
+      include: {
+        solvedBy: {
+          where: {
+            userId: req.user.id,
+          },
+        },
+      },
+    });
+
+    res
+      .status(200)
+      .json(new ApiResponse(200, '', 'Problems fetched Successfully'));
+  } catch (error) {
+    console.log(error);
+    return res.status(400).json(new ApiError(400, error.message));
+  }
+};
 
 export {
   createProblem,
@@ -282,4 +308,5 @@ export {
   getProblemById,
   updateProblem,
   deleteProblem,
+  getAllProblemsSolvedByUser,
 };
