@@ -156,7 +156,7 @@ export default function CodingJourney() {
           </motion.div>
 
           <motion.div
-            className="w-[490px] space-y-6"
+            className="w-[490px] p-6 space-y-6"
             variants={rightVariant}
             initial="hidden"
             animate={inView3 ? "visible" : "hidden"}
