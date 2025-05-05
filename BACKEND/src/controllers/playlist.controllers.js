@@ -101,6 +101,33 @@ export const addProblemToPlaylist = async (req, res) => {
         .json(new ApiError(400, 'Invalid or missing problems'));
     }
 
+    // Checking for existing problems in the playlist
+    const existingProblems = await db.problemInPlaylist.findMany({
+      where: {
+        playlistId,
+        problemId: {
+          in: problemIds,
+        },
+      },
+      select: {
+        problemId: true,
+      },
+    });
+
+    if (existingProblems.length > 0) {
+      const existingIds = existingProblems.map((p) => p.problemId);
+      return res
+        .status(400)
+        .json(
+          new ApiError(
+            400,
+            `Some Problems already exist in the playlist: ${existingIds.join(
+              ', ',
+            )}`,
+          ),
+        );
+    }
+
     const problemsInPlaylist = await db.problemInPlaylist.createMany({
       data: problemIds.map((problemId) => ({
         playlistId,
