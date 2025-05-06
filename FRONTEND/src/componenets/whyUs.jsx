@@ -26,35 +26,35 @@ export default function CodingJourney() {
   };
 
   return (
-    <div className="bg-black text-white py-12 mx-36">
+    <div className="bg-black text-white py-12 px-6 sm:px-6 md:px-10 xl:mx-36">
       <div className="max-w-6xl mx-auto space-y-24">
         <motion.div
           initial={{ opacity: 0, y: -60 }}
           whileInView={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8, ease: "easeOut" }}
           viewport={{ once: true, amount: 0.4 }}
-          className="mb-15 text-center"
+          className="text-center"
         >
-          <h1 className="text-6xl font-bold text-white mb-2">
+          <h1 className="text-5xl sm:text-5xl md:text-6xl font-bold text-white mb-2">
             Why{" "}
             <span className="text-gradient bg-clip-text text-transparent bg-gradient-to-r from-orange-400 to-yellow-300">
               Choose{" "}
             </span>
             <span className="text-gradient bg-clip-text">Us?</span>
           </h1>
-          <div className="w-39 h-1 bg-gradient-to-r from-orange-400 to-yellow-300 mx-auto rounded-full mb-6"></div>
-          <span className="inter-Regular text-3xl font-semibold">
-            CodeLeap exists beacause of some of the following Reasons : )
+          <div className="hidden md:block xl:block w-20 h-1 bg-gradient-to-r from-orange-400 to-yellow-300 mx-auto rounded-full mb-6"></div>
+          <span className="inter-Regular text-xl sm:text-3xl font-semibold">
+            CodeLeap exists because of some of the following Reasons : )
           </span>
         </motion.div>
 
         {/* Section 1 */}
         <div
-          className="grid md:grid-cols-2 gap-5 place-items-center h-96"
+          className="grid grid-cols-1 md:grid-cols-2 gap-5 place-items-center h-auto md:h-96"
           ref={section1Ref}
         >
           <motion.div
-            className="w-[490px] h-90"
+            className="w-full md:w-[490px] h-auto md:h-90 order-1"
             variants={leftVariant}
             initial="hidden"
             animate={inView1 ? "visible" : "hidden"}
@@ -63,12 +63,12 @@ export default function CodingJourney() {
             <img
               src={CodingImg1}
               alt="Feature Illustration"
-              className="w-full h-90 object-cover rounded-xl"
+              className="w-full h-full object-cover rounded-xl"
             />
           </motion.div>
 
           <motion.div
-            className="w-[490px] h-90 p-6 space-y-4"
+            className="w-full md:w-[490px] h-auto md:h-90 p-2 md:p-6 space-y-4 order-2"
             variants={rightVariant}
             initial="hidden"
             animate={inView1 ? "visible" : "hidden"}
@@ -89,17 +89,33 @@ export default function CodingJourney() {
 
         {/* Section 2 */}
         <div
-          className="grid md:grid-cols-2 gap-5 place-items-center h-96"
+          className="grid grid-cols-1 md:grid-cols-2 gap-5 place-items-center h-auto md:h-96"
           ref={section2Ref}
         >
           <motion.div
-            className="w-[490px] space-y-6"
+            className="w-full md:w-[490px] h-auto md:h-90 order-1 md:order-2"
+            variants={rightVariant}
+            initial="hidden"
+            animate={inView2 ? "visible" : "hidden"}
+            transition={{ duration: 0.7, ease: "easeOut", delay: 0.2 }}
+          >
+            <img
+              src={CodingImg2}
+              alt="User Coding"
+              className="w-full h-full object-cover rounded-xl"
+            />
+          </motion.div>
+
+          <motion.div
+            className="w-full md:w-[490px] h-auto md:h-90 p-2 md:p-6 space-y-6 order-2 md:order-1"
             variants={leftVariant}
             initial="hidden"
             animate={inView2 ? "visible" : "hidden"}
             transition={{ duration: 0.7, ease: "easeOut" }}
           >
-            <h2 className="parkinsans-Regular text-8xl font-bold">250k</h2>
+            <h2 className="parkinsans-Regular text-6xl sm:text-7xl md:text-8xl font-bold md:mt-10">
+              250k
+            </h2>
             <p className="text-white text-base">
               Over 250k programmers on our platform actively engaging with
               challenges.
@@ -115,29 +131,15 @@ export default function CodingJourney() {
               </span>
             </motion.button>
           </motion.div>
-
-          <motion.div
-            className="w-[490px] h-90"
-            variants={rightVariant}
-            initial="hidden"
-            animate={inView2 ? "visible" : "hidden"}
-            transition={{ duration: 0.7, ease: "easeOut", delay: 0.2 }}
-          >
-            <img
-              src={CodingImg2}
-              alt="User Coding"
-              className="w-full h-full object-cover rounded-xl"
-            />
-          </motion.div>
         </div>
 
         {/* Section 3 */}
         <div
-          className="grid md:grid-cols-2 gap-5 place-items-center h-96"
+          className="grid grid-cols-1 md:grid-cols-2 gap-5 place-items-center h-auto md:h-96"
           ref={section3Ref}
         >
           <motion.div
-            className="w-[490px] h-90 relative"
+            className="w-full md:w-[490px] h-auto md:h-90 relative order-1"
             variants={leftVariant}
             initial="hidden"
             animate={inView3 ? "visible" : "hidden"}
@@ -156,13 +158,15 @@ export default function CodingJourney() {
           </motion.div>
 
           <motion.div
-            className="w-[490px] p-6 space-y-6"
+            className="w-full md:w-[490px] h-auto md:h-90 p-2 md:p-6 space-y-6 order-2"
             variants={rightVariant}
             initial="hidden"
             animate={inView3 ? "visible" : "hidden"}
             transition={{ duration: 0.7, ease: "easeOut", delay: 0.2 }}
           >
-            <h2 className="parkinsans-Regular text-8xl font-bold">30k</h2>
+            <h2 className="parkinsans-Regular text-6xl sm:text-7xl md:text-8xl font-bold md:mt-8">
+              30k
+            </h2>
             <p className="text-white">
               More than 30k challenges are currently active on the platform
               worldwide.

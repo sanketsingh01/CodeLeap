@@ -1,12 +1,13 @@
 import React from "react";
 import "../index.css";
 import { FaXTwitter, FaGithub, FaDiscord, FaLinkedin } from "react-icons/fa6";
+
 const Footer = () => {
   return (
-    <footer className="text-white px-36 py-12 mt-12">
-      <div className="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-6 gap-18 ">
+    <footer className="text-white px-6 md:px-20 lg:px-36 py-12 mt-12">
+      <div className="max-w-7xl mx-auto grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-8">
         {/* Branding / About Section */}
-        <div className="md:col-span-2">
+        <div className="lg:col-span-2">
           <div className="flex items-center gap-2 mb-6">
             <div className="h-8 w-8 bg-[#F4FF54] rounded-full mr-2"></div>
             <span className="text-xl font-bold">CodeLeap</span>
@@ -20,7 +21,7 @@ const Footer = () => {
 
         {/* Links */}
         <div>
-          <h4 className="inter-Regular font-semibold mb-3 text-2xl">Links</h4>
+          <h4 className="inter-Regular font-semibold mb-3 text-xl">Links</h4>
           <ul className="space-y-2 text-base text-gray-300">
             <li>
               <a href="#">FAQs</a>
@@ -39,7 +40,7 @@ const Footer = () => {
 
         {/* Resources */}
         <div>
-          <h4 className="inter-Regular font-semibold mb-3 text-2xl">
+          <h4 className="inter-Regular font-semibold mb-3 text-xl">
             Resources
           </h4>
           <ul className="space-y-2 text-base text-gray-300">
@@ -60,7 +61,7 @@ const Footer = () => {
 
         {/* Connect */}
         <div>
-          <h4 className="inter-Regular font-semibold mb-3 text-2xl">Connect</h4>
+          <h4 className="inter-Regular font-semibold mb-3 text-xl">Connect</h4>
           <ul className="space-y-2 text-base text-gray-300">
             <li>
               <a href="#">Feedback</a>
@@ -73,18 +74,18 @@ const Footer = () => {
 
         {/* Follow Us */}
         <div>
-          <h4 className="inter-Regular font-semibold mb-3 text-2xl">
+          <h4 className="inter-Regular font-semibold mb-3 text-xl">
             Follow Us
           </h4>
           <ul className="space-y-2 text-base text-gray-300">
             <li>
-              <a href="#">X(Twitter)</a>
+              <a href="#">X (Twitter)</a>
             </li>
             <li>
-              <a href="#">Disocrd</a>
+              <a href="#">Discord</a>
             </li>
             <li>
-              <a href="#">Github</a>
+              <a href="#">GitHub</a>
             </li>
             <li>
               <a href="#">Insights</a>

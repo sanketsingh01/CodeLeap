@@ -18,7 +18,7 @@ const features = [
   },
   { image: FeatureImg1, type: "image" },
   {
-    title: "Practice Problems",
+    title: "Practice - Problems",
     description:
       "Access a wide range of practice problems designed to sharpen your coding skills effectively.",
     icon: Icon2,
@@ -60,7 +60,7 @@ const FeatureGrid = () => {
           viewport={{ once: true, amount: 0.4 }}
           className="mb-8 text-center"
         >
-          <h1 className="text-6xl font-bold text-white mb-2">
+          <h1 className="text-5xl md:text-6xl xl:text-6xl font-bold text-white mb-2">
             Key{" "}
             <span className="text-gradient bg-clip-text text-transparent bg-gradient-to-r from-orange-400 to-yellow-300">
               Features
@@ -74,13 +74,13 @@ const FeatureGrid = () => {
           initial="hidden"
           whileInView="show"
           viewport={{ once: true, amount: 0.2 }}
-          className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-10 max-w-6xl w-full bg-[#121212] p-10 rounded-2xl"
+          className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 w-full bg-[#121212] p-4 sm:p-6 lg:p-10 rounded-2xl"
         >
           {features.map((itemData, idx) => (
-            <motion.div key={idx} variants={item}>
+            <motion.div key={idx} variants={item} className="w-full">
               {itemData.type === "text" ? (
-                <div className="bg-black text-white rounded-2xl p-6 flex flex-col justify-between shadow-md h-72">
-                  <div className="text-3xl mb-2 border border-gray-800 w-16 h-16 flex items-center justify-center rounded-xl text-center">
+                <div className="bg-black text-white rounded-2xl p-4 sm:p-6 flex flex-col justify-between shadow-md h-auto md:h-72 w-full">
+                  <div className="text-3xl mb-2 border border-gray-800 w-14 h-14 flex items-center justify-center rounded-xl text-center">
                     <img src={itemData.icon} alt="IconImg" className="w-8" />
                   </div>
                   <h2 className="parkinsans-Regular text-4xl font-bold mb-2">
@@ -94,7 +94,7 @@ const FeatureGrid = () => {
                 <img
                   src={itemData.image}
                   alt={`feature-${idx}`}
-                  className="bg-black rounded-2xl w-full object-contain h-72"
+                  className="bg-black rounded-2xl w-full h-52 sm:h-64 md:h-72 object-cover"
                 />
               )}
             </motion.div>

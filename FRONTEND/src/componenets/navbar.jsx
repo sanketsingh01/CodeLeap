@@ -1,18 +1,15 @@
 import { useState } from "react";
-import { ArrowUpRight } from "lucide-react";
+import { ArrowUpRight, Menu, X } from "lucide-react";
 import { motion } from "motion/react";
 import "../index.css";
 
 export default function Navbar() {
   const [isOpen, setIsOpen] = useState(false);
 
-  const toggleMenu = () => {
-    setIsOpen(!isOpen);
-  };
+  const toggleMenu = () => setIsOpen(!isOpen);
 
   return (
-    <div className="w-full px-36">
-      {/* Navbar - Exact Modulify Style */}
+    <div className="w-full px-2 md:px-36">
       <motion.nav
         initial={{ y: -100, opacity: 0 }}
         animate={{ y: 0, opacity: 1 }}
@@ -22,26 +19,25 @@ export default function Navbar() {
           damping: 20,
           duration: 0.7,
         }}
-        className="sticky z-50 bg-black text-white py-5 px-6 flex items-center gap-6"
+        className="sticky top-0 z-50 bg-black text-white py-5 px-6 flex items-center justify-between"
       >
         {/* Left - Logo */}
-        <div className="flex items-center mr-8">
+        <div className="flex items-center">
           <div className="h-8 w-8 bg-[#F4FF54] rounded-full mr-2"></div>
           <span className="text-xl font-bold">CodeLeap</span>
         </div>
 
-        {/* Center - Navigation Links */}
-        <div className="flex items-center space-x-6 flex-1">
-          <div className="flex items-center hover:text-[#F4FF54] cursor-pointer">
-            <span>Problems</span>
-          </div>
-          <div className="hover:text-[#F4FF54] cursor-pointer">Pricing</div>
-          <div className="hover:text-[#F4FF54] cursor-pointer">FAQs</div>
-          <div className="hover:text-[#F4FF54] cursor-pointer">Contact</div>
+        {/* Center - Nav Links (Desktop) */}
+        <div className="hidden md:flex items-center space-x-6 flex-1 justify-center">
+          {["Problems", "Pricing", "FAQs", "Contact"].map((item) => (
+            <div key={item} className="hover:text-[#F4FF54] cursor-pointer">
+              {item}
+            </div>
+          ))}
         </div>
 
-        {/* Right - Buttons */}
-        <div className="flex items-center gap-2">
+        {/* Right - Auth Buttons (Desktop) */}
+        <div className="hidden md:flex items-center gap-2">
           <a
             href="#"
             className="text-white hover:text-[#F4FF54] mr-4 text-base"
@@ -50,13 +46,41 @@ export default function Navbar() {
           </a>
           <motion.button
             whileHover={{ scale: 1.15 }}
-            transition={{ duration: 0.2, ease: "easeInOut" }}
-            className="bg-[#F4FF54] text-base text-black font-medium py-2 px-4 rounded-full hover:bg-opacity-90 cursor-pointer flex"
+            transition={{ duration: 0.2 }}
+            className="bg-[#F4FF54] text-base text-black font-medium py-2 px-4 rounded-full hover:bg-opacity-90 flex"
           >
-            Register <ArrowUpRight size={25} />
+            Register <ArrowUpRight size={20} className="ml-1" />
           </motion.button>
         </div>
+
+        {/* Hamburger (Mobile Only) */}
+        <div className="md:hidden">
+          <button onClick={toggleMenu}>
+            {isOpen ? <X size={28} /> : <Menu size={28} />}
+          </button>
+        </div>
       </motion.nav>
+      {/* Mobile Menu */}
+      {isOpen && (
+        <motion.div
+          initial={{ opacity: 0, y: -10 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.2 }}
+          className="absolute top-[72px] left-0 w-full z-50 bg-black text-white px-6 py-4 space-y-4 md:hidden"
+        >
+          {["Problems", "Pricing", "FAQs", "Contact"].map((item) => (
+            <div key={item} className="hover:text-[#F4FF54] cursor-pointer">
+              {item}
+            </div>
+          ))}
+          <a href="#" className="block hover:text-[#F4FF54]">
+            Sign In
+          </a>
+          <button className="bg-[#F4FF54] text-black font-medium py-2 px-4 rounded-full w-full hover:bg-opacity-90 flex justify-center items-center">
+            Register <ArrowUpRight size={20} className="ml-1" />
+          </button>
+        </motion.div>
+      )}
     </div>
   );
 }
