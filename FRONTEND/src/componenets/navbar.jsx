@@ -31,7 +31,7 @@ export default function Navbar() {
         </Link>
 
         {/* Center - Nav Links (Desktop) */}
-        <div className="hidden text-xl md:flex items-center space-x-6 flex-1 justify-center">
+        <div className="hidden text-base md:flex items-center space-x-6 flex-1 justify-center">
           <div className="hover:text-[#F4FF54] cursor-pointer flex gap-4">
             <Link to="/">Problems</Link>
           </div>
@@ -59,7 +59,10 @@ export default function Navbar() {
             transition={{ duration: 0.2 }}
             className="bg-[#F4FF54] text-base text-black font-medium py-2 px-4 rounded-full hover:bg-opacity-90 flex"
           >
-            Register <ArrowUpRight size={20} className="ml-1" />
+            Register{" "}
+            <span className="bg-black rounded-full ml-2 flex items-center justify-center p-1 transition-all duration-300">
+              <ArrowUpRight size={15} color="white" />
+            </span>
           </motion.button>
         </div>
 
@@ -95,7 +98,10 @@ export default function Navbar() {
             Sign In
           </a>
           <button className="bg-[#F4FF54] text-black font-medium py-2 px-4 rounded-full w-full hover:bg-opacity-90 flex justify-center items-center">
-            Register <ArrowUpRight size={20} className="ml-1" />
+            Register{" "}
+            <span className="bg-black rounded-full ml-2 flex items-center justify-center p-1 transition-all duration-300">
+              <ArrowUpRight size={12} color="white" />
+            </span>
           </button>
         </motion.div>
       )}
