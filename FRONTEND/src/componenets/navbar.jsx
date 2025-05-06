@@ -19,7 +19,7 @@ export default function Navbar() {
           damping: 20,
           duration: 0.7,
         }}
-        className="sticky top-0 z-50 bg-black text-white py-5 px-6 flex items-center justify-between"
+        className="fixed top-0 left-0 w-full z-50 bg-black text-white py-5 px-6 xl:px-36 flex items-center justify-between"
       >
         {/* Left - Logo */}
         <div className="flex items-center">

@@ -42,7 +42,7 @@ const Hero = () => {
 
   return (
     <div
-      className="w-full text-white pt-10 pb-16 flex flex-col justify-center items-center overflow-hidden px-6 sm:px-12 md:px-24 lg:px-36"
+      className="w-full text-white mt-15 pt-10 pb-16 flex flex-col justify-center items-center overflow-hidden px-6 sm:px-12 md:px-24 lg:px-36"
       style={{
         backgroundImage: `radial-gradient(circle, rgba(255, 255, 255, 0.2) 1px, transparent 1px)`,
         backgroundSize: "20px 20px",
