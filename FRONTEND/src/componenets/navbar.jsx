@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { ArrowUpRight, Menu, X } from "lucide-react";
 import { motion } from "motion/react";
+import { Link } from "react-router-dom";
 import "../index.css";
 
 export default function Navbar() {
@@ -22,18 +23,27 @@ export default function Navbar() {
         className="fixed top-0 left-0 w-full z-50 bg-black text-white py-5 px-6 xl:px-36 flex items-center justify-between"
       >
         {/* Left - Logo */}
-        <div className="flex items-center">
-          <div className="h-8 w-8 bg-[#F4FF54] rounded-full mr-2"></div>
-          <span className="text-xl font-bold">CodeLeap</span>
-        </div>
+        <Link to="/">
+          <div className="flex items-center">
+            <div className="h-8 w-8 bg-[#F4FF54] rounded-full mr-2"></div>
+            <span className="text-xl font-bold">CodeLeap</span>
+          </div>
+        </Link>
 
         {/* Center - Nav Links (Desktop) */}
-        <div className="hidden md:flex items-center space-x-6 flex-1 justify-center">
-          {["Problems", "Pricing", "FAQs", "Contact"].map((item) => (
-            <div key={item} className="hover:text-[#F4FF54] cursor-pointer">
-              {item}
-            </div>
-          ))}
+        <div className="hidden text-xl md:flex items-center space-x-6 flex-1 justify-center">
+          <div className="hover:text-[#F4FF54] cursor-pointer flex gap-4">
+            <Link to="/">Problems</Link>
+          </div>
+          <div className="hover:text-[#F4FF54] cursor-pointer flex gap-4">
+            <Link to="/">Pricing</Link>
+          </div>
+          <div className="hover:text-[#F4FF54] cursor-pointer flex gap-4">
+            <Link to="/FAQ">FAQs</Link>
+          </div>
+          <div className="hover:text-[#F4FF54] cursor-pointer flex gap-4">
+            <Link to="/">About</Link>
+          </div>
         </div>
 
         {/* Right - Auth Buttons (Desktop) */}
@@ -66,13 +76,21 @@ export default function Navbar() {
           initial={{ opacity: 0, y: -10 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.2 }}
-          className="absolute top-[72px] left-0 w-full z-50 bg-black text-white px-6 py-4 space-y-4 md:hidden"
+          className="fixed top-[72px] left-0 w-full z-50 bg-black text-white px-6 py-4 space-y-4 md:hidden"
         >
-          {["Problems", "Pricing", "FAQs", "Contact"].map((item) => (
-            <div key={item} className="hover:text-[#F4FF54] cursor-pointer">
-              {item}
-            </div>
-          ))}
+          <div className="hover:text-[#F4FF54] cursor-pointer">
+            <Link to="/">Problems</Link>
+          </div>
+          <div className="hover:text-[#F4FF54] cursor-pointer">
+            <Link to="/">Pricing</Link>
+          </div>
+          <div className="hover:text-[#F4FF54] cursor-pointer">
+            <Link to="/FAQ">FAQs</Link>
+          </div>
+          <div className="hover:text-[#F4FF54] cursor-pointer">
+            <Link to="/">About</Link>
+          </div>
+
           <a href="#" className="block hover:text-[#F4FF54]">
             Sign In
           </a>
