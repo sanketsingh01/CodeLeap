@@ -1,13 +1,18 @@
 import { useState } from "react";
 import { ArrowUpRight, Menu, X } from "lucide-react";
 import { motion } from "motion/react";
-import { Link } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 import "../index.css";
 
 export default function Navbar() {
   const [isOpen, setIsOpen] = useState(false);
 
   const toggleMenu = () => setIsOpen(!isOpen);
+
+  const location = useLocation();
+  const isLandingPage = location.pathname === "/";
+  const isFAQPage = location.pathname === "/FAQ";
+  const isAboutPage = location.pathname === "/About";
 
   return (
     <div className="w-full px-2 md:px-36">
@@ -32,18 +37,27 @@ export default function Navbar() {
 
         {/* Center - Nav Links (Desktop) */}
         <div className="hidden text-base md:flex items-center space-x-6 flex-1 justify-center">
+          {!isLandingPage && (
+            <div className="hover:text-[#F4FF54] cursor-pointer flex gap-4">
+              <Link to="/">Home</Link>
+            </div>
+          )}
           <div className="hover:text-[#F4FF54] cursor-pointer flex gap-4">
             <Link to="/">Problems</Link>
           </div>
           <div className="hover:text-[#F4FF54] cursor-pointer flex gap-4">
             <Link to="/">Pricing</Link>
           </div>
-          <div className="hover:text-[#F4FF54] cursor-pointer flex gap-4">
-            <Link to="/FAQ">FAQs</Link>
-          </div>
-          <div className="hover:text-[#F4FF54] cursor-pointer flex gap-4">
-            <Link to="/">About</Link>
-          </div>
+          {!isFAQPage && (
+            <div className="hover:text-[#F4FF54] cursor-pointer flex gap-4">
+              <Link to="/FAQ">FAQ</Link>
+            </div>
+          )}
+          {!isAboutPage && (
+            <div className="hover:text-[#F4FF54] cursor-pointer flex gap-4">
+              <Link to="/About">About</Link>
+            </div>
+          )}
         </div>
 
         {/* Right - Auth Buttons (Desktop) */}
@@ -91,7 +105,7 @@ export default function Navbar() {
             <Link to="/FAQ">FAQs</Link>
           </div>
           <div className="hover:text-[#F4FF54] cursor-pointer">
-            <Link to="/">About</Link>
+            <Link to="/About">About</Link>
           </div>
 
           <a href="#" className="block hover:text-[#F4FF54]">

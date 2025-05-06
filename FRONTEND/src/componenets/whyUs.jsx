@@ -114,10 +114,10 @@ export default function CodingJourney() {
             transition={{ duration: 0.7, ease: "easeOut" }}
           >
             <h2 className="parkinsans-Regular text-6xl sm:text-7xl md:text-8xl font-bold md:mt-10">
-              250k
+              250+
             </h2>
             <p className="text-white text-base">
-              Over 250k programmers on our platform actively engaging with
+              Over 250+ programmers on our platform actively engaging with
               challenges.
             </p>
             <motion.button
@@ -165,10 +165,10 @@ export default function CodingJourney() {
             transition={{ duration: 0.7, ease: "easeOut", delay: 0.2 }}
           >
             <h2 className="parkinsans-Regular text-6xl sm:text-7xl md:text-8xl font-bold md:mt-8">
-              30k
+              30+
             </h2>
             <p className="text-white">
-              More than 30k challenges are currently active on the platform
+              More than 30+ challenges are currently active on the platform
               worldwide.
             </p>
             <button className="border border-white px-6 py-2 rounded-full hover:bg-white hover:text-black transition">
