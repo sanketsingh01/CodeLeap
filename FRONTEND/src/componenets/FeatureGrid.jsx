@@ -1,8 +1,8 @@
 import React from "react";
 import { motion } from "framer-motion";
-import FeatureImg1 from "../assets/FeatureImg1.avif";
-import FeatureImg2 from "../assets/FeatureImg2.avif";
-import FeatureImg3 from "../assets/FeatureImg3.avif";
+import FeatureImg1 from "../assets/FeatureImg1.webp";
+import FeatureImg2 from "../assets/FeatureImg2.webp";
+import FeatureImg3 from "../assets/FeatureImg3.webp";
 import Icon1 from "../assets/Icon1.svg";
 import Icon2 from "../assets/Icon2.svg";
 import Icon3 from "../assets/Icon3.svg";

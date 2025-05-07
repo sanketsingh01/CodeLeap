@@ -1,6 +1,6 @@
 import React, { useRef } from "react";
-import CodeLeapImg from "./assets/codeleap.png";
-import CreatorImg from "./assets/Creatorimg.png";
+import CodeLeapImg from "./assets/codeleap.webp";
+import CreatorImg from "./assets/Creatorimg.webp";
 import { FaXTwitter, FaGithub, FaLinkedin } from "react-icons/fa6";
 import akash from "./assets/akash.webp";
 import mukul from "./assets/mukul.webp";
@@ -8,7 +8,7 @@ import hitesh from "./assets/hitesh.webp";
 import piyush from "./assets/piyush.webp";
 import tejas from "./assets/tejas.webp";
 import anirudh from "./assets/anirudh.webp";
-import suraj from "./assets/suraj.jpg";
+import suraj from "./assets/suraj.webp";
 
 const mentors = [
   {

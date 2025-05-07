@@ -1,9 +1,9 @@
 import React, { useRef } from "react";
 import { motion, useInView } from "framer-motion";
-import CodingImg1 from "../assets/CodingImg1.avif";
-import CodingImg2 from "../assets/CodingImg2.jpg";
-import CodingImg3 from "../assets/CodingImg3.jpg";
-import FeatureImg3 from "../assets/FeatureImg3.avif";
+import CodingImg1 from "../assets/CodingImg1.webp";
+import CodingImg2 from "../assets/CodingImg2.webp";
+import CodingImg3 from "../assets/CodingImg3.webp";
+import FeatureImg3 from "../assets/FeatureImg3.webp";
 import { ArrowUpRight } from "lucide-react";
 import "../index.css";
 

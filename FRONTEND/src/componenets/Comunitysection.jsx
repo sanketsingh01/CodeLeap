@@ -1,5 +1,5 @@
 import React, { useRef } from "react";
-import Comunitybg from "../assets/Comunitybg.avif";
+import Comunitybg from "../assets/Comunitybg.webp";
 import "../index.css";
 import { FaXTwitter, FaGithub, FaDiscord, FaLinkedin } from "react-icons/fa6";
 import { motion } from "motion/react";
