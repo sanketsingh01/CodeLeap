@@ -4,12 +4,14 @@ import "./index.css";
 import App from "./App.jsx";
 import { BrowserRouter } from "react-router-dom";
 import ScrollToTop from "./utils/scrollToTop.jsx";
+import ComingSoon from "./pages/ComingSoon.jsx";
 
 createRoot(document.getElementById("root")).render(
   <BrowserRouter>
     <StrictMode>
       <ScrollToTop />
       <App />
+      {/* <ComingSoon /> */}
     </StrictMode>
   </BrowserRouter>
 );

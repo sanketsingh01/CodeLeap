@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import "../index.css";
 
 const Pricing = () => {
   const [isAnnual, setIsAnnual] = useState(false);
@@ -50,6 +51,12 @@ const Pricing = () => {
 
   return (
     <div className="w-full max-w-7xl mx-auto text-center px-4 sm:px-6 mb-8 md:mb-12 lg:mb-16 mt-30 text-white">
+      <h1 className="inter-bold text-4xl md:text-6xl font-bold mb-5">
+        Pricing
+      </h1>
+      <span className="inter-Regular text-lg md:text-xl">
+        Get started with a CodeLeap Subscription that works for you.
+      </span>
       {/* Toggle Switch */}
       <div className="flex flex-col items-center lg:flex-row justify-center mt-6 sm:mt-8 space-y-4 lg:space-y-0 lg:space-x-4 relative">
         <div className="relative w-58 h-12 bg-black rounded-md flex items-center overflow-hidden">
@@ -61,13 +68,13 @@ const Pricing = () => {
           ></div>
           <button
             onClick={() => toggleBilling("monthly")}
-            className="w-1/2 z-10 text-center text-sm font-medium text-gray-500 relative"
+            className="w-1/2 z-10 text-center text-sm font-medium text-gray-500 relative hover:text-white cursor-pointer"
           >
             Monthly
           </button>
           <button
             onClick={() => toggleBilling("annual")}
-            className="w-1/2 z-10 text-center text-sm font-medium text-gray-500 relative"
+            className="w-1/2 z-10 text-center text-sm font-medium text-gray-500 relative hover:text-white cursor-pointer"
           >
             Annual
           </button>
@@ -78,15 +85,19 @@ const Pricing = () => {
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6 w-full max-w-7xl mx-auto px-4 sm:px-6 mb-12 sm:mb-16 mt-8">
         {/* Free Plan */}
         <div className="border border-gray-200 rounded-lg p-6 sm:p-8 flex flex-col bg-gradient-to-r from-orange-400 to-yellow-300 tracking-wide shadow">
-          <h2 className="text-2xl sm:text-4xl font-bold mb-1">Free</h2>
-          <p className="text-gray-600 mb-4 sm:mb-6">For individual coders</p>
+          <h2 className="inter-bold text-2xl sm:text-4xl font-bold mb-1">
+            Free
+          </h2>
+          <p className="inter-Regular text-gray-600 mb-4 sm:mb-6">
+            For individual coders
+          </p>
           <div className="flex items-end mb-4 sm:mb-6">
             <span className="text-4xl sm:text-5xl md:text-6xl font-bold">
               {prices.free}
             </span>
             <span className="mb-1 ml-1">/month</span>
           </div>
-          <ul className="space-y-3 sm:space-y-4 mb-6 sm:mb-8 flex-grow text-base sm:text-xl">
+          <ul className="inter-Regular space-y-3 sm:space-y-4 mb-6 sm:mb-8 flex-grow text-base sm:text-xl">
             {features.free.map((point, index) => (
               <li key={index} className="flex items-start">
                 {point}
@@ -100,8 +111,12 @@ const Pricing = () => {
 
         {/* Pro Plan */}
         <div className="border border-gray-200 rounded-lg p-6 sm:p-8 flex flex-col text-white bg-gradient-to-r from-orange-400 to-yellow-300 tracking-wide shadow">
-          <h2 className="text-2xl sm:text-4xl font-bold mb-1">Pro</h2>
-          <p className="text-gray-600 mb-4 sm:mb-6">For growing developers</p>
+          <h2 className="inter-bold text-2xl sm:text-4xl font-bold mb-1">
+            Pro
+          </h2>
+          <p className="inter-Regular text-gray-600 mb-4 sm:mb-6">
+            For growing developers
+          </p>
           <div className="flex items-end mb-4 sm:mb-6">
             <span className="text-4xl sm:text-5xl md:text-6xl font-bold text-[#F4FF54]">
               {prices.pro}
@@ -110,7 +125,7 @@ const Pricing = () => {
               /month
             </span>
           </div>
-          <ul className="space-y-3 sm:space-y-4 mb-6 sm:mb-8 flex-grow text-base sm:text-xl">
+          <ul className="inter-Regular space-y-3 sm:space-y-4 mb-6 sm:mb-8 flex-grow text-base sm:text-xl">
             {features.pro.map((point, index) => (
               <li key={index} className="flex items-start">
                 {point}
@@ -124,15 +139,19 @@ const Pricing = () => {
 
         {/* Enterprise Plan */}
         <div className="border border-gray-200 rounded-lg p-6 sm:p-8 flex flex-col bg-gradient-to-r from-orange-400 to-yellow-300 tracking-wide shadow">
-          <h2 className="text-2xl sm:text-4xl font-bold mb-1">Enterprise</h2>
-          <p className="text-gray-600 mb-4 sm:mb-6">For organizations</p>
+          <h2 className="inter-bold text-2xl sm:text-4xl font-bold mb-1">
+            Enterprise
+          </h2>
+          <p className="inter-Regular text-gray-600 mb-4 sm:mb-6">
+            For organizations
+          </p>
           <div className="flex items-end mb-4 sm:mb-6">
             <span className="text-4xl sm:text-5xl md:text-6xl font-bold">
               {prices.enterprise}
             </span>
             <span className="mb-1 ml-1">/month</span>
           </div>
-          <ul className="space-y-3 sm:space-y-4 mb-6 sm:mb-8 flex-grow text-base sm:text-xl">
+          <ul className="inter-Regular space-y-3 sm:space-y-4 mb-6 sm:mb-8 flex-grow text-base sm:text-xl">
             {features.enterprise.map((point, index) => (
               <li key={index} className="flex items-start">
                 {point}

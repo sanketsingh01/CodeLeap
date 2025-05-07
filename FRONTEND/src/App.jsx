@@ -5,7 +5,7 @@ import Footer from "./componenets/Footer.jsx";
 
 const App = () => {
   return (
-    <div className="flex flex-col min-h-screen bg-black">
+    <div className="flex flex-col min-h-screen bg-gradient-to-br from-black via-zinc-800 to-black text-white">
       <Navbar />
       <Layout />
       <Footer />

@@ -38,12 +38,12 @@ function FAQ() {
           Questions
         </span>
       </h2>
-      <p className="text-base text-white mb-8">
+      <p className="text-base text-white mt-12">
         This section addresses frequently asked questions related to coding
         challenges, guiding participants on how to tackle them effectively.
       </p>
 
-      <div className="space-y-4 text-left">
+      <div className="mt-10 space-y-4 text-left">
         {faqs.map((faq, index) => (
           <div
             key={index}
@@ -65,7 +65,7 @@ function FAQ() {
                   animate={{ height: "auto", opacity: 1 }}
                   exit={{ height: 0, opacity: 0 }}
                   transition={{ duration: 0.3 }}
-                  className="overflow-hidden mt-3 text-sm text-gray-800"
+                  className="text-base overflow-hidden mt-3 text-gray-800"
                 >
                   {faq.answer}
                 </motion.p>

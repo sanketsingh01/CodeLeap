@@ -26,7 +26,7 @@ export default function CodingJourney() {
   };
 
   return (
-    <div className="bg-black text-white py-12 px-6 sm:px-6 md:px-10 xl:mx-36">
+    <div className="text-white py-12 px-6 sm:px-6 md:px-10 xl:mx-36">
       <div className="max-w-6xl mx-auto space-y-24">
         <motion.div
           initial={{ opacity: 0, y: -60 }}

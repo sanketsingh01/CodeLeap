@@ -13,6 +13,7 @@ export default function Navbar() {
   const isLandingPage = location.pathname === "/";
   const isFAQPage = location.pathname === "/FAQ";
   const isAboutPage = location.pathname === "/About";
+  const isPricingPage = location.pathname === "/Pricing";
 
   return (
     <div className="w-full px-2 md:px-36">
@@ -45,9 +46,11 @@ export default function Navbar() {
           <div className="hover:text-[#F4FF54] cursor-pointer flex gap-4">
             <Link to="/">Problems</Link>
           </div>
-          <div className="hover:text-[#F4FF54] cursor-pointer flex gap-4">
-            <Link to="/Pricing">Pricing</Link>
-          </div>
+          {!isPricingPage && (
+            <div className="hover:text-[#F4FF54] cursor-pointer flex gap-4">
+              <Link to="/Pricing">Pricing</Link>
+            </div>
+          )}
           {!isFAQPage && (
             <div className="hover:text-[#F4FF54] cursor-pointer flex gap-4">
               <Link to="/FAQ">FAQ</Link>
