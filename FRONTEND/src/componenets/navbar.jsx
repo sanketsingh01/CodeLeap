@@ -46,7 +46,7 @@ export default function Navbar() {
             <Link to="/">Problems</Link>
           </div>
           <div className="hover:text-[#F4FF54] cursor-pointer flex gap-4">
-            <Link to="/">Pricing</Link>
+            <Link to="/Pricing">Pricing</Link>
           </div>
           {!isFAQPage && (
             <div className="hover:text-[#F4FF54] cursor-pointer flex gap-4">
@@ -99,7 +99,7 @@ export default function Navbar() {
             <Link to="/">Problems</Link>
           </div>
           <div className="hover:text-[#F4FF54] cursor-pointer">
-            <Link to="/">Pricing</Link>
+            <Link to="/Pricing">Pricing</Link>
           </div>
           <div className="hover:text-[#F4FF54] cursor-pointer">
             <Link to="/FAQ">FAQs</Link>

@@ -24,16 +24,19 @@ const Footer = () => {
           <h4 className="inter-Regular font-semibold mb-3 text-xl">Links</h4>
           <ul className="space-y-2 text-base text-gray-300">
             <li>
-              <a href="#">FAQs</a>
+              <a href="/FAQ" className="hover:text-white">
+                FAQs
+              </a>
             </li>
             <li>
-              <a href="#">Support</a>
+              <a href="/Pricing" className="hover:text-white">
+                Pricing
+              </a>
             </li>
             <li>
-              <a href="#">Privacy Policy</a>
-            </li>
-            <li>
-              <a href="#">Contact Us</a>
+              <a href="/About" className="hover:text-white">
+                About
+              </a>
             </li>
           </ul>
         </div>
@@ -45,16 +48,24 @@ const Footer = () => {
           </h4>
           <ul className="space-y-2 text-base text-gray-300">
             <li>
-              <a href="#">Terms of Service</a>
+              <a href="#" target="_blank" className="hover:text-white">
+                Terms of Service
+              </a>
             </li>
             <li>
-              <a href="#">Updates</a>
+              <a href="#" target="_blank" className="hover:text-white">
+                Updates
+              </a>
             </li>
             <li>
-              <a href="#">Blog</a>
+              <a href="#" target="_blank" className="hover:text-white">
+                Blog
+              </a>
             </li>
             <li>
-              <a href="#">Tutorials</a>
+              <a href="#" target="_blank" className="hover:text-white">
+                Tutorials
+              </a>
             </li>
           </ul>
         </div>
@@ -64,10 +75,14 @@ const Footer = () => {
           <h4 className="inter-Regular font-semibold mb-3 text-xl">Connect</h4>
           <ul className="space-y-2 text-base text-gray-300">
             <li>
-              <a href="#">Feedback</a>
+              <a href="#" target="_blank" className="hover:text-white">
+                Feedback
+              </a>
             </li>
             <li>
-              <a href="#">Guides</a>
+              <a href="#" target="_blank" className="hover:text-white">
+                Guides
+              </a>
             </li>
           </ul>
         </div>
@@ -79,13 +94,32 @@ const Footer = () => {
           </h4>
           <ul className="space-y-2 text-base text-gray-300">
             <li>
-              <a href="#">X (Twitter)</a>
+              <a
+                href="https://x.com/SinghSanket78"
+                target="_blank"
+                className="hover:text-white"
+              >
+                {" "}
+                X (Twitter)
+              </a>
             </li>
             <li>
-              <a href="#">Discord</a>
+              <a
+                href="https://discord.gg/UCq2KhfZ"
+                target="_blank"
+                className="hover:text-white"
+              >
+                Discord
+              </a>
             </li>
             <li>
-              <a href="#">GitHub</a>
+              <a
+                href="https://github.com/sanketsingh01"
+                target="_blank"
+                className="hover:text-white"
+              >
+                GitHub
+              </a>
             </li>
             <li>
               <a href="#">Insights</a>
