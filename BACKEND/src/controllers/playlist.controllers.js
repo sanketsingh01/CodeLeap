@@ -8,6 +8,19 @@ export const createPlaylist = async (req, res) => {
 
     const userId = req.user.id;
 
+    const existingPlalist = await db.playlist.findFirst({
+      where: {
+        name,
+        userId,
+      },
+    });
+
+    if (existingPlalist) {
+      return res
+        .status(400)
+        .json(new ApiError(400, 'Playlist with this name already exists'));
+    }
+
     const playlist = await db.playlist.create({
       data: {
         name,

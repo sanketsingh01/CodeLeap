@@ -8,6 +8,8 @@ import {
   getPlayListDetails,
   removeProblemfromPlaylist,
 } from '../controllers/playlist.controllers.js';
+import { createPlaylistValidator } from '../validators/index.js';
+import { handleValidationErrors } from '../middleware/handleValidationErrors.middleware.js';
 
 const playlistRoutes = express.Router();
 
@@ -19,7 +21,13 @@ playlistRoutes.get(
   getPlayListDetails,
 );
 
-playlistRoutes.post('/create-playlist', authMiddleware, createPlaylist);
+playlistRoutes.post(
+  '/create-playlist',
+  authMiddleware,
+  createPlaylistValidator(),
+  handleValidationErrors,
+  createPlaylist,
+);
 
 playlistRoutes.post(
   '/:playlistId/add-problem',

@@ -7,6 +7,8 @@ import {
   getProblemById,
   updateProblem,
 } from '../controllers/problem.controllers.js';
+import { createAndUpdateProblemValidator } from '../validators/index.js';
+import { handleValidationErrors } from '../middleware/handleValidationErrors.middleware.js';
 
 const problemRoutes = express.Router();
 
@@ -14,6 +16,8 @@ problemRoutes.post(
   '/create-problem',
   authMiddleware,
   checkAdmin,
+  createAndUpdateProblemValidator(),
+  handleValidationErrors,
   createProblem,
 );
 
