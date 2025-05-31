@@ -1,15 +1,24 @@
 import React from "react";
+import { useLocation } from "react-router-dom";
 import Navbar from "./componenets/navbar.jsx";
-import Layout from "./Layout/Layout.jsx";
 import Footer from "./componenets/Footer.jsx";
+import Layout from "./Layout/Layout.jsx";
 
 const App = () => {
+  const location = useLocation();
+  const hideHeaderFooterRoutes = ["/login", "/signup"];
+
+  const shouldHideHeaderFooter = hideHeaderFooterRoutes.includes(
+    location.pathname.toLowerCase()
+  );
+
   return (
     <div className="flex flex-col min-h-screen bg-gradient-to-br from-black via-zinc-800 to-black text-white">
-      <Navbar />
+      {!shouldHideHeaderFooter && <Navbar />}
       <Layout />
-      <Footer />
+      {!shouldHideHeaderFooter && <Footer />}
     </div>
   );
 };
+
 export default App;

@@ -272,7 +272,7 @@ const config = {
     "db": {
       "url": {
         "fromEnvVar": "DATABASE_URL",
-        "value": "postgresql://sanket:sankecode@localhost:5432/postgres"
+        "value": "postgresql://CodeLeap_owner:npg_DbCzfrlR48uZ@ep-raspy-surf-a57ohme6-pooler.us-east-2.aws.neon.tech/CodeLeap?sslmode=require"
       }
     }
   },

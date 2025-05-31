@@ -10,14 +10,23 @@
     "preview": "vite preview"
   },
   "dependencies": {
-    "@tailwindcss/vite": "^4.1.5",
+    "@hookform/resolvers": "^5.0.1",
+    "@monaco-editor/react": "^4.7.0",
+    "@tailwindcss/vite": "^4.1.6",
+    "axios": "^1.9.0",
+    "daisyui": "^5.0.35",
     "lucide-react": "^0.507.0",
+    "monaco-editor": "^0.52.2",
     "motion": "^12.9.4",
     "react": "^19.0.0",
     "react-dom": "^19.0.0",
+    "react-hook-form": "^7.56.3",
+    "react-hot-toast": "^2.5.2",
     "react-icons": "^5.5.0",
     "react-router-dom": "^7.5.3",
-    "tailwindcss": "^4.1.5"
+    "tailwindcss": "^4.1.6",
+    "zod": "^3.24.4",
+    "zustand": "^5.0.4"
   },
   "devDependencies": {
     "@eslint/js": "^9.22.0",
