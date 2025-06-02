@@ -13,7 +13,7 @@ import { useAuthStore } from "../store/useAuthStore.js";
 import { Loader } from "lucide-react";
 import AdminRoute from "../componenets/AdminRoute.jsx";
 import AddProblem from "../pages/AddProblem.jsx";
-import ProblemPage from "../pages/ProblemPAge.jsx";
+import ProblemPage from "../pages/ProblemPage.jsx";
 
 const Layout = () => {
   const { authUser, checkAuth, isCheckingAuth } = useAuthStore();
