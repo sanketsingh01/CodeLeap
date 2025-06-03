@@ -33,21 +33,21 @@ const Layout = () => {
     <div className="w-full">
       <Toaster />
       <Routes>
-        <Route
-          path="/"
-          element={authUser ? <Home /> : <Navigate to="/login" />}
-        />
+        <Route path="/" element={<Home />} />
         <Route path="/FAQ" element={<FAQ />} />
         <Route path="/About" element={<About />} />
         <Route path="/Pricing" element={<Pricing />} />
-        <Route path="/problems" element={<ProblemsHome />} />
+        <Route
+          path="/problems"
+          element={authUser ? <ProblemsHome /> : <Navigate to="/login" />}
+        />
         <Route
           path="/login"
-          element={!authUser ? <LoginPage /> : <Navigate to="/" />}
+          element={!authUser ? <LoginPage /> : <Navigate to="/problems" />}
         />
         <Route
           path="/signup"
-          element={!authUser ? <SignUpPage /> : <Navigate to="/" />}
+          element={!authUser ? <SignUpPage /> : <Navigate to="/problems" />}
         />
 
         <Route

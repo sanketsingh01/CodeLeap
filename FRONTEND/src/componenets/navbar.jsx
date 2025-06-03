@@ -25,6 +25,7 @@ export default function Navbar() {
   const isFAQPage = location.pathname === "/FAQ";
   const isAboutPage = location.pathname === "/About";
   const isPricingPage = location.pathname === "/Pricing";
+  const isProblemsPage = location.pathname === "/problems";
 
   return (
     <div className="w-full px-2 md:px-36">
@@ -49,7 +50,7 @@ export default function Navbar() {
 
         {/* Center - Nav Links (Desktop) */}
         <div className="hidden text-base md:flex items-center space-x-6 flex-1 justify-center">
-          {!isLandingPage && (
+          {!(isLandingPage || isProblemsPage) && (
             <div className="hover:text-[#F4FF54] cursor-pointer flex gap-4">
               <Link to="/">Home</Link>
             </div>
@@ -76,81 +77,87 @@ export default function Navbar() {
 
         {/* Right - Auth Buttons (Desktop) */}
         <div className="hidden md:flex items-center gap-2">
-          <Link
-            to="/login"
-            className="text-white hover:text-[#F4FF54] mr-4 text-base"
-          >
-            Sign In
-          </Link>
-          <motion.button
-            whileHover={{ scale: 1.15 }}
-            transition={{ duration: 0.2 }}
-            onClick={handleRegisterClick}
-            className="bg-[#F4FF54] text-base text-black font-medium py-2 px-4 rounded-full hover:bg-opacity-90 flex"
-          >
-            Register{" "}
-            <span className="bg-black rounded-full ml-2 flex items-center justify-center p-1 transition-all duration-300">
-              <ArrowUpRight size={15} color="white" />
-            </span>
-          </motion.button>
-
-          <div className="flex items-center gap-8">
-            <div className="dropdown dropdown-end">
-              <label
-                tabIndex={0}
-                className="btn btn-ghost btn-circle avatar flex flex-row "
+          {!authUser && (
+            <div className="flex items-center">
+              <Link
+                to="/login"
+                className="text-white hover:text-[#F4FF54] mr-4 text-base"
               >
-                <div className="w-10 rounded-full ">
-                  <img
-                    src={
-                      authUser?.image ||
-                      "https://avatar.iran.liara.run/public/boy"
-                    }
-                    alt="User Avatar"
-                    className="object-cover"
-                  />
-                </div>
-              </label>
-              <ul
-                tabIndex={0}
-                className="menu menu-sm dropdown-content mt-3 z-[1] p-2 shadow bg-base-100 rounded-box w-52 space-y-3"
+                Sign In
+              </Link>
+              <motion.button
+                whileHover={{ scale: 1.15 }}
+                transition={{ duration: 0.2 }}
+                onClick={handleRegisterClick}
+                className="bg-[#F4FF54] text-base text-black font-medium py-2 px-4 rounded-full hover:bg-opacity-90 flex"
               >
-                {/* Admin Option */}
+                Register{" "}
+                <span className="bg-black rounded-full ml-2 flex items-center justify-center p-1 transition-all duration-300">
+                  <ArrowUpRight size={15} color="white" />
+                </span>
+              </motion.button>
+            </div>
+          )}
 
-                {/* Common Options */}
-                <li>
-                  <p className="text-base font-semibold">{authUser?.name}</p>
-                  <hr className="border-gray-200/10" />
-                </li>
-                <li>
-                  <Link
-                    to="/profile"
-                    className="hover:bg-primary hover:text-white text-base font-semibold"
-                  >
-                    <User className="w-4 h-4 mr-2" />
-                    My Profile
-                  </Link>
-                </li>
-                {authUser?.role === "ADMIN" && (
+          {authUser && (
+            <div className="flex items-center gap-8">
+              <div className="dropdown dropdown-end">
+                <label
+                  tabIndex={0}
+                  className="btn btn-ghost btn-circle avatar flex flex-row "
+                >
+                  <div className="w-10 rounded-full ">
+                    <img
+                      src={
+                        authUser?.image ||
+                        "https://avatar.iran.liara.run/public/boy"
+                      }
+                      alt="User Avatar"
+                      className="object-cover"
+                    />
+                  </div>
+                </label>
+                <ul
+                  tabIndex={0}
+                  className="menu menu-sm dropdown-content mt-3 z-[1] p-2 shadow bg-base-100 rounded-box w-52 space-y-3"
+                >
+                  {/* Admin Option */}
+
+                  {/* Common Options */}
+                  <li>
+                    <p className="text-base font-semibold">{authUser?.name}</p>
+                    <hr className="border-gray-200/10" />
+                  </li>
                   <li>
                     <Link
-                      to="/add-problem"
+                      to="/profile"
                       className="hover:bg-primary hover:text-white text-base font-semibold"
                     >
-                      <Code className="w-4 h-4 mr-1" />
-                      Add Problem
+                      <User className="w-4 h-4 mr-2" />
+                      My Profile
                     </Link>
                   </li>
-                )}
-                <li>
-                  <LogoutButton className="hover:bg-primary hover:text-white">
-                    <LogOut className="w-4 h-4 mr-2" />
-                    Logout
-                  </LogoutButton>
-                </li>
-              </ul>
+                  {authUser?.role === "ADMIN" && (
+                    <li>
+                      <Link
+                        to="/add-problem"
+                        className="hover:bg-primary hover:text-white text-base font-semibold"
+                      >
+                        <Code className="w-4 h-4 mr-1" />
+                        Add Problem
+                      </Link>
+                    </li>
+                  )}
+                  <li>
+                    <LogoutButton className="hover:bg-primary hover:text-white">
+                      <LogOut className="w-4 h-4 mr-2" />
+                      Logout
+                    </LogoutButton>
+                  </li>
+                </ul>
+              </div>
             </div>
-          </div>
+          )}
         </div>
 
         {/* Hamburger (Mobile Only) */}

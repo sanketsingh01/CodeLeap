@@ -168,9 +168,16 @@ const login = async (req, res) => {
     res.cookie('refreshToken', refreshToken, RefreshCookieOptions);
 
     console.log(user);
+    const loginUser = {
+      id: user.id,
+      name: user.name,
+      email: user.email,
+      role: user.role,
+      image: user.image,
+    };
     res
       .status(200)
-      .json(new ApiResponse(200, user, 'User logged in successfully'));
+      .json(new ApiResponse(200, loginUser, 'User logged in successfully'));
   } catch (error) {
     console.log(error);
     return res

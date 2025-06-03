@@ -169,6 +169,15 @@ const ProblemPage = () => {
       console.log("Error running code: ", error);
     }
   };
+
+  if (isProblemLoading || !problem) {
+    return (
+      <div className="min-h-screen flex items-center justify-center">
+        <span className="loading loading-spinner loading-lg text-primary"></span>
+      </div>
+    );
+  }
+
   return (
     <div className="min-h-screen bg-gradient-to-br from-base-300 to-base-200 mt-20 w-full">
       <nav className="navbar bg-base-100 shadow-lg px-4">
