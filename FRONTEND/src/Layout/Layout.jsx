@@ -47,7 +47,7 @@ const Layout = () => {
         />
         <Route
           path="/signup"
-          element={!authUser ? <SignUpPage /> : <Navigate to="/problems" />}
+          element={!authUser ? <SignUpPage /> : <Navigate to="/" />}
         />
 
         <Route

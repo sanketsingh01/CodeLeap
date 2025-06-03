@@ -331,8 +331,8 @@ export namespace Prisma {
   export import Exact = $Public.Exact
 
   /**
-   * Prisma Client JS version: 6.7.0
-   * Query Engine version: 3cff47a7f5d65c3ea74883f1d736e41d68ce91ed
+   * Prisma Client JS version: 6.8.2
+   * Query Engine version: 2060c79ba17c6bb9f5823312b6f6b7f4a845738e
    */
   export type PrismaVersion = {
     client: string
@@ -1634,7 +1634,7 @@ export namespace Prisma {
     verificationToken: string | null
     passwordResetToken: string | null
     passwordResetExpiry: Date | null
-    refreshToken: string | null
+    accessToken: string | null
     createdAt: Date | null
     updatedAt: Date | null
   }
@@ -1650,7 +1650,7 @@ export namespace Prisma {
     verificationToken: string | null
     passwordResetToken: string | null
     passwordResetExpiry: Date | null
-    refreshToken: string | null
+    accessToken: string | null
     createdAt: Date | null
     updatedAt: Date | null
   }
@@ -1666,7 +1666,7 @@ export namespace Prisma {
     verificationToken: number
     passwordResetToken: number
     passwordResetExpiry: number
-    refreshToken: number
+    accessToken: number
     createdAt: number
     updatedAt: number
     _all: number
@@ -1684,7 +1684,7 @@ export namespace Prisma {
     verificationToken?: true
     passwordResetToken?: true
     passwordResetExpiry?: true
-    refreshToken?: true
+    accessToken?: true
     createdAt?: true
     updatedAt?: true
   }
@@ -1700,7 +1700,7 @@ export namespace Prisma {
     verificationToken?: true
     passwordResetToken?: true
     passwordResetExpiry?: true
-    refreshToken?: true
+    accessToken?: true
     createdAt?: true
     updatedAt?: true
   }
@@ -1716,7 +1716,7 @@ export namespace Prisma {
     verificationToken?: true
     passwordResetToken?: true
     passwordResetExpiry?: true
-    refreshToken?: true
+    accessToken?: true
     createdAt?: true
     updatedAt?: true
     _all?: true
@@ -1805,7 +1805,7 @@ export namespace Prisma {
     verificationToken: string | null
     passwordResetToken: string | null
     passwordResetExpiry: Date | null
-    refreshToken: string | null
+    accessToken: string | null
     createdAt: Date
     updatedAt: Date
     _count: UserCountAggregateOutputType | null
@@ -1838,7 +1838,7 @@ export namespace Prisma {
     verificationToken?: boolean
     passwordResetToken?: boolean
     passwordResetExpiry?: boolean
-    refreshToken?: boolean
+    accessToken?: boolean
     createdAt?: boolean
     updatedAt?: boolean
     problems?: boolean | User$problemsArgs<ExtArgs>
@@ -1859,7 +1859,7 @@ export namespace Prisma {
     verificationToken?: boolean
     passwordResetToken?: boolean
     passwordResetExpiry?: boolean
-    refreshToken?: boolean
+    accessToken?: boolean
     createdAt?: boolean
     updatedAt?: boolean
   }, ExtArgs["result"]["user"]>
@@ -1875,7 +1875,7 @@ export namespace Prisma {
     verificationToken?: boolean
     passwordResetToken?: boolean
     passwordResetExpiry?: boolean
-    refreshToken?: boolean
+    accessToken?: boolean
     createdAt?: boolean
     updatedAt?: boolean
   }, ExtArgs["result"]["user"]>
@@ -1891,12 +1891,12 @@ export namespace Prisma {
     verificationToken?: boolean
     passwordResetToken?: boolean
     passwordResetExpiry?: boolean
-    refreshToken?: boolean
+    accessToken?: boolean
     createdAt?: boolean
     updatedAt?: boolean
   }
 
-  export type UserOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "name" | "email" | "image" | "password" | "role" | "isVerified" | "verificationToken" | "passwordResetToken" | "passwordResetExpiry" | "refreshToken" | "createdAt" | "updatedAt", ExtArgs["result"]["user"]>
+  export type UserOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "name" | "email" | "image" | "password" | "role" | "isVerified" | "verificationToken" | "passwordResetToken" | "passwordResetExpiry" | "accessToken" | "createdAt" | "updatedAt", ExtArgs["result"]["user"]>
   export type UserInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     problems?: boolean | User$problemsArgs<ExtArgs>
     submission?: boolean | User$submissionArgs<ExtArgs>
@@ -1926,7 +1926,7 @@ export namespace Prisma {
       verificationToken: string | null
       passwordResetToken: string | null
       passwordResetExpiry: Date | null
-      refreshToken: string | null
+      accessToken: string | null
       createdAt: Date
       updatedAt: Date
     }, ExtArgs["result"]["user"]>
@@ -2366,7 +2366,7 @@ export namespace Prisma {
     readonly verificationToken: FieldRef<"User", 'String'>
     readonly passwordResetToken: FieldRef<"User", 'String'>
     readonly passwordResetExpiry: FieldRef<"User", 'DateTime'>
-    readonly refreshToken: FieldRef<"User", 'String'>
+    readonly accessToken: FieldRef<"User", 'String'>
     readonly createdAt: FieldRef<"User", 'DateTime'>
     readonly updatedAt: FieldRef<"User", 'DateTime'>
   }
@@ -9788,7 +9788,7 @@ export namespace Prisma {
     verificationToken: 'verificationToken',
     passwordResetToken: 'passwordResetToken',
     passwordResetExpiry: 'passwordResetExpiry',
-    refreshToken: 'refreshToken',
+    accessToken: 'accessToken',
     createdAt: 'createdAt',
     updatedAt: 'updatedAt'
   };
@@ -10057,7 +10057,7 @@ export namespace Prisma {
     verificationToken?: StringNullableFilter<"User"> | string | null
     passwordResetToken?: StringNullableFilter<"User"> | string | null
     passwordResetExpiry?: DateTimeNullableFilter<"User"> | Date | string | null
-    refreshToken?: StringNullableFilter<"User"> | string | null
+    accessToken?: StringNullableFilter<"User"> | string | null
     createdAt?: DateTimeFilter<"User"> | Date | string
     updatedAt?: DateTimeFilter<"User"> | Date | string
     problems?: ProblemListRelationFilter
@@ -10077,7 +10077,7 @@ export namespace Prisma {
     verificationToken?: SortOrderInput | SortOrder
     passwordResetToken?: SortOrderInput | SortOrder
     passwordResetExpiry?: SortOrderInput | SortOrder
-    refreshToken?: SortOrderInput | SortOrder
+    accessToken?: SortOrderInput | SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
     problems?: ProblemOrderByRelationAggregateInput
@@ -10100,7 +10100,7 @@ export namespace Prisma {
     verificationToken?: StringNullableFilter<"User"> | string | null
     passwordResetToken?: StringNullableFilter<"User"> | string | null
     passwordResetExpiry?: DateTimeNullableFilter<"User"> | Date | string | null
-    refreshToken?: StringNullableFilter<"User"> | string | null
+    accessToken?: StringNullableFilter<"User"> | string | null
     createdAt?: DateTimeFilter<"User"> | Date | string
     updatedAt?: DateTimeFilter<"User"> | Date | string
     problems?: ProblemListRelationFilter
@@ -10120,7 +10120,7 @@ export namespace Prisma {
     verificationToken?: SortOrderInput | SortOrder
     passwordResetToken?: SortOrderInput | SortOrder
     passwordResetExpiry?: SortOrderInput | SortOrder
-    refreshToken?: SortOrderInput | SortOrder
+    accessToken?: SortOrderInput | SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
     _count?: UserCountOrderByAggregateInput
@@ -10142,7 +10142,7 @@ export namespace Prisma {
     verificationToken?: StringNullableWithAggregatesFilter<"User"> | string | null
     passwordResetToken?: StringNullableWithAggregatesFilter<"User"> | string | null
     passwordResetExpiry?: DateTimeNullableWithAggregatesFilter<"User"> | Date | string | null
-    refreshToken?: StringNullableWithAggregatesFilter<"User"> | string | null
+    accessToken?: StringNullableWithAggregatesFilter<"User"> | string | null
     createdAt?: DateTimeWithAggregatesFilter<"User"> | Date | string
     updatedAt?: DateTimeWithAggregatesFilter<"User"> | Date | string
   }
@@ -10657,7 +10657,7 @@ export namespace Prisma {
     verificationToken?: string | null
     passwordResetToken?: string | null
     passwordResetExpiry?: Date | string | null
-    refreshToken?: string | null
+    accessToken?: string | null
     createdAt?: Date | string
     updatedAt?: Date | string
     problems?: ProblemCreateNestedManyWithoutUserInput
@@ -10677,7 +10677,7 @@ export namespace Prisma {
     verificationToken?: string | null
     passwordResetToken?: string | null
     passwordResetExpiry?: Date | string | null
-    refreshToken?: string | null
+    accessToken?: string | null
     createdAt?: Date | string
     updatedAt?: Date | string
     problems?: ProblemUncheckedCreateNestedManyWithoutUserInput
@@ -10697,7 +10697,7 @@ export namespace Prisma {
     verificationToken?: NullableStringFieldUpdateOperationsInput | string | null
     passwordResetToken?: NullableStringFieldUpdateOperationsInput | string | null
     passwordResetExpiry?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-    refreshToken?: NullableStringFieldUpdateOperationsInput | string | null
+    accessToken?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     problems?: ProblemUpdateManyWithoutUserNestedInput
@@ -10717,7 +10717,7 @@ export namespace Prisma {
     verificationToken?: NullableStringFieldUpdateOperationsInput | string | null
     passwordResetToken?: NullableStringFieldUpdateOperationsInput | string | null
     passwordResetExpiry?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-    refreshToken?: NullableStringFieldUpdateOperationsInput | string | null
+    accessToken?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     problems?: ProblemUncheckedUpdateManyWithoutUserNestedInput
@@ -10737,7 +10737,7 @@ export namespace Prisma {
     verificationToken?: string | null
     passwordResetToken?: string | null
     passwordResetExpiry?: Date | string | null
-    refreshToken?: string | null
+    accessToken?: string | null
     createdAt?: Date | string
     updatedAt?: Date | string
   }
@@ -10753,7 +10753,7 @@ export namespace Prisma {
     verificationToken?: NullableStringFieldUpdateOperationsInput | string | null
     passwordResetToken?: NullableStringFieldUpdateOperationsInput | string | null
     passwordResetExpiry?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-    refreshToken?: NullableStringFieldUpdateOperationsInput | string | null
+    accessToken?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
@@ -10769,7 +10769,7 @@ export namespace Prisma {
     verificationToken?: NullableStringFieldUpdateOperationsInput | string | null
     passwordResetToken?: NullableStringFieldUpdateOperationsInput | string | null
     passwordResetExpiry?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-    refreshToken?: NullableStringFieldUpdateOperationsInput | string | null
+    accessToken?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
@@ -11437,7 +11437,7 @@ export namespace Prisma {
     verificationToken?: SortOrder
     passwordResetToken?: SortOrder
     passwordResetExpiry?: SortOrder
-    refreshToken?: SortOrder
+    accessToken?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
   }
@@ -11453,7 +11453,7 @@ export namespace Prisma {
     verificationToken?: SortOrder
     passwordResetToken?: SortOrder
     passwordResetExpiry?: SortOrder
-    refreshToken?: SortOrder
+    accessToken?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
   }
@@ -11469,7 +11469,7 @@ export namespace Prisma {
     verificationToken?: SortOrder
     passwordResetToken?: SortOrder
     passwordResetExpiry?: SortOrder
-    refreshToken?: SortOrder
+    accessToken?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
   }
@@ -13001,7 +13001,7 @@ export namespace Prisma {
     verificationToken?: string | null
     passwordResetToken?: string | null
     passwordResetExpiry?: Date | string | null
-    refreshToken?: string | null
+    accessToken?: string | null
     createdAt?: Date | string
     updatedAt?: Date | string
     submission?: SubmissionCreateNestedManyWithoutUserInput
@@ -13020,7 +13020,7 @@ export namespace Prisma {
     verificationToken?: string | null
     passwordResetToken?: string | null
     passwordResetExpiry?: Date | string | null
-    refreshToken?: string | null
+    accessToken?: string | null
     createdAt?: Date | string
     updatedAt?: Date | string
     submission?: SubmissionUncheckedCreateNestedManyWithoutUserInput
@@ -13147,7 +13147,7 @@ export namespace Prisma {
     verificationToken?: NullableStringFieldUpdateOperationsInput | string | null
     passwordResetToken?: NullableStringFieldUpdateOperationsInput | string | null
     passwordResetExpiry?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-    refreshToken?: NullableStringFieldUpdateOperationsInput | string | null
+    accessToken?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     submission?: SubmissionUpdateManyWithoutUserNestedInput
@@ -13166,7 +13166,7 @@ export namespace Prisma {
     verificationToken?: NullableStringFieldUpdateOperationsInput | string | null
     passwordResetToken?: NullableStringFieldUpdateOperationsInput | string | null
     passwordResetExpiry?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-    refreshToken?: NullableStringFieldUpdateOperationsInput | string | null
+    accessToken?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     submission?: SubmissionUncheckedUpdateManyWithoutUserNestedInput
@@ -13244,7 +13244,7 @@ export namespace Prisma {
     verificationToken?: string | null
     passwordResetToken?: string | null
     passwordResetExpiry?: Date | string | null
-    refreshToken?: string | null
+    accessToken?: string | null
     createdAt?: Date | string
     updatedAt?: Date | string
     problems?: ProblemCreateNestedManyWithoutUserInput
@@ -13263,7 +13263,7 @@ export namespace Prisma {
     verificationToken?: string | null
     passwordResetToken?: string | null
     passwordResetExpiry?: Date | string | null
-    refreshToken?: string | null
+    accessToken?: string | null
     createdAt?: Date | string
     updatedAt?: Date | string
     problems?: ProblemUncheckedCreateNestedManyWithoutUserInput
@@ -13383,7 +13383,7 @@ export namespace Prisma {
     verificationToken?: NullableStringFieldUpdateOperationsInput | string | null
     passwordResetToken?: NullableStringFieldUpdateOperationsInput | string | null
     passwordResetExpiry?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-    refreshToken?: NullableStringFieldUpdateOperationsInput | string | null
+    accessToken?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     problems?: ProblemUpdateManyWithoutUserNestedInput
@@ -13402,7 +13402,7 @@ export namespace Prisma {
     verificationToken?: NullableStringFieldUpdateOperationsInput | string | null
     passwordResetToken?: NullableStringFieldUpdateOperationsInput | string | null
     passwordResetExpiry?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-    refreshToken?: NullableStringFieldUpdateOperationsInput | string | null
+    accessToken?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     problems?: ProblemUncheckedUpdateManyWithoutUserNestedInput
@@ -13591,7 +13591,7 @@ export namespace Prisma {
     verificationToken?: string | null
     passwordResetToken?: string | null
     passwordResetExpiry?: Date | string | null
-    refreshToken?: string | null
+    accessToken?: string | null
     createdAt?: Date | string
     updatedAt?: Date | string
     problems?: ProblemCreateNestedManyWithoutUserInput
@@ -13610,7 +13610,7 @@ export namespace Prisma {
     verificationToken?: string | null
     passwordResetToken?: string | null
     passwordResetExpiry?: Date | string | null
-    refreshToken?: string | null
+    accessToken?: string | null
     createdAt?: Date | string
     updatedAt?: Date | string
     problems?: ProblemUncheckedCreateNestedManyWithoutUserInput
@@ -13690,7 +13690,7 @@ export namespace Prisma {
     verificationToken?: NullableStringFieldUpdateOperationsInput | string | null
     passwordResetToken?: NullableStringFieldUpdateOperationsInput | string | null
     passwordResetExpiry?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-    refreshToken?: NullableStringFieldUpdateOperationsInput | string | null
+    accessToken?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     problems?: ProblemUpdateManyWithoutUserNestedInput
@@ -13709,7 +13709,7 @@ export namespace Prisma {
     verificationToken?: NullableStringFieldUpdateOperationsInput | string | null
     passwordResetToken?: NullableStringFieldUpdateOperationsInput | string | null
     passwordResetExpiry?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-    refreshToken?: NullableStringFieldUpdateOperationsInput | string | null
+    accessToken?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     problems?: ProblemUncheckedUpdateManyWithoutUserNestedInput
@@ -13803,7 +13803,7 @@ export namespace Prisma {
     verificationToken?: string | null
     passwordResetToken?: string | null
     passwordResetExpiry?: Date | string | null
-    refreshToken?: string | null
+    accessToken?: string | null
     createdAt?: Date | string
     updatedAt?: Date | string
     problems?: ProblemCreateNestedManyWithoutUserInput
@@ -13822,7 +13822,7 @@ export namespace Prisma {
     verificationToken?: string | null
     passwordResetToken?: string | null
     passwordResetExpiry?: Date | string | null
-    refreshToken?: string | null
+    accessToken?: string | null
     createdAt?: Date | string
     updatedAt?: Date | string
     problems?: ProblemUncheckedCreateNestedManyWithoutUserInput
@@ -13873,7 +13873,7 @@ export namespace Prisma {
     verificationToken?: NullableStringFieldUpdateOperationsInput | string | null
     passwordResetToken?: NullableStringFieldUpdateOperationsInput | string | null
     passwordResetExpiry?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-    refreshToken?: NullableStringFieldUpdateOperationsInput | string | null
+    accessToken?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     problems?: ProblemUpdateManyWithoutUserNestedInput
@@ -13892,7 +13892,7 @@ export namespace Prisma {
     verificationToken?: NullableStringFieldUpdateOperationsInput | string | null
     passwordResetToken?: NullableStringFieldUpdateOperationsInput | string | null
     passwordResetExpiry?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-    refreshToken?: NullableStringFieldUpdateOperationsInput | string | null
+    accessToken?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     problems?: ProblemUncheckedUpdateManyWithoutUserNestedInput

@@ -154,7 +154,7 @@ const login = async (req, res) => {
       httpOnly: true,
       samesite: 'strict',
       secure: process.env.NODE_ENv !== 'development',
-      maxAge: 1000 * 60 * 5, // 5 minutes
+      maxAge: 1000 * 60 * 15, // 15 minutes
     };
 
     const RefreshCookieOptions = {
@@ -234,7 +234,7 @@ const TokenRefresh = async (req, res) => {
       httpOnly: true,
       samesite: 'strict',
       secure: process.env.NODE_ENv !== 'development',
-      maxAge: 1000 * 60 * 5, // 5 minutes
+      maxAge: 1000 * 60 * 15, // 15 minutes
     };
 
     const RefreshCookieOptions = {

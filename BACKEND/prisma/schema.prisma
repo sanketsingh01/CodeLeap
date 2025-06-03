@@ -32,11 +32,11 @@ model User {
   image               String?
   password            String
   role                userRole  @default(USER)
-  isVerified          Boolean   @default(false)
+  isVerified          Boolean   @default(true)
   verificationToken   String?
   passwordResetToken  String?
   passwordResetExpiry DateTime?
-  refreshToken        String?
+  accessToken        String?
   createdAt           DateTime  @default(now())
   updatedAt           DateTime  @updatedAt
 
