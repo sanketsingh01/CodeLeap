@@ -12,7 +12,10 @@ const LogoutButton = ({ children }) => {
   };
 
   return (
-    <button className="btn btn-primary" onClick={onLogout}>
+    <button
+      className="btn bg-[#F4FF54] text-black text-base font-semibold hover:bg-[#F4FF54]/80"
+      onClick={onLogout}
+    >
       {children}
     </button>
   );

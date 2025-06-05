@@ -1,7 +1,14 @@
 import React, { useState, useMemo } from "react";
 import { useAuthStore } from "../store/useAuthStore.js";
 import { Link } from "react-router-dom";
-import { Bookmark, PencilIcon, Trash, TrashIcon, Plus } from "lucide-react";
+import {
+  Bookmark,
+  PencilIcon,
+  Trash,
+  TrashIcon,
+  Plus,
+  Search,
+} from "lucide-react";
 const ProblemsTable = ({ problems }) => {
   const { authUser } = useAuthStore();
 
@@ -48,37 +55,42 @@ const ProblemsTable = ({ problems }) => {
   const handleAddToPlaylist = (id) => {};
 
   return (
-    <div className="w-full max-w-6xl mx-auto mt-15">
+    <div className="w-full max-w-7xl mx-auto mt-6 p-6">
+      {/* Header */}
       <div className="flex justify-between items-center mb-6">
-        <h2 className="text-2xl font-bold">Problems</h2>
-        <button className="btn btn-primary gap-2" onClick={() => {}}>
+        <h2 className="text-3xl font-bold text-white">All Problems</h2>
+        <button className="flex items-center gap-2 px-4 py-2 bg-[#F4FF54] text-black rounded-lg hover:bg-[#F4FF54]/80 transition cursor-pointer">
           <Plus className="w-4 h-4" />
           Create Playlist
         </button>
       </div>
 
-      <div className="flex flex-warp justify-between items-center mb-6 gap-4">
-        <input
-          type="text"
-          placeholder="Search by title"
-          className="input input-bordered w-full md:w-1/3 bg-base-200"
-          value={search}
-          onChange={(e) => setSearch(e.target.value)}
-        />
+      {/* Filters */}
+      <div className="grid md:grid-cols-4 sm:grid-cols-2 gap-4 mb-6">
+        <div className="relative">
+          <Search className="absolute left-3 top-2.5 w-5 h-5 text-gray-500" />
+          <input
+            type="text"
+            placeholder="Search problems"
+            className="pl-10 pr-4 py-2 w-full bg-zinc-800 text-white border border-zinc-700 rounded-lg focus:outline-none"
+            value={search}
+            onChange={(e) => setSearch(e.target.value)}
+          />
+        </div>
         <select
-          className="select select-bordered bg-base-200"
+          className="bg-zinc-800 text-white border border-zinc-700 rounded-lg px-4 py-2"
           value={difficulty}
           onChange={(e) => setDifficulty(e.target.value)}
         >
           <option value="ALL">All Difficulties</option>
-          {difficulties.map((diff) => (
-            <option key={diff} value={diff}>
-              {diff.charAt(0).toUpperCase() + diff.slice(1).toLowerCase()}
+          {difficulties.map((d) => (
+            <option key={d} value={d}>
+              {d[0] + d.slice(1).toLowerCase()}
             </option>
           ))}
         </select>
         <select
-          className="select select-bordered bg-base-200"
+          className="bg-zinc-800 text-white border border-zinc-700 rounded-lg px-4 py-2"
           value={selectedTag}
           onChange={(e) => setSelectedTag(e.target.value)}
         >
@@ -91,26 +103,27 @@ const ProblemsTable = ({ problems }) => {
         </select>
       </div>
 
-      <div className="overflow-x-auto rounded-xl shadow-md">
-        <table className="table table-zebra table-lg lg-base-200 text-base-content">
-          <thead className="bg-base-200">
+      {/* Table */}
+      <div className="overflow-x-auto rounded-lg border border-zinc-700">
+        <table className="min-w-full text-sm text-left text-white">
+          <thead className="bg-zinc-900 text-gray-400">
             <tr>
-              <th>Solved</th>
-              <th>Title</th>
-              <th>Tags</th>
-              <th>Difficulty</th>
-              <th>Actions</th>
+              <th className="px-4 py-3">Solved</th>
+              <th className="px-4 py-3">Title</th>
+              <th className="px-4 py-3">Tags</th>
+              <th className="px-4 py-3">Difficulty</th>
+              <th className="px-4 py-3">Actions</th>
             </tr>
           </thead>
-          <tbody>
-            {paginatedProblems.length > 0 ? (
+          <tbody className="divide-y divide-zinc-800">
+            {paginatedProblems.length ? (
               paginatedProblems.map((problem) => {
-                const isSolved = problem.solvedBy.some(
+                const isSolved = problem.solvedBy?.some(
                   (user) => user.userId === authUser?.id
                 );
                 return (
-                  <tr key={problem.id}>
-                    <td>
+                  <tr key={problem.id} className="hover:bg-zinc-800 transition">
+                    <td className="px-4 py-3">
                       <input
                         type="checkbox"
                         checked={isSolved}
@@ -118,62 +131,63 @@ const ProblemsTable = ({ problems }) => {
                         className="checkbox checkbox-sm"
                       />
                     </td>
-                    <td>
+                    <td className="px-4 py-3">
                       <Link
                         to={`/problem/${problem.id}`}
-                        className="font-semibold hover:underline"
+                        className="hover:underline font-medium text-sm cursor-pointer"
                       >
                         {problem.title}
                       </Link>
                     </td>
-                    <td>
+                    <td className="px-4 py-4">
                       <div className="flex flex-wrap gap-1">
-                        {(problem.tags || []).map((tag, idx) => (
+                        {problem.tags?.map((tag, idx) => (
                           <span
                             key={idx}
-                            className="badge badge-outline badge-warning text-xs font-bold"
+                            className="px-2 py-0.5 bg-yellow-500/10 text-yellow-400 text-sm rounded-full"
                           >
                             {tag}
                           </span>
                         ))}
                       </div>
                     </td>
-                    <td>
+                    <td className="px-4 py-4">
                       <span
-                        className={`badge font-semibold text-xs text-white ${
+                        className={`px-2 py-0.5 rounded-full text-sm font-bold ${
                           problem.difficulty === "EASY"
-                            ? "badge-success"
+                            ? "bg-green-500/10 text-green-400"
                             : problem.difficulty === "MEDIUM"
-                            ? "badge-warning"
-                            : "badge-error"
+                            ? "bg-yellow-500/10 text-yellow-400"
+                            : "bg-red-500/10 text-red-400"
                         }`}
                       >
                         {problem.difficulty}
                       </span>
                     </td>
-                    <td>
-                      <div className="flex flex-col md:flex-row gap-2 items-start md:items-center">
+                    <td className="px-4 py-3">
+                      <div className="flex flex-wrap gap-2">
                         {authUser?.role === "ADMIN" && (
-                          <div className="flex gap-2">
+                          <>
                             <button
                               onClick={() => handleDelete(problem.id)}
-                              className="btn btn-sm btn-error"
+                              className="p-1 rounded bg-red-500 hover:bg-red-600 cursor-pointer"
                             >
-                              <TrashIcon className="w-4 h-4 text-white" />
+                              <TrashIcon className="w-6 h-6 text-white" />
                             </button>
-                            <button disabled className="btn btn-sm btn-warning">
-                              <PencilIcon className="w-4 h-4 text-white" />
+                            <button
+                              disabled
+                              className="p-1 rounded bg-yellow-500 hover:bg-yellow-600 cursor-pointer"
+                            >
+                              <PencilIcon className="w-6 h-6 text-white" />
                             </button>
-                          </div>
+                          </>
                         )}
                         <button
-                          className="btn btn-sm btn-outline flex gap-2 items-center"
                           onClick={() => handleAddToPlaylist(problem.id)}
+                          className="px-2 py-1 flex items-center gap-1 border border-zinc-600 rounded hover:bg-zinc-700 cursor-pointer"
                         >
-                          <Bookmark className="w-4 h-4" />
-                          <span className="hidden sm:inline">
-                            Save to Playlist
-                          </span>
+                          <Bookmark className="w-6 h-6" />
+                          <span className="hidden sm:inline text-sm">Save</span>
                         </button>
                       </div>
                     </td>
@@ -182,7 +196,10 @@ const ProblemsTable = ({ problems }) => {
               })
             ) : (
               <tr>
-                <td colSpan={5} className="text-center py-6 text-gray-500">
+                <td
+                  colSpan={5}
+                  className="text-center py-6 text-gray-500 font-semibold"
+                >
                   No Problems Found.
                 </td>
               </tr>
@@ -191,19 +208,20 @@ const ProblemsTable = ({ problems }) => {
         </table>
       </div>
 
+      {/* Pagination */}
       <div className="flex justify-center mt-6 gap-2">
         <button
-          className="btn btn-sm"
+          className="btn btn-sm btn-outline"
           disabled={currentPage === 1}
           onClick={() => setCurrentPage((prev) => prev - 1)}
         >
           Prev
         </button>
         <span className="btn btn-ghost btn-sm">
-          {currentPage} / {totalPages}{" "}
+          {currentPage} / {totalPages}
         </span>
         <button
-          className="btn btn-sm"
+          className="btn btn-sm btn-outline"
           disabled={currentPage === totalPages}
           onClick={() => setCurrentPage((prev) => prev + 1)}
         >

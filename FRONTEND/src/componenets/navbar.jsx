@@ -131,7 +131,7 @@ export default function Navbar() {
                   <li>
                     <Link
                       to="/profile"
-                      className="hover:bg-primary hover:text-white text-base font-semibold"
+                      className="hover:bg-[#F4FF54] hover:text-black text-base font-semibold"
                     >
                       <User className="w-4 h-4 mr-2" />
                       My Profile
@@ -141,7 +141,7 @@ export default function Navbar() {
                     <li>
                       <Link
                         to="/add-problem"
-                        className="hover:bg-primary hover:text-white text-base font-semibold"
+                        className="hover:bg-[#F4FF54] hover:text-black text-base font-semibold"
                       >
                         <Code className="w-4 h-4 mr-1" />
                         Add Problem
@@ -149,7 +149,7 @@ export default function Navbar() {
                     </li>
                   )}
                   <li>
-                    <LogoutButton className="hover:bg-primary hover:text-white">
+                    <LogoutButton className="hover:bg-[#F4FF54]/80">
                       <LogOut className="w-4 h-4 mr-2" />
                       Logout
                     </LogoutButton>
