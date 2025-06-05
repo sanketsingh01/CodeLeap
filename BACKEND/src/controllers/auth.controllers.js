@@ -13,6 +13,7 @@ import {
   generateRefreshToken,
 } from '../utils/generateTokens.js';
 import jwt from 'jsonwebtoken';
+import { access } from 'fs';
 
 const register = async (req, res) => {
   const { name, email, password } = req.body;
@@ -50,10 +51,48 @@ const register = async (req, res) => {
       ),
     });
 
+    const accessToken = generateAccessToken(user);
+    const refreshToken = generateRefreshToken(user);
+
+    await db.user.update({
+      where: {
+        id: user.id,
+      },
+      data: {
+        accessToken,
+        refreshToken,
+      },
+    });
+
+    const AccessCookieOptions = {
+      httpOnly: true,
+      samesite: 'strict',
+      secure: process.env.NODE_ENv !== 'development',
+      maxAge: 1000 * 60 * 15, // 15 minutes
+    };
+
+    const RefreshCookieOptions = {
+      httpOnly: true,
+      samesite: 'strict',
+      secure: process.env.NODE_ENv !== 'development',
+      maxAge: 1000 * 60 * 60 * 24 * 7, // 7 days
+    };
+
+    res.cookie('accessToken', accessToken, AccessCookieOptions);
+    res.cookie('refreshToken', refreshToken, RefreshCookieOptions);
+
     console.log(user);
+    const registerUser = {
+      id: user.id,
+      name: user.name,
+      email: user.email,
+      role: user.role,
+      image: user.image,
+      accessToken: user.accessToken,
+    };
     res
       .status(201)
-      .json(new ApiResponse(200, user, 'User registered successfully'));
+      .json(new ApiResponse(200, registerUser, 'User registered successfully'));
   } catch (error) {
     console.log(error);
     return res
@@ -146,6 +185,7 @@ const login = async (req, res) => {
         id: user.id,
       },
       data: {
+        accessToken,
         refreshToken,
       },
     });
@@ -174,6 +214,7 @@ const login = async (req, res) => {
       email: user.email,
       role: user.role,
       image: user.image,
+      accessToken: user.accessToken,
     };
     res
       .status(200)
@@ -226,6 +267,7 @@ const TokenRefresh = async (req, res) => {
         id: user.id,
       },
       data: {
+        accessToken: newAccessToken,
         refreshToken: newRefreshToken,
       },
     });
@@ -248,9 +290,20 @@ const TokenRefresh = async (req, res) => {
     res.cookie('refreshToken', newRefreshToken, RefreshCookieOptions);
 
     console.log(user);
+    const RefreshedUser = {
+      id: user.id,
+      name: user.name,
+      email: user.email,
+      role: user.role,
+      image: user.image,
+      accessToken: user.accessToken,
+      refreshToken: user.refreshToken,
+    };
     res
       .status(200)
-      .json(new ApiResponse(200, user, 'Tokens refreshed successfully'));
+      .json(
+        new ApiResponse(200, RefreshedUser, 'Tokens refreshed successfully'),
+      );
   } catch (error) {
     console.log(error);
     return res.status(400).json(new ApiError(400, error.message));
@@ -275,6 +328,7 @@ const logout = async (req, res) => {
         id: req.user.id,
       },
       data: {
+        accessToken: null,
         refreshToken: null,
       },
     });

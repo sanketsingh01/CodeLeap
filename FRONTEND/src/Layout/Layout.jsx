@@ -16,11 +16,21 @@ import AddProblem from "../pages/AddProblem.jsx";
 import ProblemPage from "../pages/ProblemPage.jsx";
 
 const Layout = () => {
-  const { authUser, checkAuth, isCheckingAuth } = useAuthStore();
+  const { authUser, checkAuth, isCheckingAuth, refreshToken } = useAuthStore();
 
   useEffect(() => {
     checkAuth();
   }, [checkAuth]);
+
+  useEffect(() => {
+    checkAuth();
+
+    const interval = setInterval(() => {
+      refreshToken();
+    }, 1000 * 60 * 3);
+
+    return () => clearInterval(interval);
+  }, []);
 
   if (isCheckingAuth && !authUser) {
     return (

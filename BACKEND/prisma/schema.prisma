@@ -36,7 +36,8 @@ model User {
   verificationToken   String?
   passwordResetToken  String?
   passwordResetExpiry DateTime?
-  accessToken        String?
+  accessToken         String?
+  refreshToken        String?
   createdAt           DateTime  @default(now())
   updatedAt           DateTime  @updatedAt
 

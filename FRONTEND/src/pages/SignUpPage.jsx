@@ -36,36 +36,36 @@ const SignUpPage = () => {
   };
 
   return (
-    <div className="h-screen grid lg:grid-cols-2">
-      <div className="flex flex-col justify-center items-center p-6 sm:p-12">
-        <div className="w-full max-w-md space-y-8">
-          {/* Logo */}
-          <div className="text-center mb-8">
-            <div className="flex flex-col items-center gap-2 group">
-              <div className="w-12 h-12 rounded-xl bg-primary/10 flex items-center justify-center group-hover:bg-primary/20 transition-colors">
-                <Code className="w-6 h-6 text-primary" />
+    <div className="min-h-screen grid grid-cols-1 lg:grid-cols-1 text-white">
+      <div className="flex flex-col justify-center items-center px-6 py-12 lg:px-20">
+        <div className="w-full max-w-lg space-y-10">
+          <div className="text-center">
+            <div className="flex flex-col items-center gap-3">
+              <div className="w-14 h-14 bg-primary/20 rounded-2xl flex items-center justify-center">
+                <Code className="w-7 h-7 text-[#F4FF54]" />
               </div>
-              <h1 className="text-2xl font-bold mt-2">Welcome </h1>
-              <p className="text-base-content/60">Sign Up to your account</p>
+              <h1 className="text-4xl font-extrabold tracking-tight">
+                Welcome
+              </h1>
+              <p className="text-base text-gray-400">
+                Create your account below
+              </p>
             </div>
           </div>
 
-          {/* Form */}
-          <form onSubmit={handleSubmit(onSubmit)} className="space-y-6">
-            {/* name */}
-            <div className="form-control">
-              <label className="label">
-                <span className="label-text font-medium">Name</span>
-              </label>
+          <form
+            onSubmit={handleSubmit(onSubmit)}
+            className="bg-zinc-900 p-6 rounded-2xl shadow-lg space-y-6"
+          >
+            <div>
+              <label className="block mb-2 text-sm font-medium">Name</label>
               <div className="relative">
-                <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
-                  <Code className="h-5 w-5 text-base-content/40" />
-                </div>
+                <Code className="absolute left-3 top-1/2 transform -translate-y-1/2 text-zinc-500 w-5 h-5" />
                 <input
                   type="text"
                   {...register("name")}
-                  className={`input input-bordered w-full pl-10 ${
-                    errors.name ? "input-error" : ""
+                  className={`w-full pl-10 py-2 bg-zinc-800 text-white rounded-lg border focus:outline-none focus:ring-2 focus:ring-[#F4FF54]/50 transition ${
+                    errors.name ? "border-red-500" : "border-zinc-700"
                   }`}
                   placeholder="John Doe"
                 />
@@ -77,20 +77,15 @@ const SignUpPage = () => {
               )}
             </div>
 
-            {/* Email */}
-            <div className="form-control">
-              <label className="label">
-                <span className="label-text font-medium">Email</span>
-              </label>
+            <div>
+              <label className="block mb-2 text-sm font-medium">Email</label>
               <div className="relative">
-                <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
-                  <Mail className="h-5 w-5 text-base-content/40" />
-                </div>
+                <Mail className="absolute left-3 top-1/2 transform -translate-y-1/2 text-zinc-500 w-5 h-5" />
                 <input
                   type="email"
                   {...register("email")}
-                  className={`input input-bordered w-full pl-10 ${
-                    errors.email ? "input-error" : ""
+                  className={`w-full pl-10 py-2 bg-zinc-800 text-white rounded-lg border focus:outline-none focus:ring-2 focus:ring-[#F4FF54]/50 transition ${
+                    errors.email ? "border-red-500" : "border-zinc-700"
                   }`}
                   placeholder="you@example.com"
                 />
@@ -102,32 +97,29 @@ const SignUpPage = () => {
               )}
             </div>
 
-            {/* Password */}
-            <div className="form-control">
-              <label className="label">
-                <span className="label-text font-medium">Password</span>
+            <div>
+              <label className="block mb-2 text-sm font-medium">
+                Set Password
               </label>
               <div className="relative">
-                <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
-                  <Lock className="h-5 w-5 text-base-content/40" />
-                </div>
+                <Lock className="absolute left-3 top-1/2 transform -translate-y-1/2 text-zinc-500 w-5 h-5" />
                 <input
                   type={showPassword ? "text" : "password"}
                   {...register("password")}
-                  className={`input input-bordered w-full pl-10 ${
-                    errors.password ? "input-error" : ""
+                  className={`w-full pl-10 pr-10 py-2 bg-zinc-800 text-white rounded-lg border focus:outline-none focus:ring-2 focus:ring-[#F4FF54]/50 transition ${
+                    errors.password ? "border-red-500" : "border-zinc-700"
                   }`}
                   placeholder="••••••••"
                 />
                 <button
                   type="button"
-                  className="absolute inset-y-0 right-0 pr-3 flex items-center"
+                  className="absolute right-3 top-1/2 transform -translate-y-1/2 text-zinc-500"
                   onClick={() => setShowPassword(!showPassword)}
                 >
                   {showPassword ? (
-                    <EyeOff className="h-5 w-5 text-base-content/40" />
+                    <EyeOff className="w-5 h-5" />
                   ) : (
-                    <Eye className="h-5 w-5 text-base-content/40" />
+                    <Eye className="w-5 h-5" />
                   )}
                 </button>
               </div>
@@ -138,39 +130,34 @@ const SignUpPage = () => {
               )}
             </div>
 
-            {/* Submit Button */}
             <button
               type="submit"
-              className="btn btn-primary w-full"
+              className="w-full py-2 rounded-lg font-semibold bg-[#F4FF54] text-black hover:bg-[#F4FF54]/90 transition flex items-center justify-center gap-2"
               disabled={isSigninUp}
             >
               {isSigninUp ? (
                 <>
-                  <Loader2 className="h-5 w-5 animate-spin" />
-                  Loading...
+                  <Loader2 className="h-5 w-5 animate-spin" /> Loading...
                 </>
               ) : (
-                "Sign in"
+                "Sign Up"
               )}
             </button>
           </form>
 
-          {/* Footer */}
-          <div className="text-center">
-            <p className="text-base-content/60">
-              Already have an account?{" "}
-              <Link to="/login" className="link link-primary">
-                Sign in
-              </Link>
-            </p>
-          </div>
+          <p className="text-center text-base text-gray-400">
+            Already have an account?{" "}
+            <Link to="/login" className="text-[#F4FF54] hover:underline">
+              Sign in
+            </Link>
+          </p>
         </div>
       </div>
 
-      <AuthImagePattern
-        title="Welcome to CodeLeap"
-        subtitle="Sign Up to your account to expplore the power of CodeLeap"
-      />
+      {/* <AuthImagePattern
+        title={"Welcome to CodeLeap"}
+        subtitle={"Create your account to explore the power of CodeLeap."}
+      /> */}
     </div>
   );
 };
