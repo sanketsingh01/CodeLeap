@@ -16,11 +16,20 @@ import {
 import { useProblemStore } from "../store/useProblemStore.js";
 import { useExecutionStore } from "../store/useExecutionStore.js";
 import { getLanguageId } from "../lib/lang.js";
+import { useSubmissionStore } from "../store/useSubmissionStore.js";
 import SubmissionResults from "../componenets/Submission.jsx";
+import SubmissionList from "../componenets/SubmissionList.jsx";
 
 const ProblemPage = () => {
   const { id } = useParams();
   const { getProblemById, problem, isProblemLoading } = useProblemStore();
+  const {
+    submission: submissions,
+    isLoading: isSubmissionsLoading,
+    getSubmissionForProblem,
+    getSubmissionCountForProblem,
+    submissionCount,
+  } = useSubmissionStore();
   const [code, setCode] = useState("");
   const [activeTab, setActiveTab] = useState("description");
   const [selectedLanguage, setSelectedLanguage] = useState("javascript");
@@ -30,10 +39,9 @@ const ProblemPage = () => {
 
   const { executeCode, submission, isExecuting } = useExecutionStore();
 
-  const submissionCount = 10;
-
   useEffect(() => {
     getProblemById(id);
+    getSubmissionCountForProblem(id);
   }, [id]);
 
   useEffect(() => {
@@ -49,7 +57,14 @@ const ProblemPage = () => {
     }
   }, [problem, selectedLanguage]);
 
-  console.log("Problem: ", problem);
+  useEffect(() => {
+    if (activeTab === "submissions" && id) {
+      getSubmissionForProblem(id);
+    }
+  }, [activeTab, id]);
+
+  console.log("SUbmission: ", submissions);
+
   const handleLanguageChange = (e) => {
     const language = e.target.value;
     setSelectedLanguage(language);
@@ -197,7 +212,7 @@ const ProblemPage = () => {
           </button>
           <select
             value={selectedLanguage}
-            onChange={(e) => setSelectedLanguage(e.target.value)}
+            onChange={handleLanguageChange}
             className="select select-bordered select-base w-40 bg-zinc-800 border-zinc-600 text-white"
           >
             {Object.keys(problem.codeSnippet || {}).map((lang) => (
@@ -264,15 +279,14 @@ const ProblemPage = () => {
           )}
 
           {activeTab === "submissions" && (
-            // return (
-            //   <SubmissionsList
-            //     submissions={submissions}
-            //     isLoading={isSubmissionsLoading}
-            //   />
-            // );
-            <div className="p-4 text-center text-base-content/70">
-              No Submissions yet
-            </div>
+            <SubmissionList
+              submissions={submissions}
+              isLoading={isSubmissionsLoading}
+            />
+
+            // <div className="p-4 text-center text-base-content/70">
+            //   No Submissions yet
+            // </div>
           )}
 
           {activeTab === "discussion" && (

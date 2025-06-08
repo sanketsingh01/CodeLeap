@@ -8,7 +8,13 @@ import {
   TrashIcon,
   Plus,
   Search,
+  Loader,
 } from "lucide-react";
+
+import { useAction } from "../store/useAction.js";
+import { usePlaylistStore } from "../store/usePlaylistStore.js";
+import CreatePlaylistModal from "./CreatePlaylistModal.jsx";
+import AddtoPlaylist from "./AddtoPlaylist.jsx";
 const ProblemsTable = ({ problems }) => {
   const { authUser } = useAuthStore();
 
@@ -16,6 +22,16 @@ const ProblemsTable = ({ problems }) => {
   const [difficulty, setDifficulty] = useState("ALL");
   const [selectedTag, setSelectedTag] = useState("ALL");
   const [currentPage, setCurrentPage] = useState(1);
+  const [showConfirmModal, setShowConfirmModal] = useState(false);
+  const [problemToDelete, setProblemToDelete] = useState(null);
+  const [isCreateModalOpen, setIsCreateModalOpen] = useState(false);
+  const [isAddToPlaylistModalOpen, setIsAddToPlaylistModalOpen] =
+    useState(false);
+  const [selectedProblemId, setSelectedProblemId] = useState(null);
+
+  const { createPlaylist } = usePlaylistStore();
+
+  const { isDeletingProblem, onDeleteProblem } = useAction();
 
   const difficulties = ["EASY", "MEDIUM", "HARD"];
   const alltags = useMemo(() => {
@@ -50,16 +66,54 @@ const ProblemsTable = ({ problems }) => {
     );
   }, [filteredProblems, currentPage]);
 
-  const handleDelete = (id) => {};
+  const solvedProblems = useMemo(() => {
+    return (problems || []).filter((problem) =>
+      problem.solvedBy?.some((user) => user.userId === authUser?.id)
+    );
+  }, [problems, authUser]);
 
-  const handleAddToPlaylist = (id) => {};
+  console.log("solvedProblems: ", solvedProblems);
+
+  const solvedStats = useMemo(() => {
+    const stats = { EASY: 0, MEDIUM: 0, HARD: 0 };
+    solvedProblems.forEach((problem) => {
+      stats[problem.difficulty] += 1;
+    });
+    return stats;
+  }, [solvedProblems]);
+
+  const openConfirmModal = (id) => {
+    setProblemToDelete(id);
+    setShowConfirmModal(true);
+  };
+
+  const confirmDelete = () => {
+    if (problemToDelete) {
+      onDeleteProblem(problemToDelete);
+      setShowConfirmModal(false);
+      setProblemToDelete(null);
+    }
+  };
+
+  const handleAddToPlaylist = (problemId) => {
+    setSelectedProblemId(problemId);
+    console.log("SelectedProblems: ", selectedProblemId);
+    setIsAddToPlaylistModalOpen(true);
+  };
+
+  const handleCreatePlaylist = async (data) => {
+    await createPlaylist(data);
+  };
 
   return (
     <div className="w-full max-w-7xl mx-auto mt-6 p-6">
       {/* Header */}
       <div className="flex justify-between items-center mb-6">
         <h2 className="text-3xl font-bold text-white">All Problems</h2>
-        <button className="flex items-center gap-2 px-4 py-2 bg-[#F4FF54] text-black rounded-lg hover:bg-[#F4FF54]/80 transition cursor-pointer">
+        <button
+          className="flex items-center gap-2 px-4 py-2 bg-[#F4FF54] text-black rounded-lg hover:bg-[#F4FF54]/80 transition cursor-pointer"
+          onClick={() => setIsCreateModalOpen(true)}
+        >
           <Plus className="w-4 h-4" />
           Create Playlist
         </button>
@@ -101,6 +155,27 @@ const ProblemsTable = ({ problems }) => {
             </option>
           ))}
         </select>
+      </div>
+
+      <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-6">
+        <div className="p-4 bg-green-900 text-green-300 rounded-lg">
+          <h4 className="text-lg font-bold">Easy Solved</h4>
+          <p className="text-2xl">{solvedStats.EASY}</p>
+        </div>
+        <div className="p-4 bg-yellow-900 text-yellow-300 rounded-lg">
+          <h4 className="text-lg font-bold">Medium Solved</h4>
+          <p className="text-2xl">{solvedStats.MEDIUM}</p>
+        </div>
+        <div className="p-4 bg-red-900 text-red-300 rounded-lg">
+          <h4 className="text-lg font-bold">Hard Solved</h4>
+          <p className="text-2xl">{solvedStats.HARD}</p>
+        </div>
+        <div className="p-4 bg-zinc-800 text-white rounded-lg">
+          <h4 className="text-lg font-bold">Total Solved</h4>
+          <p className="text-2xl">
+            {solvedStats.EASY + solvedStats.MEDIUM + solvedStats.HARD}
+          </p>
+        </div>
       </div>
 
       {/* Table */}
@@ -169,10 +244,14 @@ const ProblemsTable = ({ problems }) => {
                         {authUser?.role === "ADMIN" && (
                           <>
                             <button
-                              onClick={() => handleDelete(problem.id)}
+                              onClick={() => openConfirmModal(problem.id)}
                               className="p-1 rounded bg-red-500 hover:bg-red-600 cursor-pointer"
                             >
-                              <TrashIcon className="w-6 h-6 text-white" />
+                              {isDeletingProblem ? (
+                                <Loader className="animate-spin h-4 w-4" />
+                              ) : (
+                                <TrashIcon className="w-6 h-6 text-white" />
+                              )}
                             </button>
                             <button
                               disabled
@@ -227,7 +306,45 @@ const ProblemsTable = ({ problems }) => {
         >
           Next
         </button>
+
+        {showConfirmModal && (
+          <div className="fixed inset-0 bg-black/70 backdrop-blur-sm flex items-center justify-center z-50">
+            <div className="bg-zinc-900 rounded-lg p-6 w-[90%] max-w-md border border-zinc-700 text-white">
+              <h3 className="text-xl font-semibold mb-4">Delete Problem?</h3>
+              <p className="text-zinc-400 mb-6">
+                Are you sure you want to delete this problem? This action cannot
+                be undone.
+              </p>
+              <div className="flex justify-end gap-3">
+                <button
+                  onClick={() => setShowConfirmModal(false)}
+                  className="px-4 py-2 bg-zinc-700 hover:bg-zinc-600 rounded"
+                >
+                  Cancel
+                </button>
+                <button
+                  onClick={confirmDelete}
+                  className="px-4 py-2 bg-red-600 hover:bg-red-700 rounded"
+                >
+                  Yes, Delete
+                </button>
+              </div>
+            </div>
+          </div>
+        )}
       </div>
+
+      <CreatePlaylistModal
+        isOpen={isCreateModalOpen}
+        onClose={() => setIsCreateModalOpen(false)}
+        onSubmit={handleCreatePlaylist}
+      />
+
+      <AddtoPlaylist
+        isOpen={isAddToPlaylistModalOpen}
+        onClose={() => setIsAddToPlaylistModalOpen(false)}
+        problemId={selectedProblemId}
+      />
     </div>
   );
 };

@@ -1,5 +1,13 @@
 import React, { useState } from "react";
-import { ArrowUpRight, Menu, X, User, Code, LogOut } from "lucide-react";
+import {
+  ArrowUpRight,
+  Menu,
+  X,
+  User,
+  Code,
+  LogOut,
+  DockIcon,
+} from "lucide-react";
 import { motion } from "motion/react";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import "../index.css";
@@ -135,6 +143,15 @@ export default function Navbar() {
                     >
                       <User className="w-4 h-4 mr-2" />
                       My Profile
+                    </Link>
+                  </li>
+                  <li>
+                    <Link
+                      to="/Playlists"
+                      className="hover:bg-[#F4FF54] hover:text-black text-base font-semibold"
+                    >
+                      <DockIcon className="w-4 h-4 mr-2" />
+                      My Playlists
                     </Link>
                   </li>
                   {authUser?.role === "ADMIN" && (
