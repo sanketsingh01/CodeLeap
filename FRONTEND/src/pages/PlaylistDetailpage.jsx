@@ -20,19 +20,18 @@ const PlaylistDetailsPage = () => {
     getAllProblems();
   }, [getAllProblems]);
 
-  if (!currentPlaylist)
-    return (
-      <div className="text-white p-6 mt-10">
-        <Loader2 className="animate-spin" />"
-      </div>
-    );
-
-  console.log("Current Playlist: ", currentPlaylist);
+  // if (!currentPlaylist)
+  //   return (
+  //     <div className="text-white p-6 mt-17 flex items-center justify-center">
+  //       <Loader2 className="animate-spin" /> Loading"
+  //     </div>
+  //   );
 
   // Derive the solved status based on authUser
   const solvedProblems = useMemo(() => {
-    return (problems || []).filter((problem) =>
-      problem.solvedBy?.some((user) => user.userId === authUser?.id)
+    if (!authUser || !problems) return [];
+    return problems.filter((problem) =>
+      problem.solvedBy?.some((user) => user.userId === authUser.id)
     );
   }, [problems, authUser]);
 
@@ -41,30 +40,23 @@ const PlaylistDetailsPage = () => {
     else console.log(null);
   });
 
-  console.log("Auth User: ", authUser.id);
-
-  console.log("Solved problems: ", solvedProblems);
-
   const problemsWithSolved = useMemo(() => {
-    if (!currentPlaylist?.problems || !solvedProblems) return [];
-
-    return currentPlaylist.problems.map((p) => {
-      const isSolved = solvedProblems.some(
-        (solved) => solved.id === p.problem.id
-      );
-
-      return {
-        ...p,
-        solved: isSolved,
-      };
-    });
+    if (!currentPlaylist?.problems) return [];
+    return currentPlaylist.problems.map((p) => ({
+      ...p,
+      solved: solvedProblems.some((sp) => sp.id === p.problem.id),
+    }));
   }, [currentPlaylist, solvedProblems]);
 
   const solved = problemsWithSolved.filter((p) => p.solved).length;
   const total = problemsWithSolved.length;
   const solvedPercent = total ? Math.floor((solved / total) * 100) : 0;
 
-  return (
+  return !currentPlaylist ? (
+    <div className="text-white p-6 mt-17 flex items-center justify-center">
+      <Loader2 className="animate-spin" /> Loading
+    </div>
+  ) : (
     <div className="min-h-screen py-20 px-4 text-white mt-10">
       <div className="max-w-6xl mx-auto space-y-5">
         {/* Header */}

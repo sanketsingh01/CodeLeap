@@ -9,8 +9,14 @@ import { db } from '../libs/db.js';
 
 export const executeCode = async (req, res) => {
   try {
-    const { sourceCode, language_id, stdin, expectedOutputs, problemId } =
-      req.body;
+    const {
+      sourceCode,
+      language_id,
+      stdin,
+      expectedOutputs,
+      problemId,
+      store, // true for "Submit", false for "Run"
+    } = req.body;
 
     const userId = req.user.id;
 
@@ -25,6 +31,7 @@ export const executeCode = async (req, res) => {
         .json(new ApiError(400, 'Invalid or Missing testcases'));
     }
 
+    // Prepare Judge0 submissions
     const Submissions = stdin.map((input) => ({
       source_code: sourceCode,
       language_id,
@@ -32,19 +39,15 @@ export const executeCode = async (req, res) => {
     }));
 
     const submitResponse = await submitBatch(Submissions);
-
     const tokens = submitResponse.map((r) => r.token);
-
     const results = await pollBatchResults(tokens);
-    console.log('Response------------');
-    console.log(results);
 
     let allPassed = true;
+
     const detailedResults = results.map((result, index) => {
-      const stdout = result.stdout.trim();
+      const stdout = result.stdout?.trim();
       const expected_output = expectedOutputs[index]?.trim();
       const passed = stdout === expected_output;
-
       if (!passed) allPassed = false;
 
       return {
@@ -58,97 +61,106 @@ export const executeCode = async (req, res) => {
         memory: result.memory ? `${result.memory} KB` : undefined,
         time: result.time ? `${result.time} s` : undefined,
       };
-
-      // console.log(`testCase #${index + 1}`);
-      // console.log(`Input for Testcase #${index + 1}: ${stdin[index]}`);
-      // console.log(
-      //   `Expected Output for Testcase #${index + 1}: ${expected_output}`,
-      // );
-      // console.log(`Actual Output for Testcase #${index + 1}: ${stdout}`);
-
-      // console.log(`Matched for Testcase #${index + 1}: ${passed}`);
     });
 
-    console.log(detailedResults);
+    let submissionWithTestCase;
 
-    // store submission summary
-    const submission = await db.submission.create({
-      data: {
-        userId,
-        problemId,
-        sourceCode: sourceCode,
-        language: getLanguageName(language_id),
-        stdin: stdin.join('\n'),
-        stdout: JSON.stringify(detailedResults.map((r) => r.stdout)),
-        stderr: detailedResults.some((r) => r.stderr)
-          ? JSON.stringify(detailedResults.map((r) => r.stderr))
-          : null,
-        compileOutput: detailedResults.some((r) => r.compileOutput)
-          ? JSON.stringify(detailedResults.map((r) => r.compileOutput))
-          : null,
-        status: allPassed ? 'Accepted' : 'Wrong Answer',
-        memory: detailedResults.some((r) => r.memory)
-          ? JSON.stringify(detailedResults.map((r) => r.memory))
-          : null,
-        time: detailedResults.some((r) => r.time)
-          ? JSON.stringify(detailedResults.map((r) => r.time))
-          : null,
-      },
-    });
+    // Handle "Submit Code" (store === true)
+    if (store) {
+      const submission = await db.submission.create({
+        data: {
+          userId,
+          problemId,
+          sourceCode: sourceCode,
+          language: getLanguageName(language_id),
+          stdin: stdin.join('\n'),
+          stdout: JSON.stringify(detailedResults.map((r) => r.stdout)),
+          stderr: detailedResults.some((r) => r.stderr)
+            ? JSON.stringify(detailedResults.map((r) => r.stderr))
+            : null,
+          compileOutput: detailedResults.some((r) => r.compileOutput)
+            ? JSON.stringify(detailedResults.map((r) => r.compileOutput))
+            : null,
+          status: allPassed ? 'Accepted' : 'Wrong Answer',
+          memory: detailedResults.some((r) => r.memory)
+            ? JSON.stringify(detailedResults.map((r) => r.memory))
+            : null,
+          time: detailedResults.some((r) => r.time)
+            ? JSON.stringify(detailedResults.map((r) => r.time))
+            : null,
+        },
+      });
 
-    if (allPassed) {
-      await db.problemSolved.upsert({
-        where: {
-          userId_problemId: {
+      // Save test case results in DB
+      await db.testCaseResult.createMany({
+        data: detailedResults.map((result) => ({
+          submissionId: submission.id,
+          testcase: result.testcase,
+          passed: result.passed,
+          stdout: result.stdout,
+          expected: result.expected,
+          stderr: result.stderr,
+          compileOutput: result.compileOutput,
+          status: result.status,
+          memory: result.memory,
+          time: result.time,
+        })),
+      });
+
+      // Mark problem as solved if passed
+      if (allPassed) {
+        await db.problemSolved.upsert({
+          where: {
+            userId_problemId: {
+              userId,
+              problemId,
+            },
+          },
+          update: {},
+          create: {
             userId,
             problemId,
           },
-        },
-        update: {},
-        create: {
-          userId,
-          problemId,
-        },
-      });
+        });
+      }
+
+      // Include testcases in response
+      submissionWithTestCase = {
+        ...submission,
+        testcases: detailedResults,
+      };
+    } else {
+      // "Run Code" only — no DB write
+      submissionWithTestCase = {
+        id: null, // no DB id
+        sourceCode,
+        language: getLanguageName(language_id),
+        status: allPassed ? 'Accepted' : 'Wrong Answer',
+        memory: JSON.stringify(detailedResults.map((r) => r.memory)),
+        time: JSON.stringify(detailedResults.map((r) => r.time)),
+        testcases: detailedResults,
+      };
     }
 
-    const testCaseResults = detailedResults.map((result) => ({
-      submissionId: submission.id,
-      testcase: result.testcase,
-      passed: result.passed,
-      stdout: result.stdout,
-      expected: result.expected,
-      stderr: result.stderr,
-      compileOutput: result.compileOutput,
-      status: result.status,
-      memory: result.memory,
-      time: result.time,
-    }));
-
-    await db.testCaseResult.createMany({
-      data: testCaseResults,
-    });
-
-    const submissionWithTestCase = await db.submission.findUnique({
-      where: {
-        id: submission.id,
-      },
-      include: {
-        testcases: true,
-      },
-    });
-
-    res
-      .status(200)
-      .json(
-        new ApiResponse(
-          200,
-          submissionWithTestCase,
-          'Code Executed Successfully',
-        ),
-      );
+    if (store) {
+      res
+        .status(200)
+        .json(
+          new ApiResponse(
+            200,
+            submissionWithTestCase,
+            'Code Submitted Successfully',
+          ),
+        );
+    } else {
+      res
+        .status(200)
+        .json(
+          new ApiResponse(200, submissionWithTestCase, 'Code Run Successfully'),
+        );
+    }
   } catch (error) {
-    console.log(error);
+    console.error(error);
     return res.status(400).json(new ApiError(400, error.message));
   }
 };

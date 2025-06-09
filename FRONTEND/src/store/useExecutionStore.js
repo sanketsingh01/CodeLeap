@@ -11,7 +11,8 @@ export const useExecutionStore = create((set) => ({
     language_id,
     stdin,
     expectedOutputs,
-    problemId
+    problemId,
+    store
   ) => {
     try {
       set({ isExecuting: true });
@@ -23,6 +24,7 @@ export const useExecutionStore = create((set) => ({
           stdin,
           expectedOutputs,
           problemId,
+          store,
         })
       );
 
@@ -32,6 +34,7 @@ export const useExecutionStore = create((set) => ({
         stdin,
         expectedOutputs,
         problemId,
+        store,
       });
 
       set({ submission: response.data.Data });
@@ -43,4 +46,6 @@ export const useExecutionStore = create((set) => ({
       set({ isExecuting: false });
     }
   },
+
+  clearSubmission: () => set({ submission: null }),
 }));
