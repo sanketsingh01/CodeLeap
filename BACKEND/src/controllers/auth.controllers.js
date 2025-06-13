@@ -13,7 +13,7 @@ import {
   generateRefreshToken,
 } from '../utils/generateTokens.js';
 import jwt from 'jsonwebtoken';
-import { access } from 'fs';
+import dayjs from 'dayjs';
 
 const register = async (req, res) => {
   const { name, email, password } = req.body;
@@ -177,6 +177,35 @@ const login = async (req, res) => {
       throw new ApiError(401, 'User is not verified');
     }
 
+    const today = dayjs().startOf('day');
+    const lastlogin = user.lastloginDate
+      ? dayjs(user.lastloginDate).startOf('day')
+      : null;
+    const todayStr = dayjs().format('YYYY-MM-DD');
+    const loginMap = user.loginMap || {};
+
+    let streakCount = 1;
+    let longestStreak = user.longestCount || 0;
+
+    const oneYearAgo = dayjs().subtract(365, 'day').format('YYYY-MM-DD');
+    const newLoginMap = Object.fromEntries(
+      Object.entries(loginMap).filter(([date]) => date >= oneYearAgo),
+    );
+
+    // Mark today's login
+    newLoginMap[todayStr] = true;
+
+    if (lastlogin) {
+      const diff = today.diff(lastlogin, 'day');
+      if (diff === 1) {
+        streakCount = user.streakCount + 1;
+        longestStreak = Math.max(longestStreak, streakCount);
+      } else if (diff === 0) {
+        streakCount = user.streakCount;
+        longestStreak = user.longestCount;
+      }
+    }
+
     const accessToken = generateAccessToken(user);
     const refreshToken = generateRefreshToken(user);
 
@@ -187,6 +216,10 @@ const login = async (req, res) => {
       data: {
         accessToken,
         refreshToken,
+        lastloginDate: new Date(),
+        streakCount,
+        longestCount: longestStreak,
+        loginMap: newLoginMap,
       },
     });
 
@@ -215,6 +248,8 @@ const login = async (req, res) => {
       role: user.role,
       image: user.image,
       accessToken: user.accessToken,
+      streakCount: user.streakCount,
+      longestCount: user.longestCount,
     };
     res
       .status(200)

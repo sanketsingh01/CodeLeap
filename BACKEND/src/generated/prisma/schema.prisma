@@ -38,8 +38,12 @@ model User {
   passwordResetExpiry DateTime?
   accessToken         String?
   refreshToken        String?
+  lastloginDate       DateTime?
+  streakCount         Int       @default(0)
+  longestCount        Int       @default(0)
   createdAt           DateTime  @default(now())
   updatedAt           DateTime  @updatedAt
+  loginMap            Json?
 
   problems      Problem[]
   submission    Submission[]

@@ -133,8 +133,12 @@ exports.Prisma.UserScalarFieldEnum = {
   passwordResetExpiry: 'passwordResetExpiry',
   accessToken: 'accessToken',
   refreshToken: 'refreshToken',
+  lastloginDate: 'lastloginDate',
+  streakCount: 'streakCount',
+  longestCount: 'longestCount',
   createdAt: 'createdAt',
-  updatedAt: 'updatedAt'
+  updatedAt: 'updatedAt',
+  loginMap: 'loginMap'
 };
 
 exports.Prisma.ProblemScalarFieldEnum = {
@@ -218,6 +222,11 @@ exports.Prisma.SortOrder = {
   desc: 'desc'
 };
 
+exports.Prisma.NullableJsonNullValueInput = {
+  DbNull: Prisma.DbNull,
+  JsonNull: Prisma.JsonNull
+};
+
 exports.Prisma.JsonNullValueInput = {
   JsonNull: Prisma.JsonNull
 };
@@ -227,15 +236,15 @@ exports.Prisma.QueryMode = {
   insensitive: 'insensitive'
 };
 
-exports.Prisma.NullsOrder = {
-  first: 'first',
-  last: 'last'
-};
-
 exports.Prisma.JsonNullValueFilter = {
   DbNull: Prisma.DbNull,
   JsonNull: Prisma.JsonNull,
   AnyNull: Prisma.AnyNull
+};
+
+exports.Prisma.NullsOrder = {
+  first: 'first',
+  last: 'last'
 };
 exports.userRole = exports.$Enums.userRole = {
   ADMIN: 'ADMIN',

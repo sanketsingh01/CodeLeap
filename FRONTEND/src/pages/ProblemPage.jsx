@@ -227,7 +227,7 @@ const ProblemPage = () => {
 
           {activeTab === "description" && (
             <div className="prose prose-invert max-w-none">
-              <h3 className="text-lg frot-semibold mb-1">Examples:</h3>
+              <h3 className="text-lg frot-semibold mb-1">Description:</h3>
               <p>{problem.description}</p>
               {problem.examples && (
                 <div className="mt-4">

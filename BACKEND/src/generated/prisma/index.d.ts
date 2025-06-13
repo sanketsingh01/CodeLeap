@@ -1619,8 +1619,20 @@ export namespace Prisma {
 
   export type AggregateUser = {
     _count: UserCountAggregateOutputType | null
+    _avg: UserAvgAggregateOutputType | null
+    _sum: UserSumAggregateOutputType | null
     _min: UserMinAggregateOutputType | null
     _max: UserMaxAggregateOutputType | null
+  }
+
+  export type UserAvgAggregateOutputType = {
+    streakCount: number | null
+    longestCount: number | null
+  }
+
+  export type UserSumAggregateOutputType = {
+    streakCount: number | null
+    longestCount: number | null
   }
 
   export type UserMinAggregateOutputType = {
@@ -1636,6 +1648,9 @@ export namespace Prisma {
     passwordResetExpiry: Date | null
     accessToken: string | null
     refreshToken: string | null
+    lastloginDate: Date | null
+    streakCount: number | null
+    longestCount: number | null
     createdAt: Date | null
     updatedAt: Date | null
   }
@@ -1653,6 +1668,9 @@ export namespace Prisma {
     passwordResetExpiry: Date | null
     accessToken: string | null
     refreshToken: string | null
+    lastloginDate: Date | null
+    streakCount: number | null
+    longestCount: number | null
     createdAt: Date | null
     updatedAt: Date | null
   }
@@ -1670,11 +1688,25 @@ export namespace Prisma {
     passwordResetExpiry: number
     accessToken: number
     refreshToken: number
+    lastloginDate: number
+    streakCount: number
+    longestCount: number
     createdAt: number
     updatedAt: number
+    loginMap: number
     _all: number
   }
 
+
+  export type UserAvgAggregateInputType = {
+    streakCount?: true
+    longestCount?: true
+  }
+
+  export type UserSumAggregateInputType = {
+    streakCount?: true
+    longestCount?: true
+  }
 
   export type UserMinAggregateInputType = {
     id?: true
@@ -1689,6 +1721,9 @@ export namespace Prisma {
     passwordResetExpiry?: true
     accessToken?: true
     refreshToken?: true
+    lastloginDate?: true
+    streakCount?: true
+    longestCount?: true
     createdAt?: true
     updatedAt?: true
   }
@@ -1706,6 +1741,9 @@ export namespace Prisma {
     passwordResetExpiry?: true
     accessToken?: true
     refreshToken?: true
+    lastloginDate?: true
+    streakCount?: true
+    longestCount?: true
     createdAt?: true
     updatedAt?: true
   }
@@ -1723,8 +1761,12 @@ export namespace Prisma {
     passwordResetExpiry?: true
     accessToken?: true
     refreshToken?: true
+    lastloginDate?: true
+    streakCount?: true
+    longestCount?: true
     createdAt?: true
     updatedAt?: true
+    loginMap?: true
     _all?: true
   }
 
@@ -1766,6 +1808,18 @@ export namespace Prisma {
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
      * 
+     * Select which fields to average
+    **/
+    _avg?: UserAvgAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to sum
+    **/
+    _sum?: UserSumAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
      * Select which fields to find the minimum value
     **/
     _min?: UserMinAggregateInputType
@@ -1796,6 +1850,8 @@ export namespace Prisma {
     take?: number
     skip?: number
     _count?: UserCountAggregateInputType | true
+    _avg?: UserAvgAggregateInputType
+    _sum?: UserSumAggregateInputType
     _min?: UserMinAggregateInputType
     _max?: UserMaxAggregateInputType
   }
@@ -1813,9 +1869,15 @@ export namespace Prisma {
     passwordResetExpiry: Date | null
     accessToken: string | null
     refreshToken: string | null
+    lastloginDate: Date | null
+    streakCount: number
+    longestCount: number
     createdAt: Date
     updatedAt: Date
+    loginMap: JsonValue | null
     _count: UserCountAggregateOutputType | null
+    _avg: UserAvgAggregateOutputType | null
+    _sum: UserSumAggregateOutputType | null
     _min: UserMinAggregateOutputType | null
     _max: UserMaxAggregateOutputType | null
   }
@@ -1847,8 +1909,12 @@ export namespace Prisma {
     passwordResetExpiry?: boolean
     accessToken?: boolean
     refreshToken?: boolean
+    lastloginDate?: boolean
+    streakCount?: boolean
+    longestCount?: boolean
     createdAt?: boolean
     updatedAt?: boolean
+    loginMap?: boolean
     problems?: boolean | User$problemsArgs<ExtArgs>
     submission?: boolean | User$submissionArgs<ExtArgs>
     problemSolved?: boolean | User$problemSolvedArgs<ExtArgs>
@@ -1869,8 +1935,12 @@ export namespace Prisma {
     passwordResetExpiry?: boolean
     accessToken?: boolean
     refreshToken?: boolean
+    lastloginDate?: boolean
+    streakCount?: boolean
+    longestCount?: boolean
     createdAt?: boolean
     updatedAt?: boolean
+    loginMap?: boolean
   }, ExtArgs["result"]["user"]>
 
   export type UserSelectUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
@@ -1886,8 +1956,12 @@ export namespace Prisma {
     passwordResetExpiry?: boolean
     accessToken?: boolean
     refreshToken?: boolean
+    lastloginDate?: boolean
+    streakCount?: boolean
+    longestCount?: boolean
     createdAt?: boolean
     updatedAt?: boolean
+    loginMap?: boolean
   }, ExtArgs["result"]["user"]>
 
   export type UserSelectScalar = {
@@ -1903,11 +1977,15 @@ export namespace Prisma {
     passwordResetExpiry?: boolean
     accessToken?: boolean
     refreshToken?: boolean
+    lastloginDate?: boolean
+    streakCount?: boolean
+    longestCount?: boolean
     createdAt?: boolean
     updatedAt?: boolean
+    loginMap?: boolean
   }
 
-  export type UserOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "name" | "email" | "image" | "password" | "role" | "isVerified" | "verificationToken" | "passwordResetToken" | "passwordResetExpiry" | "accessToken" | "refreshToken" | "createdAt" | "updatedAt", ExtArgs["result"]["user"]>
+  export type UserOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "name" | "email" | "image" | "password" | "role" | "isVerified" | "verificationToken" | "passwordResetToken" | "passwordResetExpiry" | "accessToken" | "refreshToken" | "lastloginDate" | "streakCount" | "longestCount" | "createdAt" | "updatedAt" | "loginMap", ExtArgs["result"]["user"]>
   export type UserInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     problems?: boolean | User$problemsArgs<ExtArgs>
     submission?: boolean | User$submissionArgs<ExtArgs>
@@ -1939,8 +2017,12 @@ export namespace Prisma {
       passwordResetExpiry: Date | null
       accessToken: string | null
       refreshToken: string | null
+      lastloginDate: Date | null
+      streakCount: number
+      longestCount: number
       createdAt: Date
       updatedAt: Date
+      loginMap: Prisma.JsonValue | null
     }, ExtArgs["result"]["user"]>
     composites: {}
   }
@@ -2380,8 +2462,12 @@ export namespace Prisma {
     readonly passwordResetExpiry: FieldRef<"User", 'DateTime'>
     readonly accessToken: FieldRef<"User", 'String'>
     readonly refreshToken: FieldRef<"User", 'String'>
+    readonly lastloginDate: FieldRef<"User", 'DateTime'>
+    readonly streakCount: FieldRef<"User", 'Int'>
+    readonly longestCount: FieldRef<"User", 'Int'>
     readonly createdAt: FieldRef<"User", 'DateTime'>
     readonly updatedAt: FieldRef<"User", 'DateTime'>
+    readonly loginMap: FieldRef<"User", 'Json'>
   }
     
 
@@ -9803,8 +9889,12 @@ export namespace Prisma {
     passwordResetExpiry: 'passwordResetExpiry',
     accessToken: 'accessToken',
     refreshToken: 'refreshToken',
+    lastloginDate: 'lastloginDate',
+    streakCount: 'streakCount',
+    longestCount: 'longestCount',
     createdAt: 'createdAt',
-    updatedAt: 'updatedAt'
+    updatedAt: 'updatedAt',
+    loginMap: 'loginMap'
   };
 
   export type UserScalarFieldEnum = (typeof UserScalarFieldEnum)[keyof typeof UserScalarFieldEnum]
@@ -9912,6 +10002,14 @@ export namespace Prisma {
   export type SortOrder = (typeof SortOrder)[keyof typeof SortOrder]
 
 
+  export const NullableJsonNullValueInput: {
+    DbNull: typeof DbNull,
+    JsonNull: typeof JsonNull
+  };
+
+  export type NullableJsonNullValueInput = (typeof NullableJsonNullValueInput)[keyof typeof NullableJsonNullValueInput]
+
+
   export const JsonNullValueInput: {
     JsonNull: typeof JsonNull
   };
@@ -9927,14 +10025,6 @@ export namespace Prisma {
   export type QueryMode = (typeof QueryMode)[keyof typeof QueryMode]
 
 
-  export const NullsOrder: {
-    first: 'first',
-    last: 'last'
-  };
-
-  export type NullsOrder = (typeof NullsOrder)[keyof typeof NullsOrder]
-
-
   export const JsonNullValueFilter: {
     DbNull: typeof DbNull,
     JsonNull: typeof JsonNull,
@@ -9942,6 +10032,14 @@ export namespace Prisma {
   };
 
   export type JsonNullValueFilter = (typeof JsonNullValueFilter)[keyof typeof JsonNullValueFilter]
+
+
+  export const NullsOrder: {
+    first: 'first',
+    last: 'last'
+  };
+
+  export type NullsOrder = (typeof NullsOrder)[keyof typeof NullsOrder]
 
 
   /**
@@ -9999,16 +10097,16 @@ export namespace Prisma {
 
 
   /**
-   * Reference to a field of type 'Difficulty'
+   * Reference to a field of type 'Int'
    */
-  export type EnumDifficultyFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Difficulty'>
+  export type IntFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Int'>
     
 
 
   /**
-   * Reference to a field of type 'Difficulty[]'
+   * Reference to a field of type 'Int[]'
    */
-  export type ListEnumDifficultyFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Difficulty[]'>
+  export type ListIntFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Int[]'>
     
 
 
@@ -10027,16 +10125,16 @@ export namespace Prisma {
 
 
   /**
-   * Reference to a field of type 'Int'
+   * Reference to a field of type 'Difficulty'
    */
-  export type IntFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Int'>
+  export type EnumDifficultyFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Difficulty'>
     
 
 
   /**
-   * Reference to a field of type 'Int[]'
+   * Reference to a field of type 'Difficulty[]'
    */
-  export type ListIntFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Int[]'>
+  export type ListEnumDifficultyFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Difficulty[]'>
     
 
 
@@ -10073,8 +10171,12 @@ export namespace Prisma {
     passwordResetExpiry?: DateTimeNullableFilter<"User"> | Date | string | null
     accessToken?: StringNullableFilter<"User"> | string | null
     refreshToken?: StringNullableFilter<"User"> | string | null
+    lastloginDate?: DateTimeNullableFilter<"User"> | Date | string | null
+    streakCount?: IntFilter<"User"> | number
+    longestCount?: IntFilter<"User"> | number
     createdAt?: DateTimeFilter<"User"> | Date | string
     updatedAt?: DateTimeFilter<"User"> | Date | string
+    loginMap?: JsonNullableFilter<"User">
     problems?: ProblemListRelationFilter
     submission?: SubmissionListRelationFilter
     problemSolved?: ProblemSolvedListRelationFilter
@@ -10094,8 +10196,12 @@ export namespace Prisma {
     passwordResetExpiry?: SortOrderInput | SortOrder
     accessToken?: SortOrderInput | SortOrder
     refreshToken?: SortOrderInput | SortOrder
+    lastloginDate?: SortOrderInput | SortOrder
+    streakCount?: SortOrder
+    longestCount?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
+    loginMap?: SortOrderInput | SortOrder
     problems?: ProblemOrderByRelationAggregateInput
     submission?: SubmissionOrderByRelationAggregateInput
     problemSolved?: ProblemSolvedOrderByRelationAggregateInput
@@ -10118,8 +10224,12 @@ export namespace Prisma {
     passwordResetExpiry?: DateTimeNullableFilter<"User"> | Date | string | null
     accessToken?: StringNullableFilter<"User"> | string | null
     refreshToken?: StringNullableFilter<"User"> | string | null
+    lastloginDate?: DateTimeNullableFilter<"User"> | Date | string | null
+    streakCount?: IntFilter<"User"> | number
+    longestCount?: IntFilter<"User"> | number
     createdAt?: DateTimeFilter<"User"> | Date | string
     updatedAt?: DateTimeFilter<"User"> | Date | string
+    loginMap?: JsonNullableFilter<"User">
     problems?: ProblemListRelationFilter
     submission?: SubmissionListRelationFilter
     problemSolved?: ProblemSolvedListRelationFilter
@@ -10139,11 +10249,17 @@ export namespace Prisma {
     passwordResetExpiry?: SortOrderInput | SortOrder
     accessToken?: SortOrderInput | SortOrder
     refreshToken?: SortOrderInput | SortOrder
+    lastloginDate?: SortOrderInput | SortOrder
+    streakCount?: SortOrder
+    longestCount?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
+    loginMap?: SortOrderInput | SortOrder
     _count?: UserCountOrderByAggregateInput
+    _avg?: UserAvgOrderByAggregateInput
     _max?: UserMaxOrderByAggregateInput
     _min?: UserMinOrderByAggregateInput
+    _sum?: UserSumOrderByAggregateInput
   }
 
   export type UserScalarWhereWithAggregatesInput = {
@@ -10162,8 +10278,12 @@ export namespace Prisma {
     passwordResetExpiry?: DateTimeNullableWithAggregatesFilter<"User"> | Date | string | null
     accessToken?: StringNullableWithAggregatesFilter<"User"> | string | null
     refreshToken?: StringNullableWithAggregatesFilter<"User"> | string | null
+    lastloginDate?: DateTimeNullableWithAggregatesFilter<"User"> | Date | string | null
+    streakCount?: IntWithAggregatesFilter<"User"> | number
+    longestCount?: IntWithAggregatesFilter<"User"> | number
     createdAt?: DateTimeWithAggregatesFilter<"User"> | Date | string
     updatedAt?: DateTimeWithAggregatesFilter<"User"> | Date | string
+    loginMap?: JsonNullableWithAggregatesFilter<"User">
   }
 
   export type ProblemWhereInput = {
@@ -10678,8 +10798,12 @@ export namespace Prisma {
     passwordResetExpiry?: Date | string | null
     accessToken?: string | null
     refreshToken?: string | null
+    lastloginDate?: Date | string | null
+    streakCount?: number
+    longestCount?: number
     createdAt?: Date | string
     updatedAt?: Date | string
+    loginMap?: NullableJsonNullValueInput | InputJsonValue
     problems?: ProblemCreateNestedManyWithoutUserInput
     submission?: SubmissionCreateNestedManyWithoutUserInput
     problemSolved?: ProblemSolvedCreateNestedManyWithoutUserInput
@@ -10699,8 +10823,12 @@ export namespace Prisma {
     passwordResetExpiry?: Date | string | null
     accessToken?: string | null
     refreshToken?: string | null
+    lastloginDate?: Date | string | null
+    streakCount?: number
+    longestCount?: number
     createdAt?: Date | string
     updatedAt?: Date | string
+    loginMap?: NullableJsonNullValueInput | InputJsonValue
     problems?: ProblemUncheckedCreateNestedManyWithoutUserInput
     submission?: SubmissionUncheckedCreateNestedManyWithoutUserInput
     problemSolved?: ProblemSolvedUncheckedCreateNestedManyWithoutUserInput
@@ -10720,8 +10848,12 @@ export namespace Prisma {
     passwordResetExpiry?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     accessToken?: NullableStringFieldUpdateOperationsInput | string | null
     refreshToken?: NullableStringFieldUpdateOperationsInput | string | null
+    lastloginDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    streakCount?: IntFieldUpdateOperationsInput | number
+    longestCount?: IntFieldUpdateOperationsInput | number
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    loginMap?: NullableJsonNullValueInput | InputJsonValue
     problems?: ProblemUpdateManyWithoutUserNestedInput
     submission?: SubmissionUpdateManyWithoutUserNestedInput
     problemSolved?: ProblemSolvedUpdateManyWithoutUserNestedInput
@@ -10741,8 +10873,12 @@ export namespace Prisma {
     passwordResetExpiry?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     accessToken?: NullableStringFieldUpdateOperationsInput | string | null
     refreshToken?: NullableStringFieldUpdateOperationsInput | string | null
+    lastloginDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    streakCount?: IntFieldUpdateOperationsInput | number
+    longestCount?: IntFieldUpdateOperationsInput | number
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    loginMap?: NullableJsonNullValueInput | InputJsonValue
     problems?: ProblemUncheckedUpdateManyWithoutUserNestedInput
     submission?: SubmissionUncheckedUpdateManyWithoutUserNestedInput
     problemSolved?: ProblemSolvedUncheckedUpdateManyWithoutUserNestedInput
@@ -10762,8 +10898,12 @@ export namespace Prisma {
     passwordResetExpiry?: Date | string | null
     accessToken?: string | null
     refreshToken?: string | null
+    lastloginDate?: Date | string | null
+    streakCount?: number
+    longestCount?: number
     createdAt?: Date | string
     updatedAt?: Date | string
+    loginMap?: NullableJsonNullValueInput | InputJsonValue
   }
 
   export type UserUpdateManyMutationInput = {
@@ -10779,8 +10919,12 @@ export namespace Prisma {
     passwordResetExpiry?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     accessToken?: NullableStringFieldUpdateOperationsInput | string | null
     refreshToken?: NullableStringFieldUpdateOperationsInput | string | null
+    lastloginDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    streakCount?: IntFieldUpdateOperationsInput | number
+    longestCount?: IntFieldUpdateOperationsInput | number
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    loginMap?: NullableJsonNullValueInput | InputJsonValue
   }
 
   export type UserUncheckedUpdateManyInput = {
@@ -10796,8 +10940,12 @@ export namespace Prisma {
     passwordResetExpiry?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     accessToken?: NullableStringFieldUpdateOperationsInput | string | null
     refreshToken?: NullableStringFieldUpdateOperationsInput | string | null
+    lastloginDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    streakCount?: IntFieldUpdateOperationsInput | number
+    longestCount?: IntFieldUpdateOperationsInput | number
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    loginMap?: NullableJsonNullValueInput | InputJsonValue
   }
 
   export type ProblemCreateInput = {
@@ -11396,6 +11544,17 @@ export namespace Prisma {
     not?: NestedDateTimeNullableFilter<$PrismaModel> | Date | string | null
   }
 
+  export type IntFilter<$PrismaModel = never> = {
+    equals?: number | IntFieldRefInput<$PrismaModel>
+    in?: number[] | ListIntFieldRefInput<$PrismaModel>
+    notIn?: number[] | ListIntFieldRefInput<$PrismaModel>
+    lt?: number | IntFieldRefInput<$PrismaModel>
+    lte?: number | IntFieldRefInput<$PrismaModel>
+    gt?: number | IntFieldRefInput<$PrismaModel>
+    gte?: number | IntFieldRefInput<$PrismaModel>
+    not?: NestedIntFilter<$PrismaModel> | number
+  }
+
   export type DateTimeFilter<$PrismaModel = never> = {
     equals?: Date | string | DateTimeFieldRefInput<$PrismaModel>
     in?: Date[] | string[] | ListDateTimeFieldRefInput<$PrismaModel>
@@ -11405,6 +11564,29 @@ export namespace Prisma {
     gt?: Date | string | DateTimeFieldRefInput<$PrismaModel>
     gte?: Date | string | DateTimeFieldRefInput<$PrismaModel>
     not?: NestedDateTimeFilter<$PrismaModel> | Date | string
+  }
+  export type JsonNullableFilter<$PrismaModel = never> =
+    | PatchUndefined<
+        Either<Required<JsonNullableFilterBase<$PrismaModel>>, Exclude<keyof Required<JsonNullableFilterBase<$PrismaModel>>, 'path'>>,
+        Required<JsonNullableFilterBase<$PrismaModel>>
+      >
+    | OptionalFlat<Omit<Required<JsonNullableFilterBase<$PrismaModel>>, 'path'>>
+
+  export type JsonNullableFilterBase<$PrismaModel = never> = {
+    equals?: InputJsonValue | JsonFieldRefInput<$PrismaModel> | JsonNullValueFilter
+    path?: string[]
+    mode?: QueryMode | EnumQueryModeFieldRefInput<$PrismaModel>
+    string_contains?: string | StringFieldRefInput<$PrismaModel>
+    string_starts_with?: string | StringFieldRefInput<$PrismaModel>
+    string_ends_with?: string | StringFieldRefInput<$PrismaModel>
+    array_starts_with?: InputJsonValue | JsonFieldRefInput<$PrismaModel> | null
+    array_ends_with?: InputJsonValue | JsonFieldRefInput<$PrismaModel> | null
+    array_contains?: InputJsonValue | JsonFieldRefInput<$PrismaModel> | null
+    lt?: InputJsonValue | JsonFieldRefInput<$PrismaModel>
+    lte?: InputJsonValue | JsonFieldRefInput<$PrismaModel>
+    gt?: InputJsonValue | JsonFieldRefInput<$PrismaModel>
+    gte?: InputJsonValue | JsonFieldRefInput<$PrismaModel>
+    not?: InputJsonValue | JsonFieldRefInput<$PrismaModel> | JsonNullValueFilter
   }
 
   export type ProblemListRelationFilter = {
@@ -11465,8 +11647,17 @@ export namespace Prisma {
     passwordResetExpiry?: SortOrder
     accessToken?: SortOrder
     refreshToken?: SortOrder
+    lastloginDate?: SortOrder
+    streakCount?: SortOrder
+    longestCount?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
+    loginMap?: SortOrder
+  }
+
+  export type UserAvgOrderByAggregateInput = {
+    streakCount?: SortOrder
+    longestCount?: SortOrder
   }
 
   export type UserMaxOrderByAggregateInput = {
@@ -11482,6 +11673,9 @@ export namespace Prisma {
     passwordResetExpiry?: SortOrder
     accessToken?: SortOrder
     refreshToken?: SortOrder
+    lastloginDate?: SortOrder
+    streakCount?: SortOrder
+    longestCount?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
   }
@@ -11499,8 +11693,16 @@ export namespace Prisma {
     passwordResetExpiry?: SortOrder
     accessToken?: SortOrder
     refreshToken?: SortOrder
+    lastloginDate?: SortOrder
+    streakCount?: SortOrder
+    longestCount?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
+  }
+
+  export type UserSumOrderByAggregateInput = {
+    streakCount?: SortOrder
+    longestCount?: SortOrder
   }
 
   export type StringWithAggregatesFilter<$PrismaModel = never> = {
@@ -11571,6 +11773,22 @@ export namespace Prisma {
     _max?: NestedDateTimeNullableFilter<$PrismaModel>
   }
 
+  export type IntWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: number | IntFieldRefInput<$PrismaModel>
+    in?: number[] | ListIntFieldRefInput<$PrismaModel>
+    notIn?: number[] | ListIntFieldRefInput<$PrismaModel>
+    lt?: number | IntFieldRefInput<$PrismaModel>
+    lte?: number | IntFieldRefInput<$PrismaModel>
+    gt?: number | IntFieldRefInput<$PrismaModel>
+    gte?: number | IntFieldRefInput<$PrismaModel>
+    not?: NestedIntWithAggregatesFilter<$PrismaModel> | number
+    _count?: NestedIntFilter<$PrismaModel>
+    _avg?: NestedFloatFilter<$PrismaModel>
+    _sum?: NestedIntFilter<$PrismaModel>
+    _min?: NestedIntFilter<$PrismaModel>
+    _max?: NestedIntFilter<$PrismaModel>
+  }
+
   export type DateTimeWithAggregatesFilter<$PrismaModel = never> = {
     equals?: Date | string | DateTimeFieldRefInput<$PrismaModel>
     in?: Date[] | string[] | ListDateTimeFieldRefInput<$PrismaModel>
@@ -11583,6 +11801,32 @@ export namespace Prisma {
     _count?: NestedIntFilter<$PrismaModel>
     _min?: NestedDateTimeFilter<$PrismaModel>
     _max?: NestedDateTimeFilter<$PrismaModel>
+  }
+  export type JsonNullableWithAggregatesFilter<$PrismaModel = never> =
+    | PatchUndefined<
+        Either<Required<JsonNullableWithAggregatesFilterBase<$PrismaModel>>, Exclude<keyof Required<JsonNullableWithAggregatesFilterBase<$PrismaModel>>, 'path'>>,
+        Required<JsonNullableWithAggregatesFilterBase<$PrismaModel>>
+      >
+    | OptionalFlat<Omit<Required<JsonNullableWithAggregatesFilterBase<$PrismaModel>>, 'path'>>
+
+  export type JsonNullableWithAggregatesFilterBase<$PrismaModel = never> = {
+    equals?: InputJsonValue | JsonFieldRefInput<$PrismaModel> | JsonNullValueFilter
+    path?: string[]
+    mode?: QueryMode | EnumQueryModeFieldRefInput<$PrismaModel>
+    string_contains?: string | StringFieldRefInput<$PrismaModel>
+    string_starts_with?: string | StringFieldRefInput<$PrismaModel>
+    string_ends_with?: string | StringFieldRefInput<$PrismaModel>
+    array_starts_with?: InputJsonValue | JsonFieldRefInput<$PrismaModel> | null
+    array_ends_with?: InputJsonValue | JsonFieldRefInput<$PrismaModel> | null
+    array_contains?: InputJsonValue | JsonFieldRefInput<$PrismaModel> | null
+    lt?: InputJsonValue | JsonFieldRefInput<$PrismaModel>
+    lte?: InputJsonValue | JsonFieldRefInput<$PrismaModel>
+    gt?: InputJsonValue | JsonFieldRefInput<$PrismaModel>
+    gte?: InputJsonValue | JsonFieldRefInput<$PrismaModel>
+    not?: InputJsonValue | JsonFieldRefInput<$PrismaModel> | JsonNullValueFilter
+    _count?: NestedIntNullableFilter<$PrismaModel>
+    _min?: NestedJsonNullableFilter<$PrismaModel>
+    _max?: NestedJsonNullableFilter<$PrismaModel>
   }
 
   export type EnumDifficultyFilter<$PrismaModel = never> = {
@@ -11782,17 +12026,6 @@ export namespace Prisma {
     updatedAt?: SortOrder
   }
 
-  export type IntFilter<$PrismaModel = never> = {
-    equals?: number | IntFieldRefInput<$PrismaModel>
-    in?: number[] | ListIntFieldRefInput<$PrismaModel>
-    notIn?: number[] | ListIntFieldRefInput<$PrismaModel>
-    lt?: number | IntFieldRefInput<$PrismaModel>
-    lte?: number | IntFieldRefInput<$PrismaModel>
-    gt?: number | IntFieldRefInput<$PrismaModel>
-    gte?: number | IntFieldRefInput<$PrismaModel>
-    not?: NestedIntFilter<$PrismaModel> | number
-  }
-
   export type SubmissionScalarRelationFilter = {
     is?: SubmissionWhereInput
     isNot?: SubmissionWhereInput
@@ -11852,22 +12085,6 @@ export namespace Prisma {
 
   export type TestCaseResultSumOrderByAggregateInput = {
     testcase?: SortOrder
-  }
-
-  export type IntWithAggregatesFilter<$PrismaModel = never> = {
-    equals?: number | IntFieldRefInput<$PrismaModel>
-    in?: number[] | ListIntFieldRefInput<$PrismaModel>
-    notIn?: number[] | ListIntFieldRefInput<$PrismaModel>
-    lt?: number | IntFieldRefInput<$PrismaModel>
-    lte?: number | IntFieldRefInput<$PrismaModel>
-    gt?: number | IntFieldRefInput<$PrismaModel>
-    gte?: number | IntFieldRefInput<$PrismaModel>
-    not?: NestedIntWithAggregatesFilter<$PrismaModel> | number
-    _count?: NestedIntFilter<$PrismaModel>
-    _avg?: NestedFloatFilter<$PrismaModel>
-    _sum?: NestedIntFilter<$PrismaModel>
-    _min?: NestedIntFilter<$PrismaModel>
-    _max?: NestedIntFilter<$PrismaModel>
   }
 
   export type ProblemSolvedUserIdProblemIdCompoundUniqueInput = {
@@ -12039,6 +12256,14 @@ export namespace Prisma {
 
   export type NullableDateTimeFieldUpdateOperationsInput = {
     set?: Date | string | null
+  }
+
+  export type IntFieldUpdateOperationsInput = {
+    set?: number
+    increment?: number
+    decrement?: number
+    multiply?: number
+    divide?: number
   }
 
   export type DateTimeFieldUpdateOperationsInput = {
@@ -12386,14 +12611,6 @@ export namespace Prisma {
     connect?: SubmissionWhereUniqueInput
   }
 
-  export type IntFieldUpdateOperationsInput = {
-    set?: number
-    increment?: number
-    decrement?: number
-    multiply?: number
-    divide?: number
-  }
-
   export type SubmissionUpdateOneRequiredWithoutTestcasesNestedInput = {
     create?: XOR<SubmissionCreateWithoutTestcasesInput, SubmissionUncheckedCreateWithoutTestcasesInput>
     connectOrCreate?: SubmissionCreateOrConnectWithoutTestcasesInput
@@ -12565,6 +12782,17 @@ export namespace Prisma {
     not?: NestedDateTimeNullableFilter<$PrismaModel> | Date | string | null
   }
 
+  export type NestedIntFilter<$PrismaModel = never> = {
+    equals?: number | IntFieldRefInput<$PrismaModel>
+    in?: number[] | ListIntFieldRefInput<$PrismaModel>
+    notIn?: number[] | ListIntFieldRefInput<$PrismaModel>
+    lt?: number | IntFieldRefInput<$PrismaModel>
+    lte?: number | IntFieldRefInput<$PrismaModel>
+    gt?: number | IntFieldRefInput<$PrismaModel>
+    gte?: number | IntFieldRefInput<$PrismaModel>
+    not?: NestedIntFilter<$PrismaModel> | number
+  }
+
   export type NestedDateTimeFilter<$PrismaModel = never> = {
     equals?: Date | string | DateTimeFieldRefInput<$PrismaModel>
     in?: Date[] | string[] | ListDateTimeFieldRefInput<$PrismaModel>
@@ -12591,17 +12819,6 @@ export namespace Prisma {
     _count?: NestedIntFilter<$PrismaModel>
     _min?: NestedStringFilter<$PrismaModel>
     _max?: NestedStringFilter<$PrismaModel>
-  }
-
-  export type NestedIntFilter<$PrismaModel = never> = {
-    equals?: number | IntFieldRefInput<$PrismaModel>
-    in?: number[] | ListIntFieldRefInput<$PrismaModel>
-    notIn?: number[] | ListIntFieldRefInput<$PrismaModel>
-    lt?: number | IntFieldRefInput<$PrismaModel>
-    lte?: number | IntFieldRefInput<$PrismaModel>
-    gt?: number | IntFieldRefInput<$PrismaModel>
-    gte?: number | IntFieldRefInput<$PrismaModel>
-    not?: NestedIntFilter<$PrismaModel> | number
   }
 
   export type NestedStringNullableWithAggregatesFilter<$PrismaModel = never> = {
@@ -12664,6 +12881,33 @@ export namespace Prisma {
     _max?: NestedDateTimeNullableFilter<$PrismaModel>
   }
 
+  export type NestedIntWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: number | IntFieldRefInput<$PrismaModel>
+    in?: number[] | ListIntFieldRefInput<$PrismaModel>
+    notIn?: number[] | ListIntFieldRefInput<$PrismaModel>
+    lt?: number | IntFieldRefInput<$PrismaModel>
+    lte?: number | IntFieldRefInput<$PrismaModel>
+    gt?: number | IntFieldRefInput<$PrismaModel>
+    gte?: number | IntFieldRefInput<$PrismaModel>
+    not?: NestedIntWithAggregatesFilter<$PrismaModel> | number
+    _count?: NestedIntFilter<$PrismaModel>
+    _avg?: NestedFloatFilter<$PrismaModel>
+    _sum?: NestedIntFilter<$PrismaModel>
+    _min?: NestedIntFilter<$PrismaModel>
+    _max?: NestedIntFilter<$PrismaModel>
+  }
+
+  export type NestedFloatFilter<$PrismaModel = never> = {
+    equals?: number | FloatFieldRefInput<$PrismaModel>
+    in?: number[] | ListFloatFieldRefInput<$PrismaModel>
+    notIn?: number[] | ListFloatFieldRefInput<$PrismaModel>
+    lt?: number | FloatFieldRefInput<$PrismaModel>
+    lte?: number | FloatFieldRefInput<$PrismaModel>
+    gt?: number | FloatFieldRefInput<$PrismaModel>
+    gte?: number | FloatFieldRefInput<$PrismaModel>
+    not?: NestedFloatFilter<$PrismaModel> | number
+  }
+
   export type NestedDateTimeWithAggregatesFilter<$PrismaModel = never> = {
     equals?: Date | string | DateTimeFieldRefInput<$PrismaModel>
     in?: Date[] | string[] | ListDateTimeFieldRefInput<$PrismaModel>
@@ -12676,6 +12920,29 @@ export namespace Prisma {
     _count?: NestedIntFilter<$PrismaModel>
     _min?: NestedDateTimeFilter<$PrismaModel>
     _max?: NestedDateTimeFilter<$PrismaModel>
+  }
+  export type NestedJsonNullableFilter<$PrismaModel = never> =
+    | PatchUndefined<
+        Either<Required<NestedJsonNullableFilterBase<$PrismaModel>>, Exclude<keyof Required<NestedJsonNullableFilterBase<$PrismaModel>>, 'path'>>,
+        Required<NestedJsonNullableFilterBase<$PrismaModel>>
+      >
+    | OptionalFlat<Omit<Required<NestedJsonNullableFilterBase<$PrismaModel>>, 'path'>>
+
+  export type NestedJsonNullableFilterBase<$PrismaModel = never> = {
+    equals?: InputJsonValue | JsonFieldRefInput<$PrismaModel> | JsonNullValueFilter
+    path?: string[]
+    mode?: QueryMode | EnumQueryModeFieldRefInput<$PrismaModel>
+    string_contains?: string | StringFieldRefInput<$PrismaModel>
+    string_starts_with?: string | StringFieldRefInput<$PrismaModel>
+    string_ends_with?: string | StringFieldRefInput<$PrismaModel>
+    array_starts_with?: InputJsonValue | JsonFieldRefInput<$PrismaModel> | null
+    array_ends_with?: InputJsonValue | JsonFieldRefInput<$PrismaModel> | null
+    array_contains?: InputJsonValue | JsonFieldRefInput<$PrismaModel> | null
+    lt?: InputJsonValue | JsonFieldRefInput<$PrismaModel>
+    lte?: InputJsonValue | JsonFieldRefInput<$PrismaModel>
+    gt?: InputJsonValue | JsonFieldRefInput<$PrismaModel>
+    gte?: InputJsonValue | JsonFieldRefInput<$PrismaModel>
+    not?: InputJsonValue | JsonFieldRefInput<$PrismaModel> | JsonNullValueFilter
   }
 
   export type NestedEnumDifficultyFilter<$PrismaModel = never> = {
@@ -12716,33 +12983,6 @@ export namespace Prisma {
     gt?: InputJsonValue | JsonFieldRefInput<$PrismaModel>
     gte?: InputJsonValue | JsonFieldRefInput<$PrismaModel>
     not?: InputJsonValue | JsonFieldRefInput<$PrismaModel> | JsonNullValueFilter
-  }
-
-  export type NestedIntWithAggregatesFilter<$PrismaModel = never> = {
-    equals?: number | IntFieldRefInput<$PrismaModel>
-    in?: number[] | ListIntFieldRefInput<$PrismaModel>
-    notIn?: number[] | ListIntFieldRefInput<$PrismaModel>
-    lt?: number | IntFieldRefInput<$PrismaModel>
-    lte?: number | IntFieldRefInput<$PrismaModel>
-    gt?: number | IntFieldRefInput<$PrismaModel>
-    gte?: number | IntFieldRefInput<$PrismaModel>
-    not?: NestedIntWithAggregatesFilter<$PrismaModel> | number
-    _count?: NestedIntFilter<$PrismaModel>
-    _avg?: NestedFloatFilter<$PrismaModel>
-    _sum?: NestedIntFilter<$PrismaModel>
-    _min?: NestedIntFilter<$PrismaModel>
-    _max?: NestedIntFilter<$PrismaModel>
-  }
-
-  export type NestedFloatFilter<$PrismaModel = never> = {
-    equals?: number | FloatFieldRefInput<$PrismaModel>
-    in?: number[] | ListFloatFieldRefInput<$PrismaModel>
-    notIn?: number[] | ListFloatFieldRefInput<$PrismaModel>
-    lt?: number | FloatFieldRefInput<$PrismaModel>
-    lte?: number | FloatFieldRefInput<$PrismaModel>
-    gt?: number | FloatFieldRefInput<$PrismaModel>
-    gte?: number | FloatFieldRefInput<$PrismaModel>
-    not?: NestedFloatFilter<$PrismaModel> | number
   }
 
   export type ProblemCreateWithoutUserInput = {
@@ -13032,8 +13272,12 @@ export namespace Prisma {
     passwordResetExpiry?: Date | string | null
     accessToken?: string | null
     refreshToken?: string | null
+    lastloginDate?: Date | string | null
+    streakCount?: number
+    longestCount?: number
     createdAt?: Date | string
     updatedAt?: Date | string
+    loginMap?: NullableJsonNullValueInput | InputJsonValue
     submission?: SubmissionCreateNestedManyWithoutUserInput
     problemSolved?: ProblemSolvedCreateNestedManyWithoutUserInput
     playlists?: PlaylistCreateNestedManyWithoutUserInput
@@ -13052,8 +13296,12 @@ export namespace Prisma {
     passwordResetExpiry?: Date | string | null
     accessToken?: string | null
     refreshToken?: string | null
+    lastloginDate?: Date | string | null
+    streakCount?: number
+    longestCount?: number
     createdAt?: Date | string
     updatedAt?: Date | string
+    loginMap?: NullableJsonNullValueInput | InputJsonValue
     submission?: SubmissionUncheckedCreateNestedManyWithoutUserInput
     problemSolved?: ProblemSolvedUncheckedCreateNestedManyWithoutUserInput
     playlists?: PlaylistUncheckedCreateNestedManyWithoutUserInput
@@ -13180,8 +13428,12 @@ export namespace Prisma {
     passwordResetExpiry?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     accessToken?: NullableStringFieldUpdateOperationsInput | string | null
     refreshToken?: NullableStringFieldUpdateOperationsInput | string | null
+    lastloginDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    streakCount?: IntFieldUpdateOperationsInput | number
+    longestCount?: IntFieldUpdateOperationsInput | number
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    loginMap?: NullableJsonNullValueInput | InputJsonValue
     submission?: SubmissionUpdateManyWithoutUserNestedInput
     problemSolved?: ProblemSolvedUpdateManyWithoutUserNestedInput
     playlists?: PlaylistUpdateManyWithoutUserNestedInput
@@ -13200,8 +13452,12 @@ export namespace Prisma {
     passwordResetExpiry?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     accessToken?: NullableStringFieldUpdateOperationsInput | string | null
     refreshToken?: NullableStringFieldUpdateOperationsInput | string | null
+    lastloginDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    streakCount?: IntFieldUpdateOperationsInput | number
+    longestCount?: IntFieldUpdateOperationsInput | number
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    loginMap?: NullableJsonNullValueInput | InputJsonValue
     submission?: SubmissionUncheckedUpdateManyWithoutUserNestedInput
     problemSolved?: ProblemSolvedUncheckedUpdateManyWithoutUserNestedInput
     playlists?: PlaylistUncheckedUpdateManyWithoutUserNestedInput
@@ -13279,8 +13535,12 @@ export namespace Prisma {
     passwordResetExpiry?: Date | string | null
     accessToken?: string | null
     refreshToken?: string | null
+    lastloginDate?: Date | string | null
+    streakCount?: number
+    longestCount?: number
     createdAt?: Date | string
     updatedAt?: Date | string
+    loginMap?: NullableJsonNullValueInput | InputJsonValue
     problems?: ProblemCreateNestedManyWithoutUserInput
     problemSolved?: ProblemSolvedCreateNestedManyWithoutUserInput
     playlists?: PlaylistCreateNestedManyWithoutUserInput
@@ -13299,8 +13559,12 @@ export namespace Prisma {
     passwordResetExpiry?: Date | string | null
     accessToken?: string | null
     refreshToken?: string | null
+    lastloginDate?: Date | string | null
+    streakCount?: number
+    longestCount?: number
     createdAt?: Date | string
     updatedAt?: Date | string
+    loginMap?: NullableJsonNullValueInput | InputJsonValue
     problems?: ProblemUncheckedCreateNestedManyWithoutUserInput
     problemSolved?: ProblemSolvedUncheckedCreateNestedManyWithoutUserInput
     playlists?: PlaylistUncheckedCreateNestedManyWithoutUserInput
@@ -13420,8 +13684,12 @@ export namespace Prisma {
     passwordResetExpiry?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     accessToken?: NullableStringFieldUpdateOperationsInput | string | null
     refreshToken?: NullableStringFieldUpdateOperationsInput | string | null
+    lastloginDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    streakCount?: IntFieldUpdateOperationsInput | number
+    longestCount?: IntFieldUpdateOperationsInput | number
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    loginMap?: NullableJsonNullValueInput | InputJsonValue
     problems?: ProblemUpdateManyWithoutUserNestedInput
     problemSolved?: ProblemSolvedUpdateManyWithoutUserNestedInput
     playlists?: PlaylistUpdateManyWithoutUserNestedInput
@@ -13440,8 +13708,12 @@ export namespace Prisma {
     passwordResetExpiry?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     accessToken?: NullableStringFieldUpdateOperationsInput | string | null
     refreshToken?: NullableStringFieldUpdateOperationsInput | string | null
+    lastloginDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    streakCount?: IntFieldUpdateOperationsInput | number
+    longestCount?: IntFieldUpdateOperationsInput | number
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    loginMap?: NullableJsonNullValueInput | InputJsonValue
     problems?: ProblemUncheckedUpdateManyWithoutUserNestedInput
     problemSolved?: ProblemSolvedUncheckedUpdateManyWithoutUserNestedInput
     playlists?: PlaylistUncheckedUpdateManyWithoutUserNestedInput
@@ -13630,8 +13902,12 @@ export namespace Prisma {
     passwordResetExpiry?: Date | string | null
     accessToken?: string | null
     refreshToken?: string | null
+    lastloginDate?: Date | string | null
+    streakCount?: number
+    longestCount?: number
     createdAt?: Date | string
     updatedAt?: Date | string
+    loginMap?: NullableJsonNullValueInput | InputJsonValue
     problems?: ProblemCreateNestedManyWithoutUserInput
     submission?: SubmissionCreateNestedManyWithoutUserInput
     playlists?: PlaylistCreateNestedManyWithoutUserInput
@@ -13650,8 +13926,12 @@ export namespace Prisma {
     passwordResetExpiry?: Date | string | null
     accessToken?: string | null
     refreshToken?: string | null
+    lastloginDate?: Date | string | null
+    streakCount?: number
+    longestCount?: number
     createdAt?: Date | string
     updatedAt?: Date | string
+    loginMap?: NullableJsonNullValueInput | InputJsonValue
     problems?: ProblemUncheckedCreateNestedManyWithoutUserInput
     submission?: SubmissionUncheckedCreateNestedManyWithoutUserInput
     playlists?: PlaylistUncheckedCreateNestedManyWithoutUserInput
@@ -13731,8 +14011,12 @@ export namespace Prisma {
     passwordResetExpiry?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     accessToken?: NullableStringFieldUpdateOperationsInput | string | null
     refreshToken?: NullableStringFieldUpdateOperationsInput | string | null
+    lastloginDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    streakCount?: IntFieldUpdateOperationsInput | number
+    longestCount?: IntFieldUpdateOperationsInput | number
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    loginMap?: NullableJsonNullValueInput | InputJsonValue
     problems?: ProblemUpdateManyWithoutUserNestedInput
     submission?: SubmissionUpdateManyWithoutUserNestedInput
     playlists?: PlaylistUpdateManyWithoutUserNestedInput
@@ -13751,8 +14035,12 @@ export namespace Prisma {
     passwordResetExpiry?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     accessToken?: NullableStringFieldUpdateOperationsInput | string | null
     refreshToken?: NullableStringFieldUpdateOperationsInput | string | null
+    lastloginDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    streakCount?: IntFieldUpdateOperationsInput | number
+    longestCount?: IntFieldUpdateOperationsInput | number
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    loginMap?: NullableJsonNullValueInput | InputJsonValue
     problems?: ProblemUncheckedUpdateManyWithoutUserNestedInput
     submission?: SubmissionUncheckedUpdateManyWithoutUserNestedInput
     playlists?: PlaylistUncheckedUpdateManyWithoutUserNestedInput
@@ -13846,8 +14134,12 @@ export namespace Prisma {
     passwordResetExpiry?: Date | string | null
     accessToken?: string | null
     refreshToken?: string | null
+    lastloginDate?: Date | string | null
+    streakCount?: number
+    longestCount?: number
     createdAt?: Date | string
     updatedAt?: Date | string
+    loginMap?: NullableJsonNullValueInput | InputJsonValue
     problems?: ProblemCreateNestedManyWithoutUserInput
     submission?: SubmissionCreateNestedManyWithoutUserInput
     problemSolved?: ProblemSolvedCreateNestedManyWithoutUserInput
@@ -13866,8 +14158,12 @@ export namespace Prisma {
     passwordResetExpiry?: Date | string | null
     accessToken?: string | null
     refreshToken?: string | null
+    lastloginDate?: Date | string | null
+    streakCount?: number
+    longestCount?: number
     createdAt?: Date | string
     updatedAt?: Date | string
+    loginMap?: NullableJsonNullValueInput | InputJsonValue
     problems?: ProblemUncheckedCreateNestedManyWithoutUserInput
     submission?: SubmissionUncheckedCreateNestedManyWithoutUserInput
     problemSolved?: ProblemSolvedUncheckedCreateNestedManyWithoutUserInput
@@ -13918,8 +14214,12 @@ export namespace Prisma {
     passwordResetExpiry?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     accessToken?: NullableStringFieldUpdateOperationsInput | string | null
     refreshToken?: NullableStringFieldUpdateOperationsInput | string | null
+    lastloginDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    streakCount?: IntFieldUpdateOperationsInput | number
+    longestCount?: IntFieldUpdateOperationsInput | number
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    loginMap?: NullableJsonNullValueInput | InputJsonValue
     problems?: ProblemUpdateManyWithoutUserNestedInput
     submission?: SubmissionUpdateManyWithoutUserNestedInput
     problemSolved?: ProblemSolvedUpdateManyWithoutUserNestedInput
@@ -13938,8 +14238,12 @@ export namespace Prisma {
     passwordResetExpiry?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     accessToken?: NullableStringFieldUpdateOperationsInput | string | null
     refreshToken?: NullableStringFieldUpdateOperationsInput | string | null
+    lastloginDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    streakCount?: IntFieldUpdateOperationsInput | number
+    longestCount?: IntFieldUpdateOperationsInput | number
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    loginMap?: NullableJsonNullValueInput | InputJsonValue
     problems?: ProblemUncheckedUpdateManyWithoutUserNestedInput
     submission?: SubmissionUncheckedUpdateManyWithoutUserNestedInput
     problemSolved?: ProblemSolvedUncheckedUpdateManyWithoutUserNestedInput

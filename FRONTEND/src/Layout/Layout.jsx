@@ -16,6 +16,7 @@ import AddProblem from "../pages/AddProblem.jsx";
 import ProblemPage from "../pages/ProblemPage.jsx";
 import AllPlaylistsPage from "../pages/PlaylistsPage.jsx";
 import PlaylistDetailpage from "../pages/PlaylistDetailpage.jsx";
+import Profile from "../pages/Profile.jsx";
 
 const Layout = () => {
   const { authUser, checkAuth, isCheckingAuth, refreshToken } = useAuthStore();
@@ -51,6 +52,7 @@ const Layout = () => {
         <Route path="/Pricing" element={<Pricing />} />
         <Route path="/Playlists" element={<AllPlaylistsPage />} />
         <Route path="/Playlist/:id" element={<PlaylistDetailpage />} />
+        <Route path="/profile" element={<Profile />} />
         <Route
           path="/problems"
           element={authUser ? <ProblemsHome /> : <Navigate to="/login" />}

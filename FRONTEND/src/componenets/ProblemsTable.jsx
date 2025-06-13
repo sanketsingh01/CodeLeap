@@ -9,6 +9,8 @@ import {
   Plus,
   Search,
   Loader,
+  Circle,
+  CheckCircle2,
 } from "lucide-react";
 
 import { useAction } from "../store/useAction.js";
@@ -120,7 +122,7 @@ const ProblemsTable = ({ problems }) => {
       </div>
 
       {/* Filters */}
-      <div className="grid md:grid-cols-4 sm:grid-cols-2 gap-4 mb-6">
+      <div className="grid md:grid-cols-3 sm:grid-cols-2 gap-4 mb-6">
         <div className="relative">
           <Search className="absolute left-3 top-2.5 w-5 h-5 text-gray-500" />
           <input
@@ -199,12 +201,11 @@ const ProblemsTable = ({ problems }) => {
                 return (
                   <tr key={problem.id} className="hover:bg-zinc-800 transition">
                     <td className="px-4 py-3">
-                      <input
-                        type="checkbox"
-                        checked={isSolved}
-                        readOnly
-                        className="checkbox checkbox-sm"
-                      />
+                      {isSolved ? (
+                        <CheckCircle2 className="text-green-500 w-5 h-5" />
+                      ) : (
+                        <Circle className="text-zinc-500 w-5 h-5" />
+                      )}
                     </td>
                     <td className="px-4 py-3">
                       <Link

@@ -303,7 +303,7 @@ const getAllProblemsSolvedByUser = async (req, res) => {
 
     res
       .status(200)
-      .json(new ApiResponse(200, '', 'Problems fetched Successfully'));
+      .json(new ApiResponse(200, problems, 'Problems fetched Successfully'));
   } catch (error) {
     console.log(error);
     return res.status(400).json(new ApiError(400, error.message));

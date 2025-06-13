@@ -42,53 +42,56 @@ const AllPlaylistsPage = () => {
         </div>
       ) : (
         <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-10 max-w-6xl mx-auto">
-          {playlists.map((playlist) => (
+          {playlists.map((playlist, index) => (
             <div
               key={playlist.id}
-              onClick={() => navigate(`/Playlist/${playlist.id}`)}
-              className="relative bg-zinc-800 rounded-2xl p-6 border border-zinc-700 shadow-md hover:shadow-yellow-500/20 hover:scale-[1.02] transition-all duration-300 group overflow-hidden"
+              className="relative rounded-xl border border-purple-500 p-5 bg-zinc-900 hover:shadow-lg hover:scale-[1.01] transition duration-300"
             >
-              <button
-                onClick={(e) => {
-                  e.stopPropagation();
-                  openModal(playlist);
-                }}
-                className="absolute top-4 right-4 text-red-500 hover:text-red-600 transition"
-                title="Delete Playlist"
-              >
-                <Trash2 className="w-5 h-5" />
-              </button>
-
-              <div className="flex items-center gap-4 mb-4">
-                <FolderOpen className="w-9 h-9 text-yellow-400 group-hover:rotate-6 transition-transform duration-300" />
-                <div>
-                  <h2 className="text-xl font-semibold text-white leading-tight">
-                    {playlist.name}
-                  </h2>
-                  <p className="text-sm text-gray-400">
-                    {playlist.problems?.length || 0} Problems
-                  </p>
-                </div>
+              {/* Left Chevron Icon */}
+              <div className="text-lg text-white mb-4">
+                <span className="text-purple-300 text-xl">&lt;&gt;</span>
               </div>
 
-              {playlist.description && (
-                <p className="text-sm text-gray-300 mb-3 line-clamp-3">
-                  {playlist.description}
-                </p>
-              )}
+              {/* Playlist Badge */}
+              <div className="absolute top-5 right-5 bg-white text-red-500 text-xs font-bold px-3 py-1 rounded-full">
+                Playlist {index + 1}
+              </div>
 
-              {playlist.tags && playlist.tags.length > 0 && (
-                <div className="flex flex-wrap gap-2 mt-3">
-                  {playlist.tags.map((tag, index) => (
-                    <span
-                      key={index}
-                      className="px-3 py-1 rounded-full text-xs font-medium bg-yellow-400/10 text-yellow-300 border border-yellow-400/20"
-                    >
-                      #{tag}
-                    </span>
-                  ))}
-                </div>
-              )}
+              {/* Title */}
+              <h2 className="text-xl font-bold text-white mb-3 capitalize">
+                {playlist.name}
+              </h2>
+
+              {/* Description */}
+              <p className="text-sm text-gray-300 mb-6">
+                {playlist.description?.toLowerCase() ===
+                "after solving this problem you can able to solve any js problem"
+                  ? "after solving these problems, you'll be able to solve any js problem"
+                  : playlist.description}
+              </p>
+
+              {/* Buttons */}
+              <div className="mt-auto flex flex-col gap-4">
+                <button
+                  onClick={(e) => {
+                    e.stopPropagation();
+                    navigate(`/Playlist/${playlist.id}`);
+                  }}
+                  className="w-full bg-yellow-400 text-black font-semibold py-2 rounded-lg flex justify-center items-center gap-2 hover:bg-yellow-500 transition cursor-pointer"
+                >
+                  Start Learning <span className="text-lg">→</span>
+                </button>
+                <button
+                  onClick={(e) => {
+                    e.stopPropagation();
+                    openModal(playlist);
+                  }}
+                  className="w-full bg-yellow-400 text-black font-semibold py-2 rounded-lg flex justify-center items-center gap-2 hover:bg-yellow-500 transition cursor-pointer"
+                >
+                  <Trash2 className="w-5 h-5" />
+                  Delete
+                </button>
+              </div>
             </div>
           ))}
         </div>

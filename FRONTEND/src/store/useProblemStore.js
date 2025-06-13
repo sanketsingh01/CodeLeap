@@ -47,7 +47,7 @@ export const useProblemStore = create((set) => ({
     try {
       const response = await axiosInstance.get("/problems/get-solved-problems");
 
-      set({ solvedProblems: response.data.problems });
+      set({ solvedProblems: response.data.Data });
     } catch (error) {
       console.error("Error getting all solved problems", error);
       toast.error("Error in fetching solved problems");
