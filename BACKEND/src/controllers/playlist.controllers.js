@@ -80,7 +80,7 @@ export const getPlayListDetails = async (req, res) => {
     const playlist = await db.playlist.findUnique({
       where: {
         id: playlistId,
-        userId: req.user.id,
+        // userId: req.user.id,
       },
       include: {
         problems: {
@@ -92,7 +92,7 @@ export const getPlayListDetails = async (req, res) => {
     });
 
     if (!playlist) {
-      return res.status(404).json(new ApiError(404, 'Playlist not found'));
+      return res.status(404).json(new ApiError(404, 'Playlist not Exists'));
     }
 
     res
