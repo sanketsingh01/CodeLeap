@@ -50,9 +50,12 @@ const Layout = () => {
         <Route path="/FAQ" element={<FAQ />} />
         <Route path="/About" element={<About />} />
         <Route path="/Pricing" element={<Pricing />} />
-        <Route path="/Playlists" element={<AllPlaylistsPage />} />
         <Route path="/Playlist/:id" element={<PlaylistDetailpage />} />
         <Route path="/profile" element={<Profile />} />
+        <Route
+          path="/playlists"
+          element={authUser ? <AllPlaylistsPage /> : <Navigate to="/login" />}
+        />
         <Route
           path="/problems"
           element={authUser ? <ProblemsHome /> : <Navigate to="/login" />}

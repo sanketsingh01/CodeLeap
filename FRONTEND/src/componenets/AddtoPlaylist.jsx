@@ -1,11 +1,12 @@
 import React, { useEffect, useState } from "react";
 import { X, Plus, Loader } from "lucide-react";
 import { usePlaylistStore } from "../store/usePlaylistStore.js";
+import { useAuthStore } from "../store/useAuthStore.js";
 
 const AddtoPlaylist = ({ isOpen, onClose, problemId }) => {
-  console.log("CLIENT_PROB_ID: ", problemId);
   const { playlists, getAllPlaylists, addProblemToPlaylist, isLoading } =
     usePlaylistStore();
+  const { authUser, checkAuth } = useAuthStore();
   const [selectedPlaylist, setSelectedPlaylist] = useState("");
 
   useEffect(() => {
@@ -13,6 +14,10 @@ const AddtoPlaylist = ({ isOpen, onClose, problemId }) => {
       getAllPlaylists();
     }
   }, [isOpen]);
+
+  useEffect(() => {
+    checkAuth();
+  }, [checkAuth]);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -28,7 +33,7 @@ const AddtoPlaylist = ({ isOpen, onClose, problemId }) => {
     <div className="fixed inset-0 z-50 bg-black bg-opacity-60 backdrop-blur-sm flex items-center justify-center px-4">
       <div className="bg-zinc-900 rounded-2xl shadow-2xl w-full max-w-lg border border-zinc-700">
         <div className="flex justify-between items-center p-5 border-b border-zinc-700">
-          <h3 className="text-2xl font-semibold text-white">Add to Playlist</h3>
+          <h3 className="text-2xl font-semibold text-white">Add to Sheet</h3>
           <button
             onClick={onClose}
             className="text-gray-400 hover:text-white transition"
@@ -40,7 +45,7 @@ const AddtoPlaylist = ({ isOpen, onClose, problemId }) => {
         <form onSubmit={handleSubmit} className="p-6 space-y-5">
           <div>
             <label className="block text-sm font-medium text-gray-300 mb-1">
-              Select Playlist
+              Select Sheet
             </label>
             <select
               className="w-full px-4 py-2 bg-zinc-800 text-white border border-zinc-700 rounded-lg focus:outline-none focus:ring-2 focus:ring-yellow-400"
@@ -48,12 +53,18 @@ const AddtoPlaylist = ({ isOpen, onClose, problemId }) => {
               onChange={(e) => setSelectedPlaylist(e.target.value)}
               disabled={isLoading}
             >
-              <option value="">Select a playlist</option>
-              {playlists.map((playlist) => (
-                <option key={playlist.id} value={playlist.id}>
-                  {playlist.name}
-                </option>
-              ))}
+              <option value="">Select a Sheet</option>
+              {playlists
+                .filter(
+                  (playlist) =>
+                    authUser?.role === "ADMIN" ||
+                    playlist.createdBy === authUser?.id
+                )
+                .map((playlist) => (
+                  <option key={playlist.id} value={playlist.id}>
+                    {playlist.name}
+                  </option>
+                ))}
             </select>
           </div>
 
@@ -88,7 +99,7 @@ const AddtoPlaylist = ({ isOpen, onClose, problemId }) => {
               ) : (
                 <Plus className="w-4 h-4" />
               )}
-              Add to Playlist
+              Add to Sheet
             </button>
           </div>
         </form>

@@ -29,11 +29,11 @@ export default function Navbar() {
   const toggleMenu = () => setIsOpen(!isOpen);
 
   const location = useLocation();
-  const isLandingPage = location.pathname === "/";
   const isFAQPage = location.pathname === "/FAQ";
   const isAboutPage = location.pathname === "/About";
   const isPricingPage = location.pathname === "/Pricing";
   const isProblemsPage = location.pathname === "/problems";
+  const isPlaylistsPage = Location.pathname === "/playlists";
 
   return (
     <div className="w-full px-2 md:px-36">
@@ -58,14 +58,14 @@ export default function Navbar() {
 
         {/* Center - Nav Links (Desktop) */}
         <div className="hidden text-base md:flex items-center space-x-6 flex-1 justify-center">
-          {!(isLandingPage || isProblemsPage) && (
-            <div className="hover:text-[#F4FF54] cursor-pointer flex gap-4">
-              <Link to="/">Home</Link>
-            </div>
-          )}
           <div className="hover:text-[#F4FF54] cursor-pointer flex gap-4">
             <Link to="/problems">Problems</Link>
           </div>
+          {!isPlaylistsPage && (
+            <div className="hover:text-[#F4FF54] cursor-pointer flex gap-4">
+              <Link to="/playlists">Sheets</Link>
+            </div>
+          )}
           {!isPricingPage && (
             <div className="hover:text-[#F4FF54] cursor-pointer flex gap-4">
               <Link to="/Pricing">Pricing</Link>
@@ -143,15 +143,6 @@ export default function Navbar() {
                     >
                       <User className="w-4 h-4 mr-2" />
                       My Profile
-                    </Link>
-                  </li>
-                  <li>
-                    <Link
-                      to="/Playlists"
-                      className="hover:bg-[#F4FF54] hover:text-black text-base font-semibold"
-                    >
-                      <DockIcon className="w-4 h-4 mr-2" />
-                      My Playlists
                     </Link>
                   </li>
                   {authUser?.role === "ADMIN" && (

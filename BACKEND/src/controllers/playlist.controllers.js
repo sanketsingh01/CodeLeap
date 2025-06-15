@@ -4,7 +4,7 @@ import { ApiResponse } from '../utils/api-response.js';
 
 export const createPlaylist = async (req, res) => {
   try {
-    const { name, description } = req.body;
+    const { name, description, isPublic = false } = req.body;
 
     const userId = req.user.id;
 
@@ -25,7 +25,8 @@ export const createPlaylist = async (req, res) => {
       data: {
         name,
         description,
-        userId,
+        isPublic,
+        userId: isPublic ? null : userId,
       },
     });
 
@@ -42,7 +43,7 @@ export const getAllListDetails = async (req, res) => {
   try {
     const playlists = await db.playlist.findMany({
       where: {
-        userId: req.user.id,
+        OR: [{ userId: req.user.id }, { isPublic: true }],
       },
       include: {
         problems: {

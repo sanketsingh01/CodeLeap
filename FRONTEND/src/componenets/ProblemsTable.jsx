@@ -117,7 +117,7 @@ const ProblemsTable = ({ problems }) => {
           onClick={() => setIsCreateModalOpen(true)}
         >
           <Plus className="w-4 h-4" />
-          Create Playlist
+          Create Sheet
         </button>
       </div>
 

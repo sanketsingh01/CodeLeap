@@ -44,10 +44,10 @@ const Profile = ({ user }) => {
 
   // console.log("Streak Count: ", authUser.streakCount);
   const total = problems.length;
-  const solved = solvedProblems?.length || 214;
+  const solved = solvedProblems?.length || 0;
 
   const easy = {
-    solved: solvedProblems?.filter((p) => p.difficulty === "EASY").length || 80,
+    solved: solvedProblems?.filter((p) => p.difficulty === "EASY").length || 0,
     // total: 880,
   };
 

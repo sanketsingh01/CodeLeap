@@ -138,13 +138,14 @@ model Playlist {
   id          String   @id @default(uuid())
   name        String
   description String?
-  userId      String
+  userId      String?
+  isPublic    Boolean  @default(false)
   createdAt   DateTime @default(now())
   updatedAt   DateTime @updatedAt
 
   problems ProblemInPlaylist[]
 
-  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+  user User? @relation(fields: [userId], references: [id], onDelete: Cascade)
 
   @@unique([name, userId])
 }
