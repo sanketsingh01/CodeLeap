@@ -72,13 +72,11 @@ const AllPlaylistsPage = () => {
         </h1>
       </div>
 
-      {/* Subheading */}
       <div className="text-2xl font-semibold text-center mb-12 mx-auto max-w-3xl">
         Master Data Structures & Algorithms with curated problem sets. From
         beginner-friendly challenges to advanced company-specific questions.
       </div>
 
-      {/* If no playlists at all */}
       {playlists.length === 0 ? (
         <div className="text-center text-gray-400">
           <BookOpen className="mx-auto w-12 h-12 mb-4" />
