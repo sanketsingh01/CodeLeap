@@ -16,8 +16,8 @@ import { useAuthStore } from "../store/useAuthStore.js";
 
 import amazonIcon from "./assets/AmazonIcon.webp";
 import googleIcon from "./assets/googleIcon.webp";
-import flipkartIcon from "./assets/flipkartIcon.webp";
 import microsoftIcon from "./assets/microsoftIcon.webp";
+import flipkartIcon from "./assets/flipkartIcon.webp";
 
 const AllPlaylistsPage = () => {
   const navigate = useNavigate();
