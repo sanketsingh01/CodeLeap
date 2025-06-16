@@ -17,7 +17,7 @@ import { useAuthStore } from "../store/useAuthStore.js";
 import amazonIcon from "./assets/AmazonIcon.webp";
 import googleIcon from "./assets/googleIcon.webp";
 import microsoftIcon from "./assets/microsoftIcon.webp";
-import flipkartIcon from "./assets/flipkartIcon.webp";
+// import flipkartIcon from "./assets/flipkartIcon.webp";
 
 const AllPlaylistsPage = () => {
   const navigate = useNavigate();
@@ -191,11 +191,11 @@ const AllPlaylistsPage = () => {
                           className="w-6 h-6 object-contain"
                         />
                       )}
-                      <img
+                      {/* <img
                         src={flipkartIcon}
                         alt="Flipkart"
                         className="w-6 h-6 object-contain"
-                      />
+                      /> */}
                       <span className="text-blue-300 text-xl ml-2">
                         &lt;/&gt;
                       </span>
