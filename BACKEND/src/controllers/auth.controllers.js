@@ -1,4 +1,7 @@
 import bcrypt from 'bcryptjs';
+import dayjs from 'dayjs';
+import jwt from 'jsonwebtoken';
+
 import { db } from '../libs/db.js';
 import { ApiError } from '../utils/api-error.js';
 import crypto from 'crypto';
@@ -12,8 +15,7 @@ import {
   generateAccessToken,
   generateRefreshToken,
 } from '../utils/generateTokens.js';
-import jwt from 'jsonwebtoken';
-import dayjs from 'dayjs';
+import { uploadRandomAvatar } from '../utils/avatarUtils.js';
 
 const register = async (req, res) => {
   const { name, email, password } = req.body;
@@ -51,6 +53,8 @@ const register = async (req, res) => {
       ),
     });
 
+    const avatarUrl = await uploadRandomAvatar(user.id);
+
     const accessToken = generateAccessToken(user);
     const refreshToken = generateRefreshToken(user);
 
@@ -61,20 +65,21 @@ const register = async (req, res) => {
       data: {
         accessToken,
         refreshToken,
+        image: avatarUrl,
       },
     });
 
     const AccessCookieOptions = {
       httpOnly: true,
       samesite: 'strict',
-      secure: process.env.NODE_ENv !== 'development',
+      secure: process.env.NODE_ENV !== 'development',
       maxAge: 1000 * 60 * 15, // 15 minutes
     };
 
     const RefreshCookieOptions = {
       httpOnly: true,
       samesite: 'strict',
-      secure: process.env.NODE_ENv !== 'development',
+      secure: process.env.NODE_ENV !== 'development',
       maxAge: 1000 * 60 * 60 * 24 * 7, // 7 days
     };
 
@@ -209,7 +214,7 @@ const login = async (req, res) => {
     const accessToken = generateAccessToken(user);
     const refreshToken = generateRefreshToken(user);
 
-    await db.user.update({
+    const updatedUser = await db.user.update({
       where: {
         id: user.id,
       },
@@ -226,14 +231,14 @@ const login = async (req, res) => {
     const AccessCookieOptions = {
       httpOnly: true,
       samesite: 'strict',
-      secure: process.env.NODE_ENv !== 'development',
+      secure: process.env.NODE_ENV !== 'development',
       maxAge: 1000 * 60 * 15, // 15 minutes
     };
 
     const RefreshCookieOptions = {
       httpOnly: true,
       samesite: 'strict',
-      secure: process.env.NODE_ENv !== 'development',
+      secure: process.env.NODE_ENV !== 'development',
       maxAge: 1000 * 60 * 60 * 24 * 7, // 7 days
     };
 
@@ -246,10 +251,10 @@ const login = async (req, res) => {
       name: user.name,
       email: user.email,
       role: user.role,
-      image: user.image,
+      image: updatedUser.image,
       accessToken: user.accessToken,
-      streakCount: user.streakCount,
-      longestCount: user.longestCount,
+      streakCount: updatedUser.streakCount,
+      longestCount: updatedUser.longestCount,
     };
     res
       .status(200)
