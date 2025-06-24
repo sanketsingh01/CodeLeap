@@ -104,7 +104,7 @@ const LoginHeatmap = ({ loginMap = {} }) => {
   };
 
   return (
-    <div className="p-6 bg-zinc-900 text-white mt-10 rounded-xl">
+    <div className="p-6 bg-black text-white mt-10 rounded-xl">
       <h2 className="mb-4 text-xl font-semibold">Login Activity</h2>
 
       <div className="relative">
