@@ -2,6 +2,7 @@ import React from "react";
 import "../../src/index.css";
 import { motion } from "motion/react";
 import { ArrowUpRight } from "lucide-react";
+import { Link } from "react-router-dom";
 import MagicSVG from "../assets/magic.svg";
 
 // Add these styles to your CSS file or include them here
@@ -29,16 +30,14 @@ const keyframesStyle = `
 
 const Hero = () => {
   React.useEffect(() => {
-    // Add keyframes to document when component mounts
     const style = document.createElement("style");
     style.innerHTML = keyframesStyle;
     document.head.appendChild(style);
 
-    // Clean up function for removing the style when component unmounts
     return () => {
       document.head.removeChild(style);
     };
-  }, []); // Empty dependency array means this runs once on mount
+  }, []);
 
   return (
     <div
@@ -105,9 +104,12 @@ const Hero = () => {
           Explore More
         </button>
         <button className="parkinsans-font relative overflow-hidden bg-[#F4FF54] text-black py-2.5 px-6 sm:px-8 text-sm sm:text-base rounded-md border flex gap-1 items-center group hover:shadow-[0_0_20px_#F4FF54] transition-all duration-300">
-          <span className="relative z-10 flex items-center gap-1">
+          <Link
+            to="/problems"
+            className="relative z-10 flex items-center gap-1 cursor-pointer"
+          >
             Get Started <ArrowUpRight size={20} color="black" />
-          </span>
+          </Link>
           <span className="absolute inset-0 bg-gradient-to-r from-yellow-300 via-yellow-200 to-yellow-400 opacity-0 group-hover:opacity-100 blur-lg transition-all duration-500"></span>
         </button>
       </motion.div>

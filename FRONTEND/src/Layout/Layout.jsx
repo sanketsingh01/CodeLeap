@@ -17,6 +17,7 @@ import ProblemPage from "../pages/ProblemPage.jsx";
 import AllPlaylistsPage from "../pages/PlaylistsPage.jsx";
 import PlaylistDetailpage from "../pages/PlaylistDetailpage.jsx";
 import Profile from "../pages/Profile.jsx";
+import NotFoundPage from "../pages/NotFoundPage.jsx";
 
 const Layout = () => {
   const { authUser, checkAuth, isCheckingAuth, refreshToken } = useAuthStore();
@@ -80,6 +81,9 @@ const Layout = () => {
             element={authUser ? <AddProblem /> : <Navigate to="/" />}
           />
         </Route>
+
+        <Route path="/404" element={<NotFoundPage />} />
+        <Route path="*" element={<Navigate to="/404" />} />
       </Routes>
     </div>
   );

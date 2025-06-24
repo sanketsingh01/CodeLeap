@@ -57,7 +57,7 @@ export default function Navbar() {
         </Link>
 
         {/* Center - Nav Links (Desktop) */}
-        <div className="hidden text-base md:flex items-center space-x-6 flex-1 justify-center">
+        <div className="hidden text-base md:flex items-center space-x-8 flex-1 justify-center">
           <div className="hover:text-[#F4FF54] cursor-pointer flex gap-4">
             <Link to="/problems">Problems</Link>
           </div>

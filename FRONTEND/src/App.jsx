@@ -6,7 +6,7 @@ import Layout from "./Layout/Layout.jsx";
 
 const App = () => {
   const location = useLocation();
-  const hideHeaderFooterRoutes = ["/login", "/signup"];
+  const hideHeaderFooterRoutes = ["/login", "/signup", "/404"];
 
   const shouldHideHeaderFooter = hideHeaderFooterRoutes.includes(
     location.pathname.toLowerCase()

@@ -1,4 +1,5 @@
 import React, { useRef } from "react";
+import { Link } from "react-router-dom";
 import { motion, useInView } from "framer-motion";
 import CodingImg1 from "../assets/CodingImg1.webp";
 import CodingImg2 from "../assets/CodingImg2.webp";
@@ -168,12 +169,15 @@ export default function CodingJourney() {
               30+
             </h2>
             <p className="text-white">
-              More than 30+ challenges are currently active on the platform
-              worldwide.
+              More than 30+ questions from the top companies & Leetcode premimum
+              are avaliable.
             </p>
-            <button className="border border-white px-6 py-2 rounded-full hover:bg-white hover:text-black transition">
+            <Link
+              to="/problems"
+              className="border border-white px-6 py-2 rounded-full hover:bg-white hover:text-black transition"
+            >
               See More
-            </button>
+            </Link>
           </motion.div>
         </div>
       </div>

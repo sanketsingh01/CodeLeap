@@ -10,8 +10,8 @@ const Pricing = () => {
 
   const prices = {
     free: "$0",
-    pro: isAnnual ? "$39" : "$9",
-    enterprise: isAnnual ? "$249" : "$25",
+    pro: "$39",
+    enterprise: "$249",
   };
 
   const features = {
@@ -21,32 +21,18 @@ const Pricing = () => {
       "✓ 1 private project",
       "✓ Basic analytics dashboard",
     ],
-    pro: isAnnual
-      ? [
-          "✓ 1M API calls/year",
-          "✓ Priority email & chat support",
-          "✓ 50 private projects",
-          "✓ Team collaboration tools",
-        ]
-      : [
-          "✓ 100k API calls/month",
-          "✓ Priority email support",
-          "✓ 10 private projects",
-          "✓ Team management tools",
-        ],
-    enterprise: isAnnual
-      ? [
-          "✓ Unlimited API calls",
-          "✓ Dedicated success manager",
-          "✓ Unlimited private projects",
-          "✓ Custom onboarding & training",
-        ]
-      : [
-          "✓ 1M API calls/month",
-          "✓ Account manager access",
-          "✓ 100 private projects",
-          "✓ Integration support",
-        ],
+    pro: [
+      "✓ 1M API calls/year",
+      "✓ Priority email & chat support",
+      "✓ 50 private projects",
+      "✓ Team collaboration tools",
+    ],
+    enterprise: [
+      "✓ Unlimited API calls",
+      "✓ Dedicated success manager",
+      "✓ Unlimited private projects",
+      "✓ Custom onboarding & training",
+    ],
   };
 
   return (
@@ -57,29 +43,6 @@ const Pricing = () => {
       <span className="inter-Regular text-lg md:text-xl">
         Get started with a CodeLeap Subscription that works for you.
       </span>
-      {/* Toggle Switch */}
-      <div className="flex flex-col items-center lg:flex-row justify-center mt-6 sm:mt-8 space-y-4 lg:space-y-0 lg:space-x-4 relative">
-        <div className="relative w-58 h-12 bg-black rounded-md flex items-center overflow-hidden">
-          <div
-            id="toggleSlider"
-            className={`absolute top-1 ${
-              isAnnual ? "left-[calc(50%+0.5rem)]" : "left-1"
-            } w-[calc(50%-0.5rem)] h-10 bg-[#F4FF54] rounded-md transition-all duration-300 ease-in-out z-0`}
-          ></div>
-          <button
-            onClick={() => toggleBilling("monthly")}
-            className="w-1/2 z-10 text-center text-sm font-medium text-gray-500 relative hover:text-white cursor-pointer"
-          >
-            Monthly
-          </button>
-          <button
-            onClick={() => toggleBilling("annual")}
-            className="w-1/2 z-10 text-center text-sm font-medium text-gray-500 relative hover:text-white cursor-pointer"
-          >
-            Annual
-          </button>
-        </div>
-      </div>
 
       {/* Pricing Cards */}
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6 w-full max-w-7xl mx-auto px-4 sm:px-6 mb-12 sm:mb-16 mt-8">
