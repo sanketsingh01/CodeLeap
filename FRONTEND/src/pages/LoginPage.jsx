@@ -4,6 +4,7 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { Link } from "react-router-dom";
 import { Code, Eye, EyeOff, Loader2, Lock, Mail } from "lucide-react";
 import { useNavigate } from "react-router-dom";
+import google from "./assets/google.svg";
 
 import { z } from "zod";
 import AuthImagePattern from "../componenets/AuthImagePattern.jsx";
@@ -122,6 +123,29 @@ const LoginPage = () => {
                 "Sign In"
               )}
             </button>
+
+            {/* Divider */}
+            <div className="relative text-center my-4">
+              <span className="absolute left-0 top-1/2 w-full border-t border-zinc-700 transform -translate-y-1/2" />
+              <span className="bg-zinc-900 px-2 text-sm text-gray-400 relative z-10">
+                or
+              </span>
+            </div>
+
+            {/* Google Sign-in */}
+            <div className="flex items-center justify-center">
+              <a
+                href={`http://localhost:3000/api/v1/auth/google`}
+                className="w-full py-2 rounded-lg font-semibold text-white bg-blue-600 hover:bg-blue-600/80 transition flex items-center justify-center gap-2 cursor-pointer"
+              >
+                <img
+                  src={google}
+                  alt="Google"
+                  className="w-6 h-6 bg-white mr-2"
+                />
+                Continue with Google
+              </a>
+            </div>
           </form>
 
           <p className="text-center text-base text-gray-400">

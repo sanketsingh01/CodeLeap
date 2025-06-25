@@ -6,6 +6,7 @@ import { Code, Eye, EyeOff, Loader2, Lock, Mail } from "lucide-react";
 import { z } from "zod";
 import AuthImagePattern from "../componenets/AuthImagePattern.jsx";
 import { useAuthStore } from "../store/useAuthStore.js";
+import google from "./assets/google.svg";
 
 const SignUpSchema = z.object({
   email: z.string().email("Enter a valid email"),
@@ -47,9 +48,6 @@ const SignUpPage = () => {
               <h1 className="text-4xl font-extrabold tracking-tight">
                 Welcome
               </h1>
-              <p className="text-base text-gray-400">
-                Create your account below
-              </p>
             </div>
           </div>
 
@@ -132,7 +130,7 @@ const SignUpPage = () => {
 
             <button
               type="submit"
-              className="w-full py-2 rounded-lg font-semibold bg-[#F4FF54] text-black hover:bg-[#F4FF54]/90 transition flex items-center justify-center gap-2"
+              className="w-full py-2 rounded-lg font-semibold bg-[#F4FF54] text-black hover:bg-[#F4FF54]/90 transition flex items-center justify-center gap-2 cursor-pointer"
               disabled={isSigninUp}
             >
               {isSigninUp ? (
@@ -142,6 +140,28 @@ const SignUpPage = () => {
               ) : (
                 "Sign Up"
               )}
+            </button>
+
+            <div className="flex items-center justify-center gap-2">
+              <div className="h-[1px] bg-zinc-700 w-full" />
+              <span className="text-zinc-400 text-sm">or</span>
+              <div className="h-[1px] bg-zinc-700 w-full" />
+            </div>
+
+            <button
+              type="button"
+              onClick={() =>
+                (window.location.href =
+                  "http://localhost:3000/api/v1/auth/google")
+              }
+              className="w-full py-2 rounded-lg font-semibold text-white bg-blue-600 hover:bg-blue-600/80 transition flex items-center justify-center gap-2 cursor-pointer"
+            >
+              <img
+                src={google}
+                alt="Google logo"
+                className="w-6 h-6 bg-white"
+              />
+              Continue with Google
             </button>
           </form>
 

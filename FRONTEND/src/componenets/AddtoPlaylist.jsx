@@ -91,7 +91,7 @@ const AddtoPlaylist = ({ isOpen, onClose, problemId }) => {
             </button>
             <button
               type="submit"
-              className="px-5 py-2 text-sm font-semibold bg-yellow-400 text-black rounded-lg hover:bg-yellow-300 transition flex items-center gap-2"
+              className="px-5 py-2 text-sm font-semibold bg-yellow-400 text-black rounded-lg hover:bg-yellow-300 transition flex items-center gap-2 cursor-pointer"
               disabled={!selectedPlaylist || isLoading}
             >
               {isLoading ? (

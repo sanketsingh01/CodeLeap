@@ -3,10 +3,14 @@ import dotenv from 'dotenv';
 import userAuthRoutes from './routes/userAuth.routes.js';
 import cors from 'cors';
 import cookieParser from 'cookie-parser';
+import session from 'express-session';
+import passport from 'passport';
+
 import problemRoutes from './routes/problem.routes.js';
 import executionRoute from './routes/execute-code.routes.js';
 import submissionRoutes from './routes/submission.routes.js';
 import playlistRoutes from './routes/playlist.routes.js';
+import './utils/passort.js';
 
 dotenv.config();
 
@@ -20,9 +24,18 @@ app.use(
     allowheaders: ['Content-Type', 'Authorization'],
   }),
 );
+app.use(
+  session({
+    secret: process.env.SESSION_SECRET,
+    resave: false,
+    saveUninitialized: false,
+  }),
+);
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(cookieParser());
+app.use(passport.initialize());
+app.use(passport.session());
 
 app.get('/', (req, res) => {
   res.send('Hi, Welocome to LeapCode 🔥');

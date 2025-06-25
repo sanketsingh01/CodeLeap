@@ -269,6 +269,55 @@ const login = async (req, res) => {
   }
 };
 
+const googleLogin = async (req, res) => {
+  const user = req.user;
+
+  try {
+    if (!user) {
+      throw new ApiError(401, 'User not Found');
+    }
+
+    const accessToken = generateAccessToken(user);
+    const refreshToken = generateRefreshToken(user);
+
+    await db.user.update({
+      where: {
+        id: user.id,
+      },
+      data: {
+        accessToken,
+        refreshToken,
+      },
+    });
+
+    const AccessCookieOptions = {
+      httpOnly: true,
+      samesite: 'strict',
+      secure: process.env.NODE_ENV !== 'development',
+      maxAge: 1000 * 60 * 15, // 15 minutes
+    };
+
+    const RefreshCookieOptions = {
+      httpOnly: true,
+      samesite: 'strict',
+      secure: process.env.NODE_ENV !== 'development',
+      maxAge: 1000 * 60 * 60 * 24 * 7, // 7 days
+    };
+
+    res.cookie('accessToken', accessToken, AccessCookieOptions);
+    res.cookie('refreshToken', refreshToken, RefreshCookieOptions);
+
+    res.redirect(`${process.env.FONTEND_URL}/problems`);
+  } catch (error) {
+    console.log(error);
+    return res
+      .status(400)
+      .json(
+        new ApiError(400, 'Internall error Occured while logging in', error),
+      );
+  }
+};
+
 const TokenRefresh = async (req, res) => {
   try {
     console.log(req.cookies);
@@ -391,4 +440,12 @@ const check = async (req, res) => {
   }
 };
 
-export { register, verifyUser, login, TokenRefresh, logout, check };
+export {
+  register,
+  verifyUser,
+  login,
+  TokenRefresh,
+  logout,
+  check,
+  googleLogin,
+};
