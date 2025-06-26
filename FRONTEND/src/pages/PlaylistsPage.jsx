@@ -29,9 +29,15 @@ const AllPlaylistsPage = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [selectedPlaylist, setSelectedPlaylist] = useState(null);
   const [isCreateModalOpen, setIsCreateModalOpen] = useState(false);
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    getAllPlaylists();
+    const fetchPlaylists = async () => {
+      setLoading(true);
+      await getAllPlaylists();
+      setLoading(false);
+    };
+    fetchPlaylists();
   }, []);
 
   useEffect(() => {
@@ -61,6 +67,17 @@ const AllPlaylistsPage = () => {
   const handleCreatePlaylist = async (data) => {
     await createPlaylist(data);
   };
+
+  if (loading) {
+    return (
+      <div className="min-h-screen flex items-center justify-center bg-black text-white">
+        <div className="text-center space-y-4">
+          <div className="w-10 h-10 border-4 border-yellow-400 border-dashed rounded-full animate-spin mx-auto"></div>
+          <p className="text-lg font-semibold">Fetching playlists...</p>
+        </div>
+      </div>
+    );
+  }
 
   return (
     <div className="min-h-screen py-16 px-6 bg-gradient-to-br from-black via-zinc-900 to-black text-white mt-10">

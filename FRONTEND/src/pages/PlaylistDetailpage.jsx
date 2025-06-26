@@ -48,9 +48,22 @@ const PlaylistDetailsPage = () => {
     }));
   }, [currentPlaylist, solvedProblems]);
 
+  const isLoading = !currentPlaylist || isProblemsLoading;
+
   const solved = problemsWithSolved.filter((p) => p.solved).length;
   const total = problemsWithSolved.length;
   const solvedPercent = total ? Math.floor((solved / total) * 100) : 0;
+
+  if (isLoading) {
+    return (
+      <div className="min-h-screen flex items-center justify-center bg-black text-white">
+        <div className="text-center space-y-4">
+          <Loader2 className="w-10 h-10 animate-spin mx-auto text-yellow-400" />
+          <p className="text-lg font-semibold">Loading problems...</p>
+        </div>
+      </div>
+    );
+  }
 
   return !currentPlaylist ? (
     <div className="text-white p-6 mt-17 flex items-center justify-center">
