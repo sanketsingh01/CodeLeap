@@ -39,6 +39,7 @@ const ProblemPage = () => {
   const [testCases, setTestCases] = useState([]);
   const [activeTestCase, setActiveTestCase] = useState(0);
   const [activeResultTab, setActiveResultTab] = useState("testcases");
+  const [cooldown, setCooldown] = useState(0);
 
   const { executeCode, submission, isExecuting, clearSubmission } =
     useExecutionStore();
@@ -48,7 +49,26 @@ const ProblemPage = () => {
     getSubmissionCountForProblem(id);
   }, [id]);
 
-  // Initialize code when problem loads or language changes
+  const startCooldown = () => {
+    setCooldown(30);
+  };
+
+  useEffect(() => {
+    if (cooldown === 0) return;
+
+    const timer = setInterval(() => {
+      setCooldown((prev) => {
+        if (prev <= 1) {
+          clearInterval(timer);
+          return 0;
+        }
+        return prev - 1;
+      });
+    }, 1000);
+
+    return () => clearInterval(timer);
+  }, [cooldown]);
+
   useEffect(() => {
     if (problem) {
       // Set default language to JAVASCRIPT if it exists in codeSnippet
@@ -57,7 +77,6 @@ const ProblemPage = () => {
         ? "JAVASCRIPT"
         : availableLanguages[0] || "JAVASCRIPT";
 
-      // Only update selectedLanguage if it's the initial load (when code is empty)
       if (
         !code &&
         selectedLanguage === "JAVASCRIPT" &&
@@ -66,7 +85,6 @@ const ProblemPage = () => {
         setSelectedLanguage(defaultLanguage);
       }
 
-      // Set the code for the current language
       const currentCode = problem.codeSnippet?.[selectedLanguage] || "";
       setCode(currentCode);
 
@@ -104,6 +122,12 @@ const ProblemPage = () => {
     };
   }, [id]);
 
+  useEffect(() => {
+    if (submission) {
+      setActiveResultTab("results");
+    }
+  }, [submission]);
+
   console.log("Submission: ", submissions);
 
   const handleLanguageChange = (e) => {
@@ -114,12 +138,15 @@ const ProblemPage = () => {
 
   const handleRunCode = (e) => {
     e.preventDefault();
+    if (cooldown > 0) return;
+
     try {
       const language_id = getLanguageId(selectedLanguage);
       const stdin = problem.testcases.map((tc) => tc.input);
       const expected_outputs = problem.testcases.map((tc) => tc.output);
 
       executeCode(code, language_id, stdin, expected_outputs, id, false);
+      startCooldown();
     } catch (error) {
       console.log("Error running code: ", error);
     }
@@ -127,12 +154,15 @@ const ProblemPage = () => {
 
   const handleSubmitCode = (e) => {
     e.preventDefault();
+    if (cooldown > 0) return;
+
     try {
       const language_id = getLanguageId(selectedLanguage);
       const stdin = problem.testcases.map((tc) => tc.input);
       const expected_outputs = problem.testcases.map((tc) => tc.output);
 
       executeCode(code, language_id, stdin, expected_outputs, id, true);
+      startCooldown();
     } catch (error) {
       console.log("Error submitting code: ", error);
     }
@@ -148,33 +178,50 @@ const ProblemPage = () => {
 
   return (
     <div className="min-h-screen text-white mt-20 px-6">
-      <nav className="flex items-center justify-between py-4 border-b border-zinc-700">
-        <div className="flex items-center gap-2">
-          <h1 className="text-xl font-bold">{problem.title}</h1>
+      <nav className="flex flex-col md:flex-row justify-between items-start md:items-center gap-4 py-4 border-b border-zinc-700">
+        {/* Problem Title */}
+        <div className="flex items-center gap-3">
+          <FileText className="w-6 h-6 text-[#F4FF54]" />
+          <h1 className="text-2xl font-bold tracking-wide text-white">
+            {problem.title}
+          </h1>
         </div>
-        <div className="flex items-center gap-4">
+
+        {/* Right Options */}
+        <div className="flex flex-wrap items-center gap-3">
+          {/* Bookmark Button */}
           <button
             onClick={() => setIsBookmarked(!isBookmarked)}
-            className="btn btn-ghost"
+            className={`rounded-lg px-3 py-2 text-sm font-medium flex items-center gap-2 transition-all ${
+              isBookmarked
+                ? "bg-yellow-400/20 text-yellow-300 border border-yellow-300"
+                : "hover:bg-zinc-700 text-zinc-300 border border-transparent"
+            }`}
           >
-            <Bookmark
-              className={`w-5 h-5 ${isBookmarked ? "text-yellow-400" : ""}`}
-            />
+            <Bookmark className="w-4 h-4" />
+            {isBookmarked ? "Bookmarked" : "Bookmark"}
           </button>
-          <button className="btn btn-ghost">
-            <Share2 className="w-5 h-5" />
+
+          {/* Share Button */}
+          <button className="rounded-lg px-3 py-2 text-sm font-medium flex items-center gap-2 hover:bg-zinc-700 text-zinc-300 transition-all">
+            <Share2 className="w-4 h-4" />
+            Share
           </button>
-          <select
-            value={selectedLanguage}
-            onChange={handleLanguageChange}
-            className="select select-bordered select-base w-40 bg-zinc-800 border-zinc-600 text-white"
-          >
-            {Object.keys(problem.codeSnippet || {}).map((lang) => (
-              <option key={lang} value={lang}>
-                {lang.toUpperCase()}
-              </option>
-            ))}
-          </select>
+
+          {/* Language Selector */}
+          <div className="relative">
+            <select
+              value={selectedLanguage}
+              onChange={handleLanguageChange}
+              className="select select-bordered bg-zinc-800 border-zinc-600 text-white text-sm px-3 py-2 rounded-lg"
+            >
+              {Object.keys(problem.codeSnippet || {}).map((lang) => (
+                <option key={lang} value={lang}>
+                  {lang.toUpperCase()}
+                </option>
+              ))}
+            </select>
+          </div>
         </div>
       </nav>
 
@@ -302,10 +349,12 @@ const ProblemPage = () => {
                 <button
                   onClick={handleRunCode}
                   className="btn btn-base bg-[#F4FF54] text-black hover:bg-[#F4FF54]/80"
-                  disabled={isExecuting}
+                  disabled={isExecuting || cooldown > 0}
                 >
                   {isExecuting ? (
                     "Running..."
+                  ) : cooldown > 0 ? (
+                    `Wait ${cooldown}s`
                   ) : (
                     <>
                       <Play className="w-4 h-4 mr-1" />
@@ -316,9 +365,17 @@ const ProblemPage = () => {
                 <button
                   onClick={handleSubmitCode}
                   className="btn btn-base btn-success"
-                  disabled={isExecuting}
+                  disabled={isExecuting || cooldown > 0}
                 >
-                  <BugPlayIcon className="w-5 h-5 mr-1" /> Submit
+                  {isExecuting ? (
+                    "Submitting..."
+                  ) : cooldown > 0 ? (
+                    `Wait ${cooldown}s`
+                  ) : (
+                    <>
+                      <BugPlayIcon className="w-5 h-5 mr-1" /> Submit
+                    </>
+                  )}
                 </button>
               </div>
             </div>

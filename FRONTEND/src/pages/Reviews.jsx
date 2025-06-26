@@ -46,7 +46,7 @@ const Reviews = () => {
 
   return (
     <>
-      <div className="bg-transparent text-white font-poppins flex justify-between items-center gap-32 px-6 sm:px-12 md:px-24 lg:px-36 w-full py-24">
+      <div className="bg-[#131313] text-white font-poppins flex justify-between items-center gap-24 px-6 max-w-7xl py-8 rounded-xl">
         {/* Left text */}
         <div className="flex flex-col justify-center items-start min-w-[300px] gap-4">
           <span className="text-sm">WHAT CLIENTS ARE SAYING</span>
@@ -77,7 +77,7 @@ const Reviews = () => {
               {visibleReviews.map((review, idx) => (
                 <div
                   key={idx}
-                  className="bg-[#131313] text-white flex flex-col items-start justify-center px-8 py-2 gap-4 w-full h-[300px] rounded-2xl"
+                  className="bg-black text-white flex flex-col items-start justify-center px-8 py-2 gap-4 w-full h-[300px] rounded-2xl"
                 >
                   <span className="text-2xl">"{review.text}"</span>
                   <div className="flex justify-start">

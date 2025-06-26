@@ -8,7 +8,7 @@ import Reviews from "./Reviews.jsx";
 
 const Home = () => {
   return (
-    <div className="w-full">
+    <div className="w-full flex flex-col items-center">
       <Hero />
       <FeatureGrid />
       <CodingJourney />

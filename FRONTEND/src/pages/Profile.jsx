@@ -412,7 +412,7 @@ const Profile = ({ user }) => {
                     ) : (
                       <tr>
                         <td
-                          colSpan={3}
+                          colSpan={4}
                           className="text-center py-12 text-gray-500"
                         >
                           <BookOpenCheck className="w-12 h-12 mx-auto mb-4 opacity-50" />
