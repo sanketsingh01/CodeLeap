@@ -20,7 +20,7 @@ const PORT = process.env.PORT || 3000;
 
 app.use(
   cors({
-    origin: 'http://localhost:5173',
+    origin: process.env.FONTEND_URL,
     credentials: true,
     methods: ['GET', 'PUSH', 'PUT', 'PATCH', 'DELETE'],
     allowheaders: ['Content-Type', 'Authorization'],
