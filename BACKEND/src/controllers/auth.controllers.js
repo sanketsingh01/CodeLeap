@@ -307,7 +307,9 @@ const googleLogin = async (req, res) => {
     res.cookie('accessToken', accessToken, AccessCookieOptions);
     res.cookie('refreshToken', refreshToken, RefreshCookieOptions);
 
-    res.redirect(`${process.env.FONTEND_URL}/problems`);
+    res.redirect(
+      `${process.env.FONTEND_URL}/problems?accessToken=${accessToken}&refreshToken=${refreshToken}`,
+    );
   } catch (error) {
     console.log(error);
     return res
