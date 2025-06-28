@@ -22,10 +22,11 @@ app.use(
   cors({
     origin: process.env.FONTEND_URL,
     credentials: true,
-    methods: ['GET', 'PUSH', 'PUT', 'PATCH', 'DELETE', 'OPTIONS'],
-    allowheaders: ['Content-Type', 'Authorization'],
+    methods: ['GET', 'POST', 'PUT', 'PATCH', 'DELETE', 'OPTIONS'],
+    allowedHeaders: ['Content-Type', 'Authorization'],
   }),
 );
+app.options('*', cors());
 app.use(
   session({
     secret: process.env.SESSION_SECRET,
