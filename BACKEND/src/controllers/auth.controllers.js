@@ -71,14 +71,14 @@ const register = async (req, res) => {
 
     const AccessCookieOptions = {
       httpOnly: true,
-      samesite: 'none',
+      sameSite: 'none',
       secure: true,
       maxAge: 1000 * 60 * 15, // 15 minutes
     };
 
     const RefreshCookieOptions = {
       httpOnly: true,
-      samesite: 'none',
+      sameSite: 'none',
       secure: true,
       maxAge: 1000 * 60 * 60 * 24 * 7, // 7 days
     };
@@ -230,14 +230,14 @@ const login = async (req, res) => {
 
     const AccessCookieOptions = {
       httpOnly: true,
-      samesite: 'none',
+      sameSite: 'none',
       secure: true,
       maxAge: 1000 * 60 * 15, // 15 minutes
     };
 
     const RefreshCookieOptions = {
       httpOnly: true,
-      samesite: 'none',
+      sameSite: 'none',
       secure: true,
       maxAge: 1000 * 60 * 60 * 24 * 7, // 7 days
     };
@@ -292,14 +292,14 @@ const googleLogin = async (req, res) => {
 
     const AccessCookieOptions = {
       httpOnly: true,
-      samesite: 'none',
+      sameSite: 'none',
       secure: true,
       maxAge: 1000 * 60 * 15, // 15 minutes
     };
 
     const RefreshCookieOptions = {
       httpOnly: true,
-      samesite: 'none',
+      sameSite: 'none',
       secure: true,
       maxAge: 1000 * 60 * 60 * 24 * 7, // 7 days
     };
@@ -363,14 +363,14 @@ const TokenRefresh = async (req, res) => {
 
     const AccessCookieOptions = {
       httpOnly: true,
-      samesite: 'none',
+      sameSite: 'none',
       secure: true,
       maxAge: 1000 * 60 * 15, // 15 minutes
     };
 
     const RefreshCookieOptions = {
       httpOnly: true,
-      samesite: 'none',
+      sameSite: 'none',
       secure: true,
       maxAge: 1000 * 60 * 60 * 24 * 7, // 7 days
     };
@@ -403,12 +403,12 @@ const logout = async (req, res) => {
   try {
     res.clearCookie('accessToken', {
       httpOnly: true,
-      samesite: 'none',
+      sameSite: 'none',
       secure: true,
     });
     res.clearCookie('refreshToken', {
       httpOnly: true,
-      samesite: 'none',
+      sameSite: 'none',
       secure: true,
     });
 
