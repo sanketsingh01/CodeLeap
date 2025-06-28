@@ -1,7 +1,5 @@
 import React, { useEffect } from "react";
 import { Loader } from "lucide-react";
-import { useNavigate } from "react-router-dom";
-import Cookies from "js-cookie";
 
 import { useProblemStore } from "../store/useProblemStore.js";
 
@@ -11,33 +9,10 @@ import ProblemsTable from "../componenets/ProblemsTable.jsx";
 const ProblemsHome = () => {
   const { authUser } = useAuthStore();
   const { getAllProblems, problems, isProblemsLoading } = useProblemStore();
-  const navigate = useNavigate();
 
   useEffect(() => {
     getAllProblems();
   }, [getAllProblems]);
-
-  useEffect(() => {
-    const params = new URLSearchParams(window.location.search);
-    const accessToken = params.get("accessToken");
-    const refreshToken = params.get("refreshToken");
-
-    if (accessToken && refreshToken) {
-      Cookies.set("accessToken", accessToken, {
-        secure: true,
-        sameSite: "none",
-        expires: 0.0104, // roughly 15 minutes
-      });
-      Cookies.set("refreshToken", refreshToken, {
-        secure: true,
-        sameSite: "none",
-        expires: 7, // 7 days
-      });
-
-      // clean up the query params in the URL
-      window.history.replaceState({}, document.title, "/problems");
-    }
-  }, []);
 
   if (isProblemsLoading) {
     return (

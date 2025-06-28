@@ -290,9 +290,24 @@ const googleLogin = async (req, res) => {
       },
     });
 
-    res.redirect(
-      `${process.env.FONTEND_URL}/problems?accessToken=${accessToken}&refreshToken=${refreshToken}`,
-    );
+    const AccessCookieOptions = {
+      httpOnly: true,
+      sameSite: 'none',
+      secure: true,
+      maxAge: 1000 * 60 * 15, // 15 minutes
+    };
+
+    const RefreshCookieOptions = {
+      httpOnly: true,
+      sameSite: 'none',
+      secure: true,
+      maxAge: 1000 * 60 * 60 * 24 * 7, // 7 days
+    };
+
+    res.cookie('accessToken', accessToken, AccessCookieOptions);
+    res.cookie('refreshToken', refreshToken, RefreshCookieOptions);
+
+    res.redirect(`${process.env.FONTEND_URL}/problems`);
   } catch (error) {
     console.log(error);
     return res
