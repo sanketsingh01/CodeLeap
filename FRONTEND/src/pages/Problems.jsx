@@ -1,7 +1,7 @@
 import React, { useEffect } from "react";
 import { Loader } from "lucide-react";
 import { useNavigate } from "react-router-dom";
-import Cookie from "js-cookie";
+import Cookies from "js-cookie";
 
 import { useProblemStore } from "../store/useProblemStore.js";
 
