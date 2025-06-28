@@ -18,22 +18,24 @@ const ProblemsHome = () => {
   }, [getAllProblems]);
 
   useEffect(() => {
-    const url = new URL(window.location.href);
-    const accessToken = url.searchParams.get("accessToken");
-    const refreshToken = url.searchParams.get("refreshToken");
+    const params = new URLSearchParams(window.location.search);
+    const accessToken = params.get("accessToken");
+    const refreshToken = params.get("refreshToken");
 
     if (accessToken && refreshToken) {
       Cookies.set("accessToken", accessToken, {
         secure: true,
         sameSite: "none",
-        expires: 0.0104, // 15 minutes
+        expires: 0.0104, // roughly 15 minutes
       });
       Cookies.set("refreshToken", refreshToken, {
         secure: true,
         sameSite: "none",
-        expires: 7,
+        expires: 7, // 7 days
       });
-      navigate("/problems"); // clean the URL
+
+      // clean up the query params in the URL
+      window.history.replaceState({}, document.title, "/problems");
     }
   }, []);
 

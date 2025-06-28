@@ -32,7 +32,10 @@ router.get('/check', authMiddleware, check);
 
 router.get(
   '/google',
-  passport.authenticate('google', { scope: ['profile', 'email'] }),
+  passport.authenticate('google', {
+    session: false,
+    scope: ['profile', 'email'],
+  }),
 );
 
 router.get(
