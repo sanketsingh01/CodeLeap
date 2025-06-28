@@ -22,7 +22,7 @@ app.use(
   cors({
     origin: process.env.FONTEND_URL,
     credentials: true,
-    methods: ['GET', 'PUSH', 'PUT', 'PATCH', 'DELETE'],
+    methods: ['GET', 'PUSH', 'PUT', 'PATCH', 'DELETE', 'OPTIONS'],
     allowheaders: ['Content-Type', 'Authorization'],
   }),
 );
