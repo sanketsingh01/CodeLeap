@@ -33,7 +33,6 @@ router.get('/check', authMiddleware, check);
 router.get(
   '/google',
   passport.authenticate('google', {
-    session: false,
     scope: ['profile', 'email'],
   }),
 );
@@ -41,7 +40,6 @@ router.get(
 router.get(
   '/google/callback',
   passport.authenticate('google', {
-    session: false,
     failureRedirect: '/login',
   }),
   googleLogin,

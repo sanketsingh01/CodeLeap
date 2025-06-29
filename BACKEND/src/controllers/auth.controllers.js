@@ -321,7 +321,7 @@ const googleLogin = async (req, res) => {
     console.log('Session after:', req.session);
     console.log(
       'Cookies set, redirecting to:',
-      `${process.env.FRONTEND_URL}/problems`,
+      `${process.env.FONTEND_URL}/problems`,
     );
 
     res.redirect(`${process.env.FONTEND_URL}/problems`);
