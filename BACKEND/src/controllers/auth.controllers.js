@@ -290,17 +290,19 @@ const googleLogin = async (req, res) => {
       },
     });
 
+    const isProduction = process.env.NODE_ENV === 'production';
+
     const AccessCookieOptions = {
       httpOnly: true,
-      sameSite: 'none',
-      secure: true,
+      sameSite: isProduction ? 'none' : 'lax',
+      secure: isProduction,
       maxAge: 1000 * 60 * 15, // 15 minutes
     };
 
     const RefreshCookieOptions = {
       httpOnly: true,
-      sameSite: 'none',
-      secure: true,
+      sameSite: isProduction ? 'none' : 'lax',
+      secure: isProduction,
       maxAge: 1000 * 60 * 60 * 24 * 7, // 7 days
     };
 

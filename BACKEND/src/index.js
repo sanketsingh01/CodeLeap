@@ -5,6 +5,7 @@ import cors from 'cors';
 import cookieParser from 'cookie-parser';
 import session from 'express-session';
 import passport from 'passport';
+import pgSession from 'connect-pg-simple';
 
 import problemRoutes from './routes/problem.routes.js';
 import executionRoute from './routes/execute-code.routes.js';
@@ -17,6 +18,9 @@ dotenv.config();
 const app = express();
 
 const PORT = process.env.PORT || 3000;
+const isProduction = process.env.NODE_ENV === 'production';
+
+const pgStore = pgSession(session);
 
 app.use(
   cors({
@@ -31,6 +35,19 @@ app.use(
     secret: process.env.SESSION_SECRET,
     resave: false,
     saveUninitialized: false,
+    store: isProduction
+      ? new pgStore({
+          conString: process.env.DATABASE_URL,
+          tableName: 'user_sessions',
+          createTableIfMissing: true,
+        })
+      : undefined,
+    cookie: {
+      secure: isProduction,
+      httpOnly: true,
+      maxAge: 1000 * 60 * 60 * 24 * 7, // 7 days
+      sameSite: isProduction ? 'none' : 'lax',
+    },
   }),
 );
 app.use(express.json());
