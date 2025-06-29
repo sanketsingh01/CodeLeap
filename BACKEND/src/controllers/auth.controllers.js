@@ -273,6 +273,12 @@ const googleLogin = async (req, res) => {
   const user = req.user;
 
   try {
+    console.log('=== GOOGLE LOGIN DEBUG ===');
+    console.log('User from req.user:', user);
+    console.log('Session ID:', req.sessionID);
+    console.log('Session before:', req.session);
+    console.log('Is Authenticated:', req.isAuthenticated());
+
     if (!user) {
       throw new ApiError(401, 'User not Found');
     }
@@ -289,6 +295,9 @@ const googleLogin = async (req, res) => {
         refreshToken,
       },
     });
+
+    req.session.userId = user.id;
+    req.session.isLoggedIn = true;
 
     const isProduction = process.env.NODE_ENV === 'production';
 
@@ -308,6 +317,12 @@ const googleLogin = async (req, res) => {
 
     res.cookie('accessToken', accessToken, AccessCookieOptions);
     res.cookie('refreshToken', refreshToken, RefreshCookieOptions);
+
+    console.log('Session after:', req.session);
+    console.log(
+      'Cookies set, redirecting to:',
+      `${process.env.FRONTEND_URL}/problems`,
+    );
 
     res.redirect(`${process.env.FONTEND_URL}/problems`);
   } catch (error) {
