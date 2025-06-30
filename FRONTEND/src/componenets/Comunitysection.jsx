@@ -63,7 +63,7 @@ const Comunitysection = () => {
             <FaGithub className="hover:text-[#F4FF54] transition duration-300" />
           </a>
           <a
-            href="https://discord.gg/UCq2KhfZ"
+            href="https://discord.gg/EbhvYvCV"
             target="_blank"
             rel="noopener noreferrer"
           >

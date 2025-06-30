@@ -1,4 +1,6 @@
 import React from "react";
+import { Link } from "react-router-dom";
+
 import "../index.css";
 import { FaXTwitter, FaGithub, FaDiscord, FaLinkedin } from "react-icons/fa6";
 
@@ -24,19 +26,19 @@ const Footer = () => {
           <h4 className="inter-Regular font-semibold mb-3 text-xl">Links</h4>
           <ul className="space-y-2 text-base text-gray-300">
             <li>
-              <a href="/FAQ" className="hover:text-white">
+              <Link to="/FAQ" className="hover:text-white">
                 FAQs
-              </a>
+              </Link>
             </li>
             <li>
-              <a href="/Pricing" className="hover:text-white">
+              <Link to="/Pricing" className="hover:text-white">
                 Pricing
-              </a>
+              </Link>
             </li>
             <li>
-              <a href="/About" className="hover:text-white">
+              <Link to="/About" className="hover:text-white">
                 About
-              </a>
+              </Link>
             </li>
           </ul>
         </div>
@@ -48,22 +50,22 @@ const Footer = () => {
           </h4>
           <ul className="space-y-2 text-base text-gray-300">
             <li>
-              <a href="#" target="_blank" className="hover:text-white">
+              <a href="!#" className="hover:text-white">
                 Terms of Service
               </a>
             </li>
             <li>
-              <a href="#" target="_blank" className="hover:text-white">
+              <a href="!#" className="hover:text-white">
                 Updates
               </a>
             </li>
             <li>
-              <a href="#" target="_blank" className="hover:text-white">
+              <a href="!#" className="hover:text-white">
                 Blog
               </a>
             </li>
             <li>
-              <a href="#" target="_blank" className="hover:text-white">
+              <a href="!#" className="hover:text-white">
                 Tutorials
               </a>
             </li>
@@ -75,12 +77,12 @@ const Footer = () => {
           <h4 className="inter-Regular font-semibold mb-3 text-xl">Connect</h4>
           <ul className="space-y-2 text-base text-gray-300">
             <li>
-              <a href="#" target="_blank" className="hover:text-white">
+              <a href="!#" className="hover:text-white">
                 Feedback
               </a>
             </li>
             <li>
-              <a href="#" target="_blank" className="hover:text-white">
+              <a href="!#" className="hover:text-white">
                 Guides
               </a>
             </li>
@@ -105,7 +107,7 @@ const Footer = () => {
             </li>
             <li>
               <a
-                href="https://discord.gg/UCq2KhfZ"
+                href="https://discord.gg/EbhvYvCV"
                 target="_blank"
                 className="hover:text-white"
               >
@@ -147,7 +149,7 @@ const Footer = () => {
             <FaGithub className="hover:text-[#F4FF54] transition duration-300" />
           </a>
           <a
-            href="https://discord.gg/UCq2KhfZ"
+            href="https://discord.gg/EbhvYvCV"
             target="_blank"
             rel="noopener noreferrer"
           >

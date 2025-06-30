@@ -12,8 +12,12 @@ import {
   Terminal,
   Code2,
   BugPlayIcon,
+  CheckCircle,
+  XCircle,
+  Clock,
+  ArrowRight,
 } from "lucide-react";
-import { RemoveScrollBar } from "react-remove-scroll-bar";
+import { toast } from "react-hot-toast";
 
 import { useProblemStore } from "../store/useProblemStore.js";
 import { useExecutionStore } from "../store/useExecutionStore.js";
@@ -21,6 +25,7 @@ import { getLanguageId } from "../lib/lang.js";
 import { useSubmissionStore } from "../store/useSubmissionStore.js";
 import SubmissionResults from "../componenets/Submission.jsx";
 import SubmissionList from "../componenets/SubmissionList.jsx";
+import AddtoPlaylist from "../componenets/AddtoPlaylist.jsx";
 
 const ProblemPage = () => {
   const { id } = useParams();
@@ -40,6 +45,9 @@ const ProblemPage = () => {
   const [activeTestCase, setActiveTestCase] = useState(0);
   const [activeResultTab, setActiveResultTab] = useState("testcases");
   const [cooldown, setCooldown] = useState(0);
+  const [selectedProblemId, setSelectedProblemId] = useState(null);
+  const [isAddToPlaylistModalOpen, setIsAddToPlaylistModalOpen] =
+    useState(false);
 
   const { executeCode, submission, isExecuting, clearSubmission } =
     useExecutionStore();
@@ -168,6 +176,22 @@ const ProblemPage = () => {
     }
   };
 
+  const handleBookmark = (problemId) => {
+    setSelectedProblemId(problemId);
+    console.log("Selected Problem: ", selectedProblemId);
+    setIsAddToPlaylistModalOpen(true);
+  };
+
+  const handleShare = () => {
+    try {
+      navigator.clipboard.writeText(window.location.href);
+      toast.success("Link copied to clipboard");
+    } catch (error) {
+      console.log("Failed to copy url: ", error);
+      toast.error("Failed to copy url");
+    }
+  };
+
   if (isProblemLoading || !problem) {
     return (
       <div className="min-h-screen flex items-center justify-center">
@@ -191,7 +215,10 @@ const ProblemPage = () => {
         <div className="flex flex-wrap items-center gap-3">
           {/* Bookmark Button */}
           <button
-            onClick={() => setIsBookmarked(!isBookmarked)}
+            onClick={() => {
+              handleBookmark(problem.id);
+              setIsBookmarked(!isBookmarked);
+            }}
             className={`rounded-lg px-3 py-2 text-sm font-medium flex items-center gap-2 transition-all ${
               isBookmarked
                 ? "bg-yellow-400/20 text-yellow-300 border border-yellow-300"
@@ -203,7 +230,10 @@ const ProblemPage = () => {
           </button>
 
           {/* Share Button */}
-          <button className="rounded-lg px-3 py-2 text-sm font-medium flex items-center gap-2 hover:bg-zinc-700 text-zinc-300 transition-all">
+          <button
+            onClick={handleShare}
+            className="rounded-lg px-3 py-2 text-sm font-medium flex items-center gap-2 hover:bg-zinc-700 text-zinc-300 transition-all"
+          >
             <Share2 className="w-4 h-4" />
             Share
           </button>
@@ -225,10 +255,9 @@ const ProblemPage = () => {
         </div>
       </nav>
 
-      <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 mt-6 max-h-[600px] overflow-y-auto ">
-        {/* <RemoveScrollBar /> */}
+      <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 mt-6 h-[calc(100vh-180px)]">
         {/* Problem Description Section */}
-        <div className="bg-zinc-800 rounded-xl p-6 shadow-lg">
+        <div className="bg-zinc-800 rounded-xl p-6 shadow-lg flex flex-col">
           <div className="relative flex justify-between mb-4 border-b border-zinc-700 pb-2 w-full">
             {["description", "submissions", "discussion", "hints"].map(
               (tab, index) => {
@@ -272,73 +301,78 @@ const ProblemPage = () => {
             />
           </div>
 
-          {activeTab === "description" && (
-            <div className="prose prose-invert max-w-none">
-              <h3 className="text-lg frot-semibold mb-1">Description:</h3>
-              <p>{problem.description}</p>
-              {problem.examples && (
-                <div className="mt-4">
-                  <h3 className="text-lg frot-semibold mb-2">Examples:</h3>
-                  {Object.entries(problem.examples).map(([lang, ex], idx) => (
-                    <div key={idx} className="bg-zinc-700 p-4 rounded-lg mb-4">
-                      <p>
-                        <strong>Input:</strong> <code>{ex.input}</code>
-                      </p>
-                      <p>
-                        <strong>Output:</strong> <code>{ex.output}</code>
-                      </p>
-                      {ex.explanation && (
+          <div className="flex-1 overflow-y-auto">
+            {activeTab === "description" && (
+              <div className="prose prose-invert max-w-none">
+                <h3 className="text-lg frot-semibold mb-1">Description:</h3>
+                <p>{problem.description}</p>
+                {problem.examples && (
+                  <div className="mt-4">
+                    <h3 className="text-lg frot-semibold mb-2">Examples:</h3>
+                    {Object.entries(problem.examples).map(([lang, ex], idx) => (
+                      <div
+                        key={idx}
+                        className="bg-zinc-700 p-4 rounded-lg mb-4"
+                      >
                         <p>
-                          <strong>Explanation:</strong> {ex.explanation}
+                          <strong>Input:</strong> <code>{ex.input}</code>
                         </p>
-                      )}
-                    </div>
-                  ))}
-                </div>
-              )}
-              {problem.constraints && (
-                <div className="mt-4">
-                  <h3>Constraints:</h3>
-                  <p>
-                    <code>{problem.constraints}</code>
-                  </p>
-                </div>
-              )}
-            </div>
-          )}
+                        <p>
+                          <strong>Output:</strong> <code>{ex.output}</code>
+                        </p>
+                        {ex.explanation && (
+                          <p>
+                            <strong>Explanation:</strong> {ex.explanation}
+                          </p>
+                        )}
+                      </div>
+                    ))}
+                  </div>
+                )}
+                {problem.constraints && (
+                  <div className="mt-4">
+                    <h3>Constraints:</h3>
+                    <p>
+                      <code>{problem.constraints}</code>
+                    </p>
+                  </div>
+                )}
+              </div>
+            )}
 
-          {activeTab === "submissions" && (
-            <SubmissionList
-              submissions={submissions}
-              isLoading={isSubmissionsLoading}
-            />
-          )}
+            {activeTab === "submissions" && (
+              <SubmissionList
+                submissions={submissions}
+                isLoading={isSubmissionsLoading}
+              />
+            )}
 
-          {activeTab === "discussion" && (
-            <div className="p-4 text-center text-base-content/70">
-              No discussions yet
-            </div>
-          )}
+            {activeTab === "discussion" && (
+              <div className="p-4 text-center text-base-content/70">
+                No discussions yet
+              </div>
+            )}
 
-          {activeTab === "hints" && (
-            <div className="p-4">
-              {problem?.hints ? (
-                <div className="bg-base-200 p-6 rounded-xl">
-                  <span className="bg-black/90 px-4 py-1 rounded-lg font-semibold text-white text-lg">
-                    {problem.hints}
-                  </span>
-                </div>
-              ) : (
-                <div className="text-center text-base-content/70">
-                  No hints available
-                </div>
-              )}
-            </div>
-          )}
+            {activeTab === "hints" && (
+              <div className="p-4">
+                {problem?.hints ? (
+                  <div className="bg-base-200 p-6 rounded-xl">
+                    <span className="bg-black/90 px-4 py-1 rounded-lg font-semibold text-white text-lg">
+                      {problem.hints}
+                    </span>
+                  </div>
+                ) : (
+                  <div className="text-center text-base-content/70">
+                    No hints available
+                  </div>
+                )}
+              </div>
+            )}
+          </div>
         </div>
 
         {/* Right Side - Code Editor and Test Cases/Results */}
-        <div className="flex flex-col gap-6">
+        <div className="flex flex-col gap-4">
           {/* Code Editor Section */}
           <div className="bg-zinc-800 rounded-xl overflow-hidden shadow-lg flex-1">
             <div className="bg-zinc-700 px-4 py-2 flex justify-between items-center">
@@ -381,7 +415,7 @@ const ProblemPage = () => {
             </div>
 
             <Editor
-              height="400px"
+              height="350px"
               language={selectedLanguage.toLowerCase()}
               theme="vs-dark"
               value={code}
@@ -390,80 +424,137 @@ const ProblemPage = () => {
             />
           </div>
 
-          {/* Test Cases and Results Section */}
+          {/* Enhanced Test Cases and Results Section */}
           <div className="bg-zinc-800 rounded-xl shadow-lg flex-1">
-            <div className="bg-zinc-700 px-4 py-2">
-              <div className="flex gap-4">
-                {["testcases", "results"].map((tab) => (
+            {/* Stylish Tab Header */}
+            <div className="bg-gradient-to-r from-zinc-700 to-zinc-600 px-4 py-3 relative">
+              <div className="flex gap-2">
+                {[
+                  { key: "testcases", label: "Test Cases", icon: Code2 },
+                  { key: "results", label: "Results", icon: CheckCircle },
+                ].map(({ key, label, icon: Icon }) => (
                   <button
-                    key={tab}
-                    onClick={() => setActiveResultTab(tab)}
-                    className={`px-4 py-2 rounded-md text-sm font-medium transition-all ${
-                      activeResultTab === tab
-                        ? "bg-[#F4FF54] text-black"
-                        : "bg-zinc-600 text-white hover:bg-zinc-500"
+                    key={key}
+                    onClick={() => setActiveResultTab(key)}
+                    className={`px-4 py-2 rounded-lg text-sm font-medium transition-all duration-300 flex items-center gap-2 ${
+                      activeResultTab === key
+                        ? "bg-[#F4FF54] text-black shadow-lg transform scale-105"
+                        : "bg-zinc-600/50 text-white hover:bg-zinc-500/50 hover:scale-102"
                     }`}
                   >
-                    {tab === "testcases" ? "Test Cases" : "Test Results"}
+                    <Icon className="w-4 h-4" />
+                    {label}
                   </button>
                 ))}
               </div>
             </div>
 
-            <div className="p-4 h-80 overflow-y-auto mt-2">
+            {/* Content Area */}
+            <div className="p-4 h-80">
               {activeResultTab === "results" && submission ? (
-                <SubmissionResults submission={submission} />
+                <div className="h-full">
+                  <SubmissionResults submission={submission} />
+                </div>
               ) : (
-                <>
-                  <div className="flex gap-3 mb-4 flex-wrap">
-                    {testCases.map((_, idx) => (
-                      <button
-                        key={idx}
-                        onClick={() => setActiveTestCase(idx)}
-                        className={`px-3 py-1 rounded-md text-lg font-medium transition-all cursor-pointer ${
-                          activeTestCase === idx
-                            ? "bg-[#F4FF54] text-black"
-                            : "bg-zinc-700 text-white hover:bg-zinc-600"
-                        }`}
-                      >
-                        Case {idx + 1}
-                      </button>
-                    ))}
+                <div className="h-full flex flex-col">
+                  {/* Enhanced Test Case Selector */}
+                  <div className="flex gap-2 mb-4 pb-3 border-b border-zinc-700">
+                    <div className="flex gap-2 flex-wrap flex-1">
+                      {testCases.map((_, idx) => (
+                        <button
+                          key={idx}
+                          onClick={() => setActiveTestCase(idx)}
+                          className={`px-4 py-2 rounded-lg text-sm font-semibold transition-all duration-200 flex items-center gap-2 ${
+                            activeTestCase === idx
+                              ? "bg-gradient-to-r from-[#F4FF54] to-yellow-300 text-black shadow-md transform scale-105"
+                              : "bg-zinc-700 text-white hover:bg-zinc-600 hover:scale-102"
+                          }`}
+                        >
+                          <div
+                            className={`w-2 h-2 rounded-full ${
+                              activeTestCase === idx
+                                ? "bg-black/30"
+                                : "bg-white/50"
+                            }`}
+                          />
+                          Case {idx + 1}
+                        </button>
+                      ))}
+                    </div>
+                    <div className="text-sm text-zinc-400 flex items-center">
+                      {testCases.length} test{testCases.length !== 1 ? "s" : ""}
+                    </div>
                   </div>
-                  <div className="bg-zinc-900 p-4 rounded-lg space-y-3 text-sm">
-                    <div>
-                      <span className="font-semibold text-emerald-400">
-                        Input:
-                      </span>{" "}
-                      <code className="text-white bg-zinc-800 px-2 py-1 rounded">
-                        {testCases[activeTestCase]?.input}
-                      </code>
-                    </div>
-                    <div>
-                      <span className="font-semibold text-blue-400">
-                        Expected Output:
-                      </span>{" "}
-                      <code className="text-white bg-zinc-800 px-2 py-1 rounded">
-                        {testCases[activeTestCase]?.output}
-                      </code>
-                    </div>
-                    {testCases[activeTestCase]?.explanation && (
-                      <div>
-                        <span className="font-semibold text-pink-400">
-                          Explanation:
-                        </span>{" "}
-                        <span className="text-white">
-                          {testCases[activeTestCase].explanation}
-                        </span>
+
+                  {/* Enhanced Test Case Display */}
+                  {testCases[activeTestCase] && (
+                    <div className="flex-1 bg-gradient-to-br from-zinc-900 to-zinc-800 rounded-xl p-6 space-y-6 border border-zinc-700/50">
+                      {/* Input Section */}
+                      <div className="group">
+                        <div className="flex items-center gap-3 mb-3">
+                          <div className="w-8 h-8 rounded-full bg-emerald-500/20 flex items-center justify-center">
+                            <ArrowRight className="w-4 h-4 text-emerald-400" />
+                          </div>
+                          <span className="font-semibold text-emerald-400 text-lg">
+                            Input
+                          </span>
+                        </div>
+                        <div className="bg-zinc-800/80 backdrop-blur-sm p-4 rounded-lg border border-emerald-500/20 group-hover:border-emerald-500/40 transition-colors">
+                          <code className="text-white font-mono text-base break-all">
+                            {testCases[activeTestCase]?.input}
+                          </code>
+                        </div>
                       </div>
-                    )}
-                  </div>
-                </>
+
+                      {/* Output Section */}
+                      <div className="group">
+                        <div className="flex items-center gap-3 mb-3">
+                          <div className="w-8 h-8 rounded-full bg-blue-500/20 flex items-center justify-center">
+                            <CheckCircle className="w-4 h-4 text-blue-400" />
+                          </div>
+                          <span className="font-semibold text-blue-400 text-lg">
+                            Expected Output
+                          </span>
+                        </div>
+                        <div className="bg-zinc-800/80 backdrop-blur-sm p-4 rounded-lg border border-blue-500/20 group-hover:border-blue-500/40 transition-colors">
+                          <code className="text-white font-mono text-base break-all">
+                            {testCases[activeTestCase]?.output}
+                          </code>
+                        </div>
+                      </div>
+
+                      {/* Explanation Section */}
+                      {testCases[activeTestCase]?.explanation && (
+                        <div className="group">
+                          <div className="flex items-center gap-3 mb-3">
+                            <div className="w-8 h-8 rounded-full bg-purple-500/20 flex items-center justify-center">
+                              <Lightbulb className="w-4 h-4 text-purple-400" />
+                            </div>
+                            <span className="font-semibold text-purple-400 text-lg">
+                              Explanation
+                            </span>
+                          </div>
+                          <div className="bg-zinc-800/80 backdrop-blur-sm p-4 rounded-lg border border-purple-500/20 group-hover:border-purple-500/40 transition-colors">
+                            <p className="text-white leading-relaxed">
+                              {testCases[activeTestCase].explanation}
+                            </p>
+                          </div>
+                        </div>
+                      )}
+                    </div>
+                  )}
+                </div>
               )}
             </div>
           </div>
         </div>
       </div>
+
+      <AddtoPlaylist
+        isOpen={isAddToPlaylistModalOpen}
+        onClose={() => setIsAddToPlaylistModalOpen(false)}
+        problemId={selectedProblemId}
+      />
     </div>
   );
 };

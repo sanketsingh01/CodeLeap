@@ -78,9 +78,9 @@ const About = () => {
             <span className="text-red-700">❤</span>
           </h1>
           <p className="text-lg max-w-4xl mx-auto">
-            From chaotic beginnings to a smooth launch, CodeLeap was built by a
-            team that supported each other, learned together, and grew stronger
-            every day.
+            From struggles to triumph, CodeLeap is a testament to the power of
+            dedication and determination. My journey is a testament to the
+            pursuit of excellence and the unwavering pursuit of success.
           </p>
         </div>
       </div>
@@ -99,8 +99,8 @@ const About = () => {
               community you need to grow.
             </p>
             <p className="text-lg">
-              In just 24 days, we transformed an idea into a working library,
-              ready to use by developers and teams of all levels.
+              In just 35 days, i transformed an idea into a working platform,
+              ready to use by students and developers inn terms of all levels.
             </p>
           </div>
           <div className="rounded-2xl overflow-hidden shadow-xl">
