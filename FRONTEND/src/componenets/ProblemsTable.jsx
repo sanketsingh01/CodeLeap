@@ -1,4 +1,4 @@
-import React, { useState, useMemo } from "react";
+import React, { useState, useMemo, useEffect } from "react";
 import { useAuthStore } from "../store/useAuthStore.js";
 import { Link } from "react-router-dom";
 import {
@@ -17,6 +17,7 @@ import { useAction } from "../store/useAction.js";
 import { usePlaylistStore } from "../store/usePlaylistStore.js";
 import CreatePlaylistModal from "./CreatePlaylistModal.jsx";
 import AddtoPlaylist from "./AddtoPlaylist.jsx";
+
 const ProblemsTable = ({ problems }) => {
   const { authUser } = useAuthStore();
 
@@ -32,7 +33,6 @@ const ProblemsTable = ({ problems }) => {
   const [selectedProblemId, setSelectedProblemId] = useState(null);
 
   const { createPlaylist } = usePlaylistStore();
-
   const { isDeletingProblem, onDeleteProblem } = useAction();
 
   const difficulties = ["EASY", "MEDIUM", "HARD"];
@@ -46,6 +46,7 @@ const ProblemsTable = ({ problems }) => {
     return Array.from(tagsSet);
   }, [problems]);
 
+  // Filter problems (this already works on ALL problems, not just current page)
   const filteredProblems = useMemo(() => {
     return (problems || [])
       .filter((problem) =>
@@ -59,8 +60,15 @@ const ProblemsTable = ({ problems }) => {
       );
   }, [problems, search, difficulty, selectedTag]);
 
+  // Reset to page 1 whenever filters change
+  useEffect(() => {
+    setCurrentPage(1);
+  }, [search, difficulty, selectedTag]);
+
   const itemsPerPage = 10;
   const totalPages = Math.ceil(filteredProblems.length / itemsPerPage);
+
+  // Apply pagination to filtered results
   const paginatedProblems = useMemo(() => {
     return filteredProblems.slice(
       (currentPage - 1) * itemsPerPage,
@@ -180,6 +188,14 @@ const ProblemsTable = ({ problems }) => {
         </div>
       </div>
 
+      {/* Results summary */}
+      <div className="mb-4 text-gray-400 text-sm">
+        Showing {filteredProblems.length} problem
+        {filteredProblems.length !== 1 ? "s" : ""}
+        {(search || difficulty !== "ALL" || selectedTag !== "ALL") &&
+          ` (filtered from ${problems?.length || 0} total)`}
+      </div>
+
       {/* Table */}
       <div className="overflow-x-auto rounded-lg border border-zinc-700">
         <table className="min-w-full text-sm text-left text-white">
@@ -289,51 +305,53 @@ const ProblemsTable = ({ problems }) => {
       </div>
 
       {/* Pagination */}
-      <div className="flex justify-center mt-6 gap-2">
-        <button
-          className="btn btn-sm btn-outline"
-          disabled={currentPage === 1}
-          onClick={() => setCurrentPage((prev) => prev - 1)}
-        >
-          Prev
-        </button>
-        <span className="btn btn-ghost btn-sm">
-          {currentPage} / {totalPages}
-        </span>
-        <button
-          className="btn btn-sm btn-outline"
-          disabled={currentPage === totalPages}
-          onClick={() => setCurrentPage((prev) => prev + 1)}
-        >
-          Next
-        </button>
+      {totalPages > 1 && (
+        <div className="flex justify-center mt-6 gap-2">
+          <button
+            className="btn btn-sm btn-outline"
+            disabled={currentPage === 1}
+            onClick={() => setCurrentPage((prev) => prev - 1)}
+          >
+            Prev
+          </button>
+          <span className="btn btn-ghost btn-sm">
+            {currentPage} / {totalPages}
+          </span>
+          <button
+            className="btn btn-sm btn-outline"
+            disabled={currentPage === totalPages}
+            onClick={() => setCurrentPage((prev) => prev + 1)}
+          >
+            Next
+          </button>
+        </div>
+      )}
 
-        {showConfirmModal && (
-          <div className="fixed inset-0 bg-black/70 backdrop-blur-sm flex items-center justify-center z-50">
-            <div className="bg-zinc-900 rounded-lg p-6 w-[90%] max-w-md border border-zinc-700 text-white">
-              <h3 className="text-xl font-semibold mb-4">Delete Problem?</h3>
-              <p className="text-zinc-400 mb-6">
-                Are you sure you want to delete this problem? This action cannot
-                be undone.
-              </p>
-              <div className="flex justify-end gap-3">
-                <button
-                  onClick={() => setShowConfirmModal(false)}
-                  className="px-4 py-2 bg-zinc-700 hover:bg-zinc-600 rounded"
-                >
-                  Cancel
-                </button>
-                <button
-                  onClick={confirmDelete}
-                  className="px-4 py-2 bg-red-600 hover:bg-red-700 rounded"
-                >
-                  Yes, Delete
-                </button>
-              </div>
+      {showConfirmModal && (
+        <div className="fixed inset-0 bg-black/70 backdrop-blur-sm flex items-center justify-center z-50">
+          <div className="bg-zinc-900 rounded-lg p-6 w-[90%] max-w-md border border-zinc-700 text-white">
+            <h3 className="text-xl font-semibold mb-4">Delete Problem?</h3>
+            <p className="text-zinc-400 mb-6">
+              Are you sure you want to delete this problem? This action cannot
+              be undone.
+            </p>
+            <div className="flex justify-end gap-3">
+              <button
+                onClick={() => setShowConfirmModal(false)}
+                className="px-4 py-2 bg-zinc-700 hover:bg-zinc-600 rounded"
+              >
+                Cancel
+              </button>
+              <button
+                onClick={confirmDelete}
+                className="px-4 py-2 bg-red-600 hover:bg-red-700 rounded"
+              >
+                Yes, Delete
+              </button>
             </div>
           </div>
-        )}
-      </div>
+        </div>
+      )}
 
       <CreatePlaylistModal
         isOpen={isCreateModalOpen}

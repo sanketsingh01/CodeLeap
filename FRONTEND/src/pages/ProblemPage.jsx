@@ -17,7 +17,7 @@ import {
   Clock,
   ArrowRight,
 } from "lucide-react";
-import { toast } from "react-hot-toast";
+import { RemoveScrollBar } from "react-remove-scroll-bar";
 
 import { useProblemStore } from "../store/useProblemStore.js";
 import { useExecutionStore } from "../store/useExecutionStore.js";
@@ -25,7 +25,6 @@ import { getLanguageId } from "../lib/lang.js";
 import { useSubmissionStore } from "../store/useSubmissionStore.js";
 import SubmissionResults from "../componenets/Submission.jsx";
 import SubmissionList from "../componenets/SubmissionList.jsx";
-import AddtoPlaylist from "../componenets/AddtoPlaylist.jsx";
 
 const ProblemPage = () => {
   const { id } = useParams();
@@ -230,10 +229,7 @@ const ProblemPage = () => {
           </button>
 
           {/* Share Button */}
-          <button
-            onClick={handleShare}
-            className="rounded-lg px-3 py-2 text-sm font-medium flex items-center gap-2 hover:bg-zinc-700 text-zinc-300 transition-all"
-          >
+          <button className="rounded-lg px-3 py-2 text-sm font-medium flex items-center gap-2 hover:bg-zinc-700 text-zinc-300 transition-all">
             <Share2 className="w-4 h-4" />
             Share
           </button>
@@ -255,9 +251,9 @@ const ProblemPage = () => {
         </div>
       </nav>
 
-      <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 mt-6 h-[calc(100vh-180px)]">
+      <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 mt-6">
         {/* Problem Description Section */}
-        <div className="bg-zinc-800 rounded-xl p-6 shadow-lg flex flex-col">
+        <div className="bg-zinc-800 rounded-xl p-6 shadow-lg">
           <div className="relative flex justify-between mb-4 border-b border-zinc-700 pb-2 w-full">
             {["description", "submissions", "discussion", "hints"].map(
               (tab, index) => {
@@ -301,7 +297,7 @@ const ProblemPage = () => {
             />
           </div>
 
-          <div className="flex-1 overflow-y-auto">
+          <div className="max-h-96 overflow-y-auto">
             {activeTab === "description" && (
               <div className="prose prose-invert max-w-none">
                 <h3 className="text-lg frot-semibold mb-1">Description:</h3>
@@ -374,7 +370,7 @@ const ProblemPage = () => {
         {/* Right Side - Code Editor and Test Cases/Results */}
         <div className="flex flex-col gap-4">
           {/* Code Editor Section */}
-          <div className="bg-zinc-800 rounded-xl overflow-hidden shadow-lg flex-1">
+          <div className="bg-zinc-800 rounded-xl overflow-hidden shadow-lg">
             <div className="bg-zinc-700 px-4 py-2 flex justify-between items-center">
               <h2 className="text-lg font-semibold flex items-center gap-2">
                 <Terminal className="w-5 h-5" /> Code Editor
@@ -415,7 +411,7 @@ const ProblemPage = () => {
             </div>
 
             <Editor
-              height="350px"
+              height="300px"
               language={selectedLanguage.toLowerCase()}
               theme="vs-dark"
               value={code}
@@ -425,7 +421,7 @@ const ProblemPage = () => {
           </div>
 
           {/* Enhanced Test Cases and Results Section */}
-          <div className="bg-zinc-800 rounded-xl shadow-lg flex-1">
+          <div className="bg-zinc-800 rounded-xl shadow-lg">
             {/* Stylish Tab Header */}
             <div className="bg-gradient-to-r from-zinc-700 to-zinc-600 px-4 py-3 relative">
               <div className="flex gap-2">
@@ -452,19 +448,19 @@ const ProblemPage = () => {
             {/* Content Area */}
             <div className="p-4 h-80">
               {activeResultTab === "results" && submission ? (
-                <div className="h-full">
+                <div className="h-full overflow-y-auto">
                   <SubmissionResults submission={submission} />
                 </div>
               ) : (
                 <div className="h-full flex flex-col">
                   {/* Enhanced Test Case Selector */}
-                  <div className="flex gap-2 mb-4 pb-3 border-b border-zinc-700">
+                  <div className="flex gap-2 mb-4 pb-3 border-b border-zinc-700 flex-shrink-0">
                     <div className="flex gap-2 flex-wrap flex-1">
                       {testCases.map((_, idx) => (
                         <button
                           key={idx}
                           onClick={() => setActiveTestCase(idx)}
-                          className={`px-4 py-2 rounded-lg text-sm font-semibold transition-all duration-200 flex items-center gap-2 ${
+                          className={`px-3 py-2 rounded-lg text-sm font-semibold transition-all duration-200 flex items-center gap-2 ${
                             activeTestCase === idx
                               ? "bg-gradient-to-r from-[#F4FF54] to-yellow-300 text-black shadow-md transform scale-105"
                               : "bg-zinc-700 text-white hover:bg-zinc-600 hover:scale-102"
@@ -481,26 +477,26 @@ const ProblemPage = () => {
                         </button>
                       ))}
                     </div>
-                    <div className="text-sm text-zinc-400 flex items-center">
+                    <div className="text-sm text-zinc-400 flex items-center flex-shrink-0">
                       {testCases.length} test{testCases.length !== 1 ? "s" : ""}
                     </div>
                   </div>
 
                   {/* Enhanced Test Case Display */}
                   {testCases[activeTestCase] && (
-                    <div className="flex-1 bg-gradient-to-br from-zinc-900 to-zinc-800 rounded-xl p-6 space-y-6 border border-zinc-700/50">
+                    <div className="flex-1 bg-gradient-to-br from-zinc-900 to-zinc-800 rounded-xl p-4 space-y-4 border border-zinc-700/50 overflow-y-auto">
                       {/* Input Section */}
                       <div className="group">
-                        <div className="flex items-center gap-3 mb-3">
-                          <div className="w-8 h-8 rounded-full bg-emerald-500/20 flex items-center justify-center">
-                            <ArrowRight className="w-4 h-4 text-emerald-400" />
+                        <div className="flex items-center gap-3 mb-2">
+                          <div className="w-6 h-6 rounded-full bg-emerald-500/20 flex items-center justify-center flex-shrink-0">
+                            <ArrowRight className="w-3 h-3 text-emerald-400" />
                           </div>
-                          <span className="font-semibold text-emerald-400 text-lg">
+                          <span className="font-semibold text-emerald-400">
                             Input
                           </span>
                         </div>
-                        <div className="bg-zinc-800/80 backdrop-blur-sm p-4 rounded-lg border border-emerald-500/20 group-hover:border-emerald-500/40 transition-colors">
-                          <code className="text-white font-mono text-base break-all">
+                        <div className="bg-zinc-800/80 backdrop-blur-sm p-3 rounded-lg border border-emerald-500/20 group-hover:border-emerald-500/40 transition-colors">
+                          <code className="text-white font-mono text-sm break-all">
                             {testCases[activeTestCase]?.input}
                           </code>
                         </div>
@@ -508,16 +504,16 @@ const ProblemPage = () => {
 
                       {/* Output Section */}
                       <div className="group">
-                        <div className="flex items-center gap-3 mb-3">
-                          <div className="w-8 h-8 rounded-full bg-blue-500/20 flex items-center justify-center">
-                            <CheckCircle className="w-4 h-4 text-blue-400" />
+                        <div className="flex items-center gap-3 mb-2">
+                          <div className="w-6 h-6 rounded-full bg-blue-500/20 flex items-center justify-center flex-shrink-0">
+                            <CheckCircle className="w-3 h-3 text-blue-400" />
                           </div>
-                          <span className="font-semibold text-blue-400 text-lg">
+                          <span className="font-semibold text-blue-400">
                             Expected Output
                           </span>
                         </div>
-                        <div className="bg-zinc-800/80 backdrop-blur-sm p-4 rounded-lg border border-blue-500/20 group-hover:border-blue-500/40 transition-colors">
-                          <code className="text-white font-mono text-base break-all">
+                        <div className="bg-zinc-800/80 backdrop-blur-sm p-3 rounded-lg border border-blue-500/20 group-hover:border-blue-500/40 transition-colors">
+                          <code className="text-white font-mono text-sm break-all">
                             {testCases[activeTestCase]?.output}
                           </code>
                         </div>
@@ -526,16 +522,16 @@ const ProblemPage = () => {
                       {/* Explanation Section */}
                       {testCases[activeTestCase]?.explanation && (
                         <div className="group">
-                          <div className="flex items-center gap-3 mb-3">
-                            <div className="w-8 h-8 rounded-full bg-purple-500/20 flex items-center justify-center">
-                              <Lightbulb className="w-4 h-4 text-purple-400" />
+                          <div className="flex items-center gap-3 mb-2">
+                            <div className="w-6 h-6 rounded-full bg-purple-500/20 flex items-center justify-center flex-shrink-0">
+                              <Lightbulb className="w-3 h-3 text-purple-400" />
                             </div>
-                            <span className="font-semibold text-purple-400 text-lg">
+                            <span className="font-semibold text-purple-400">
                               Explanation
                             </span>
                           </div>
-                          <div className="bg-zinc-800/80 backdrop-blur-sm p-4 rounded-lg border border-purple-500/20 group-hover:border-purple-500/40 transition-colors">
-                            <p className="text-white leading-relaxed">
+                          <div className="bg-zinc-800/80 backdrop-blur-sm p-3 rounded-lg border border-purple-500/20 group-hover:border-purple-500/40 transition-colors">
+                            <p className="text-white text-sm leading-relaxed">
                               {testCases[activeTestCase].explanation}
                             </p>
                           </div>
@@ -549,7 +545,6 @@ const ProblemPage = () => {
           </div>
         </div>
       </div>
-
       <AddtoPlaylist
         isOpen={isAddToPlaylistModalOpen}
         onClose={() => setIsAddToPlaylistModalOpen(false)}

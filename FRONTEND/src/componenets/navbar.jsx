@@ -13,6 +13,7 @@ import { Link, useLocation, useNavigate } from "react-router-dom";
 import "../index.css";
 import { useAuthStore } from "../store/useAuthStore.js";
 import LogoutButton from "./LogoutButton.jsx";
+import codeleaplogo from "../assets/codeleaplogo.webp";
 
 export default function Navbar() {
   const [isOpen, setIsOpen] = useState(false);
@@ -46,17 +47,16 @@ export default function Navbar() {
           damping: 20,
           duration: 0.7,
         }}
-        className="fixed top-0 left-0 w-full z-50 bg-black text-white py-5 px-6 xl:px-36 flex items-center justify-between"
+        className="fixed top-0 left-0 w-full z-50 bg-black text-white py-5 px-6 xl:px-36 flex items-center justify-between text-center"
       >
-        {/* Left - Logo */}
         <Link to="/">
           <div className="flex items-center">
-            <div className="h-8 w-8 bg-[#F4FF54] rounded-full mr-2"></div>
-            <span className="text-xl font-bold">CodeLeap</span>
+            <img src={codeleaplogo} alt="Codeleap Logo" className="h-12 w-36" />
+            {/* <div className="h-8 w-8 bg-[#F4FF54] rounded-full mr-2"></div>
+            <span className="text-xl font-bold">CodeLeap</span> */}
           </div>
         </Link>
 
-        {/* Center - Nav Links (Desktop) */}
         <div className="hidden text-base md:flex items-center space-x-8 flex-1 justify-center">
           <div className="hover:text-[#F4FF54] cursor-pointer flex gap-4">
             <Link to="/problems">Problems</Link>
