@@ -240,7 +240,7 @@ const ProblemPage = () => {
             <select
               value={selectedLanguage}
               onChange={handleLanguageChange}
-              className="select select-bordered bg-zinc-800 border-zinc-600 text-white text-sm px-3 py-2 rounded-lg pl-10"
+              className="select select-bordered bg-zinc-800 border-zinc-600 text-white text-sm px-3 py-2 rounded-lg pr-10"
             >
               {Object.keys(problem.codeSnippet || {}).map((lang) => (
                 <option key={lang} value={lang}>
@@ -447,7 +447,7 @@ const ProblemPage = () => {
 
             {/* Content Area */}
             <div className="p-4 h-80">
-              {activeResultTab === "results" && submission ? (
+              {activeResultTab === "results" ? (
                 submission ? (
                   <div className="h-full overflow-y-auto">
                     <SubmissionResults submission={submission} />

@@ -1,5 +1,5 @@
 import React, { useRef } from "react";
-import CodeLeapImg from "./assets/codeleap.webp";
+import codeleaplogo from "./assets/codeleaplogo.webp";
 import CreatorImg from "./assets/Creatorimg.webp";
 import { FaXTwitter, FaGithub, FaLinkedin } from "react-icons/fa6";
 import akash from "./assets/akash.webp";
@@ -105,9 +105,9 @@ const About = () => {
           </div>
           <div className="rounded-2xl overflow-hidden shadow-xl">
             <img
-              src={CodeLeapImg}
+              src={codeleaplogo}
               alt="SwingKit journey"
-              className="w-full h-80 object-cover"
+              className="w-full h-85 object-contain bg-black"
             />
           </div>
         </div>
