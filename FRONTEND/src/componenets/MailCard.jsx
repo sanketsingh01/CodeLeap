@@ -1,8 +1,20 @@
-import React from "react";
+import React, { useState } from "react";
 import "../index.css";
 import { motion } from "motion/react";
+import { toast } from "react-hot-toast";
 
 const CommunityCard = () => {
+  const [isSubscribed, setIsSubscribed] = useState(true);
+
+  const handleClick = () => {
+    if (isSubscribed) {
+      setIsSubscribed(false);
+      toast.success("Subscribed Successfully");
+    } else {
+      toast.error("Already Subscribed");
+    }
+  };
+
   return (
     <motion.div
       initial={{ scale: 0.8, opacity: 0 }}
@@ -31,7 +43,12 @@ const CommunityCard = () => {
             placeholder="Email"
             className="w-full bg-black text-[#F4FF54] px-4 py-2 outline-none rounded-full sm:rounded-l-full sm:rounded-r-none"
           />
-          <button className="w-full sm:w-auto bg-[#F4FF54] text-black font-semibold px-6 py-2 rounded-full sm:rounded-r-full sm:rounded-l-none">
+          <button
+            onClick={() => {
+              handleClick();
+            }}
+            className="w-full sm:w-auto bg-[#F4FF54] text-black font-semibold px-6 py-2 rounded-full sm:rounded-r-full sm:rounded-l-none hover:bg-[#f4ff54b9] cursor-pointer"
+          >
             Subscribe
           </button>
         </div>

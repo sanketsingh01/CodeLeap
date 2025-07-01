@@ -108,7 +108,7 @@ export default function Navbar() {
           )}
 
           {authUser && (
-            <div className="flex items-center gap-8">
+            <div className="flex items-center gap-8 mr-10">
               <div className="dropdown dropdown-end">
                 <label
                   tabIndex={0}

@@ -201,7 +201,7 @@ const ProblemPage = () => {
   }
 
   return (
-    <div className="min-h-screen text-white mt-20 px-6">
+    <div className="min-h-screen text-white mt-24 px-6">
       <nav className="flex flex-col md:flex-row justify-between items-start md:items-center gap-4 py-4 border-b border-zinc-700">
         {/* Problem Title */}
         <div className="flex items-center gap-3">
@@ -240,7 +240,7 @@ const ProblemPage = () => {
             <select
               value={selectedLanguage}
               onChange={handleLanguageChange}
-              className="select select-bordered bg-zinc-800 border-zinc-600 text-white text-sm px-3 py-2 rounded-lg"
+              className="select select-bordered bg-zinc-800 border-zinc-600 text-white text-sm px-3 py-2 rounded-lg pl-10"
             >
               {Object.keys(problem.codeSnippet || {}).map((lang) => (
                 <option key={lang} value={lang}>
@@ -412,7 +412,7 @@ const ProblemPage = () => {
             </div>
 
             <Editor
-              height="300px"
+              height="350px"
               language={selectedLanguage.toLowerCase()}
               theme="vs-dark"
               value={code}
@@ -421,7 +421,6 @@ const ProblemPage = () => {
             />
           </div>
 
-          {/* Enhanced Test Cases and Results Section */}
           <div className="bg-zinc-800 rounded-xl shadow-lg">
             {/* Stylish Tab Header */}
             <div className="bg-gradient-to-r from-zinc-700 to-zinc-600 px-4 py-3 relative">
@@ -449,9 +448,15 @@ const ProblemPage = () => {
             {/* Content Area */}
             <div className="p-4 h-80">
               {activeResultTab === "results" && submission ? (
-                <div className="h-full overflow-y-auto">
-                  <SubmissionResults submission={submission} />
-                </div>
+                submission ? (
+                  <div className="h-full overflow-y-auto">
+                    <SubmissionResults submission={submission} />
+                  </div>
+                ) : (
+                  <div className="h-full overflow-y-auto flex items-center justify-center text-center text-zinc-400">
+                    <p>Please run or submit the code first to see results.</p>
+                  </div>
+                )
               ) : (
                 <div className="h-full flex flex-col">
                   {/* Enhanced Test Case Selector */}
