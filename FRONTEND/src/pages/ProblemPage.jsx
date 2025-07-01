@@ -25,6 +25,7 @@ import { getLanguageId } from "../lib/lang.js";
 import { useSubmissionStore } from "../store/useSubmissionStore.js";
 import SubmissionResults from "../componenets/Submission.jsx";
 import SubmissionList from "../componenets/SubmissionList.jsx";
+import AddtoPlaylist from "../componenets/AddtoPlaylist.jsx";
 
 const ProblemPage = () => {
   const { id } = useParams();
