@@ -17,7 +17,7 @@ import {
   Clock,
   ArrowRight,
 } from "lucide-react";
-import { RemoveScrollBar } from "react-remove-scroll-bar";
+import { toast } from "react-hot-toast";
 
 import { useProblemStore } from "../store/useProblemStore.js";
 import { useExecutionStore } from "../store/useExecutionStore.js";
