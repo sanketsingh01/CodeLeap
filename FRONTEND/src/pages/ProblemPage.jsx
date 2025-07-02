@@ -230,7 +230,10 @@ const ProblemPage = () => {
           </button>
 
           {/* Share Button */}
-          <button className="rounded-lg px-3 py-2 text-sm font-medium flex items-center gap-2 hover:bg-zinc-700 text-zinc-300 transition-all">
+          <button
+            onClick={handleShare}
+            className="rounded-lg px-3 py-2 text-sm font-medium flex items-center gap-2 hover:bg-zinc-700 text-zinc-300 transition-all"
+          >
             <Share2 className="w-4 h-4" />
             Share
           </button>

@@ -18,6 +18,7 @@ import AllPlaylistsPage from "../pages/PlaylistsPage.jsx";
 import PlaylistDetailpage from "../pages/PlaylistDetailpage.jsx";
 import Profile from "../pages/Profile.jsx";
 import NotFoundPage from "../pages/NotFoundPage.jsx";
+import PricingComingSoon from "../pages/PricingComingSoon.jsx";
 
 const Layout = () => {
   const { authUser, checkAuth, isCheckingAuth, refreshToken } = useAuthStore();
@@ -50,7 +51,7 @@ const Layout = () => {
         <Route path="/" element={<Home />} />
         <Route path="/FAQ" element={<FAQ />} />
         <Route path="/About" element={<About />} />
-        <Route path="/Pricing" element={<Pricing />} />
+        <Route path="/Pricing" element={<PricingComingSoon />} />
         <Route path="/Playlist/:id" element={<PlaylistDetailpage />} />
         <Route path="/profile" element={<Profile />} />
         <Route
