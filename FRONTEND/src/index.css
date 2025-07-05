@@ -12,6 +12,24 @@
   font-style: normal;
 }
 
+.font-roboto {
+  font-family: "Roboto", sans-serif;
+}
+
+.raleway-font-regular {
+  font-family: "Raleway", sans-serif;
+  font-optical-sizing: auto;
+  font-weight: 500;
+  font-style: normal;
+}
+
+.raleway-font-bold {
+  font-family: "Raleway", sans-serif;
+  font-optical-sizing: auto;
+  font-weight: 900;
+  font-style: normal;
+}
+
 .parkinsans-Regular {
   font-family: "Parkinsans", sans-serif;
   font-optical-sizing: auto;

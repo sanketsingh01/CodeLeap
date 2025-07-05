@@ -67,15 +67,14 @@ const About = () => {
   const teamMemberRefs = useRef([]);
 
   return (
-    <div className="w-full min-h-screen text-white mt-8">
+    <div className="w-full min-h-screen text-white mt-8 parkinsans-Regular">
       <div className="relative w-full py-18 px-4 flex flex-col items-center justify-center text-center">
         <div className="relative z-10 max-w-5xl mx-auto">
           <div className="inline-block px-4 py-2 swing-ocean-gradient-animate text-black rounded-full text-base font-semibold  bg-gradient-to-r from-orange-400 to-yellow-300 tracking-wide shadow mb-6">
             ABOUT US
           </div>
           <h1 className="text-3xl sm:text-4xl text-[#F4FF54] md:text-6xl font-bold  mb-6">
-            A Product Built with Dream, Dedication & Devotion{" "}
-            <span className="text-red-700">❤</span>
+            A Product Built with Dream, Dedication & Devotion <span>💖</span>
           </h1>
           <p className="text-lg max-w-4xl mx-auto">
             From struggles to triumph, CodeLeap is a testament to the power of

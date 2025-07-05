@@ -36,14 +36,14 @@ export default function CodingJourney() {
           viewport={{ once: true, amount: 0.4 }}
           className="text-center"
         >
-          <h1 className="text-5xl sm:text-5xl md:text-6xl font-bold text-white mb-2">
+          <h1 className="text-5xl sm:text-5xl md:text-6xl font-bold text-white mb-2 raleway-font-bold">
             Why{" "}
             <span className="text-gradient bg-clip-text text-transparent bg-gradient-to-r from-orange-400 to-yellow-300">
               Choose{" "}
             </span>
             <span className="text-gradient bg-clip-text">Us?</span>
           </h1>
-          <div className="hidden md:block xl:block w-20 h-1 bg-gradient-to-r from-orange-400 to-yellow-300 mx-auto rounded-full mb-6"></div>
+          <div className="hidden md:block xl:block w-20 h-1 bg-gradient-to-r from-orange-400 to-yellow-300 mx-auto rounded-full mb-6 raleway-font-regular"></div>
           <span className="inter-Regular text-xl sm:text-3xl font-semibold">
             CodeLeap exists because of some of the following Reasons : )
           </span>
@@ -69,7 +69,7 @@ export default function CodingJourney() {
           </motion.div>
 
           <motion.div
-            className="w-full md:w-[490px] h-auto md:h-90 p-2 md:p-6 space-y-4 order-2"
+            className="w-full md:w-[490px] h-auto md:h-90 p-2 md:p-6 space-y-4 order-2 parkinsans-Regular"
             variants={rightVariant}
             initial="hidden"
             animate={inView1 ? "visible" : "hidden"}
@@ -78,7 +78,7 @@ export default function CodingJourney() {
             <p className="text-yellow-400 font-semibold mt-4">
               Curated Questions
             </p>
-            <h2 className="parkinsans-Regular text-3xl md:text-6xl font-bold mt-2 mb-4 py-6">
+            <h2 className="text-3xl md:text-6xl font-bold mt-2 mb-4 py-6">
               Questions from Top Companies
             </h2>
             <p className="text-white">
@@ -108,13 +108,13 @@ export default function CodingJourney() {
           </motion.div>
 
           <motion.div
-            className="w-full md:w-[490px] h-auto md:h-90 p-2 md:p-6 space-y-6 order-2 md:order-1"
+            className="w-full md:w-[490px] h-auto md:h-90 p-2 md:p-6 space-y-6 order-2 md:order-1 parkinsans-Regular"
             variants={leftVariant}
             initial="hidden"
             animate={inView2 ? "visible" : "hidden"}
             transition={{ duration: 0.7, ease: "easeOut" }}
           >
-            <h2 className="parkinsans-Regular text-6xl sm:text-7xl md:text-8xl font-bold md:mt-10">
+            <h2 className="text-6xl sm:text-7xl md:text-8xl font-bold md:mt-10">
               250+
             </h2>
             <p className="text-white text-base">
@@ -159,13 +159,13 @@ export default function CodingJourney() {
           </motion.div>
 
           <motion.div
-            className="w-full md:w-[490px] h-auto md:h-90 p-2 md:p-6 space-y-6 order-2"
+            className="w-full md:w-[490px] h-auto md:h-90 p-2 md:p-6 space-y-6 order-2 parkinsans-Regular"
             variants={rightVariant}
             initial="hidden"
             animate={inView3 ? "visible" : "hidden"}
             transition={{ duration: 0.7, ease: "easeOut", delay: 0.2 }}
           >
-            <h2 className="parkinsans-Regular text-6xl sm:text-7xl md:text-8xl font-bold md:mt-8">
+            <h2 className="text-6xl sm:text-7xl md:text-8xl font-bold md:mt-8">
               30+
             </h2>
             <p className="text-white">

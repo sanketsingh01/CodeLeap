@@ -38,7 +38,7 @@ const LoginPage = () => {
   };
 
   return (
-    <div className="min-h-screen grid grid-cols-1 lg:grid-cols-1 text-white">
+    <div className="min-h-screen grid grid-cols-1 lg:grid-cols-1 text-white parkinsans-Regular">
       <div className="flex flex-col justify-center items-center px-6 py-12 lg:px-20">
         <div className="w-full max-w-lg space-y-10">
           <div className="text-center">

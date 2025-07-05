@@ -60,7 +60,7 @@ const FeatureGrid = () => {
           viewport={{ once: true, amount: 0.4 }}
           className="mb-8 text-center"
         >
-          <h1 className="text-5xl md:text-6xl xl:text-6xl font-bold text-white mb-2">
+          <h1 className="text-5xl md:text-6xl xl:text-6xl font-bold text-white mb-2 raleway-font-bold">
             Key{" "}
             <span className="text-gradient bg-clip-text text-transparent bg-gradient-to-r from-orange-400 to-yellow-300">
               Features

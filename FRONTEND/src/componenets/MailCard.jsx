@@ -21,14 +21,14 @@ const CommunityCard = () => {
       whileInView={{ scale: 1, opacity: 1 }}
       transition={{ duration: 1, ease: "easeOut" }}
       viewport={{ once: true, amount: 0.4 }}
-      className="bg-[#131313] text-white px-4 py-10 md:px-10 rounded-3xl flex flex-col md:flex-row items-center justify-between gap-6 mx-auto max-w-[90%] md:max-w-[1200px] mb-8"
+      className="bg-[#131313] text-white px-4 py-10 md:px-10 rounded-3xl flex flex-col md:flex-row items-center justify-between gap-6 mx-auto max-w-[90%] md:max-w-[1200px] mb-8 parkinsans-Regular"
     >
       {/* Left Text Section */}
       <div className="w-full md:w-1/2 text-center md:text-left">
-        <h2 className="inter-bold text-4xl md:text-6xl font-bold mb-4">
+        <h2 className="text-4xl md:text-6xl font-bold mb-4">
           Features and Offers!
         </h2>
-        <p className="inter-Regular text-white text-base md:text-lg">
+        <p className="raleway-font-regular text-white text-base md:text-lg">
           Become part of our mailing list to get early access to new features,
           exclusive offers, and coding updates—delivered straight to your inbox.
         </p>

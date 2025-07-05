@@ -3,18 +3,18 @@ import { Link } from "react-router-dom";
 
 import "../index.css";
 import { FaXTwitter, FaGithub, FaDiscord, FaLinkedin } from "react-icons/fa6";
+import codeleaplogo from "../assets/codeleaplogo.webp";
 
 const Footer = () => {
   return (
-    <footer className="text-white px-6 md:px-20 lg:px-36 py-12 mt-12">
-      <div className="max-w-7xl mx-auto grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-8">
+    <footer className="text-white px-6 md:px-20 lg:px-36 py-12 mt-12 overflow-auto">
+      <div className="max-w-7xl mx-auto grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-8 raleway-font-regular">
         {/* Branding / About Section */}
         <div className="lg:col-span-2">
           <div className="flex items-center gap-2 mb-6">
-            <div className="h-8 w-8 bg-[#F4FF54] rounded-full mr-2"></div>
-            <span className="text-xl font-bold">CodeLeap</span>
+            <img src={codeleaplogo} alt="Codeleap Logo" className="h-10 w-32" />
           </div>
-          <p className="text-base text-[#a4a3a3]">
+          <p className="text-base raleway-font-regular text-[#a4a3a3]">
             Stay connected and boost your skills! We offer a wide range of
             resources to help you grow in the coding world. Don’t hesitate to
             reach out and get involved!

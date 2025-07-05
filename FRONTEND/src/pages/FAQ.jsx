@@ -31,19 +31,19 @@ function FAQ() {
   const toggle = (index) => setOpenIndex(openIndex === index ? null : index);
 
   return (
-    <section className="w-full max-w-xl mx-auto px-4 py-12 text-center mt-15">
-      <h2 className="text-white text-5xl font-bold mb-6">
+    <section className="w-full max-w-xl mx-auto px-4 py-12 text-center mt-16 parkinsans-Regular">
+      <h2 className="text-white text-5xl font-bold mb-4">
         Commonly Asked{" "}
         <span className="text-gradient bg-clip-text text-transparent bg-gradient-to-r from-orange-400 to-yellow-300">
           Questions
         </span>
       </h2>
-      <p className="text-base text-white mt-12">
+      <p className="text-base text-white mt-10">
         This section addresses frequently asked questions related to coding
         challenges, guiding participants on how to tackle them effectively.
       </p>
 
-      <div className="mt-10 space-y-4 text-left">
+      <div className="mt-10 space-y-4 text-left raleway-font-regular">
         {faqs.map((faq, index) => (
           <div
             key={index}

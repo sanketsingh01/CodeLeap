@@ -37,7 +37,7 @@ const SignUpPage = () => {
   };
 
   return (
-    <div className="min-h-screen grid grid-cols-1 lg:grid-cols-1 text-white">
+    <div className="min-h-screen grid grid-cols-1 lg:grid-cols-1 text-white parkinsans-Regular">
       <div className="flex flex-col justify-center items-center px-6 py-12 lg:px-20">
         <div className="w-full max-w-lg space-y-10">
           <div className="text-center">
@@ -46,7 +46,7 @@ const SignUpPage = () => {
                 <Code className="w-7 h-7 text-[#F4FF54]" />
               </div>
               <h1 className="text-4xl font-extrabold tracking-tight">
-                Welcome
+                Welcome to Codeleap
               </h1>
             </div>
           </div>
