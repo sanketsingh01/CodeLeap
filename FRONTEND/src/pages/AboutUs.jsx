@@ -106,7 +106,7 @@ const About = () => {
             <img
               src={codeleaplogo}
               alt="SwingKit journey"
-              className="w-full h-85 object-contain bg-black"
+              className="w-full h-full object-contain bg-black"
             />
           </div>
         </div>
@@ -137,7 +137,7 @@ const About = () => {
             <img
               src={CreatorImg}
               alt="SwingKit journey"
-              className="w-full h-80 object-cover"
+              className="w-full h-full object-cover"
             />
 
             <div

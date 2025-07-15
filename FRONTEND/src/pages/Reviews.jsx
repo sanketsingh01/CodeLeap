@@ -10,13 +10,20 @@ import {
 import { motion } from "motion/react";
 import { Link } from "react-router-dom";
 
+import SarahImg from "./assets/sarah.webp";
+import devImg from "./assets/dev.webp";
+import alexImg from "./assets/alex.webp";
+import priyaImg from "./assets/priya.webp";
+import marcusImg from "./assets/marcus.webp";
+import emmaImg from "./assets/emma.webp";
+
 const reviews = [
   {
     text: "Just discovered @CodeLeap and I'm blown away! The DSA practice interface is so clean and intuitive. Finally found a platform that makes coding challenges enjoyable.",
     name: "Sarah Chen",
     username: "@sarahbuilds",
     location: "San Francisco, CA",
-    avatar: "https://avatar.iran.liara.run/public/girl?username=sarah",
+    avatar: `${SarahImg}`,
     likes: 127,
     retweets: 34,
     replies: 18,
@@ -28,7 +35,7 @@ const reviews = [
     name: "Dev Patel",
     username: "@devpatel_codes",
     location: "Mumbai, India",
-    avatar: "https://avatar.iran.liara.run/public/boy?username=dev",
+    avatar: `${devImg}`,
     likes: 89,
     retweets: 23,
     replies: 12,
@@ -40,7 +47,7 @@ const reviews = [
     name: "Alex Rodriguez",
     username: "@alexcodes",
     location: "Austin, TX",
-    avatar: "https://avatar.iran.liara.run/public/boy?username=alex",
+    avatar: `${alexImg}`,
     likes: 203,
     retweets: 67,
     replies: 29,
@@ -52,7 +59,7 @@ const reviews = [
     name: "Priya Sharma",
     username: "@priya_learns",
     location: "Bangalore, India",
-    avatar: "https://avatar.iran.liara.run/public/girl?username=priya",
+    avatar: `${priyaImg}`,
     likes: 156,
     retweets: 41,
     replies: 22,
@@ -64,7 +71,7 @@ const reviews = [
     name: "Marcus Johnson",
     username: "@marcusbuilds",
     location: "Seattle, WA",
-    avatar: "https://avatar.iran.liara.run/public/boy?username=marcus",
+    avatar: `${marcusImg}`,
     likes: 94,
     retweets: 28,
     replies: 15,
@@ -76,7 +83,7 @@ const reviews = [
     name: "Emma Wilson",
     username: "@emmacodes",
     location: "Toronto, Canada",
-    avatar: "https://avatar.iran.liara.run/public/girl?username=emma",
+    avatar: `${emmaImg}`,
     likes: 178,
     retweets: 52,
     replies: 31,
