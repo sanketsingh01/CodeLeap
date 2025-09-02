@@ -43,16 +43,16 @@ const Layout = () => {
     return () => clearInterval(interval);
   }, [checkAuth, refreshToken]);
 
-  // 1. Still checking
-  if (isCheckingAuth && !authUser && !authError) {
-    return (
-      <div className="flex items-center justify-center h-screen">
-        <Loader className="size-10 animate-spin" />
-      </div>
-    );
-  }
+  // Still checking
+  // if (isCheckingAuth && !authUser && !authError) {
+  //   return (
+  //     <div className="flex items-center justify-center h-screen">
+  //       <Loader className="size-10 animate-spin" />
+  //     </div>
+  //   );
+  // }
 
-  // 2. Backend unreachable
+  //  if Backend unreachable
   if (authError) {
     return (
       <div className="flex flex-col items-center justify-center h-screen text-center px-4">
@@ -70,7 +70,6 @@ const Layout = () => {
     );
   }
 
-  // 3. Normal app
   return (
     <div className="w-full">
       <Toaster />
