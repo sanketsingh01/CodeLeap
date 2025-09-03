@@ -38,8 +38,8 @@ const SignUpPage = () => {
 
   return (
     <div className="min-h-screen grid grid-cols-1 lg:grid-cols-1 text-white parkinsans-Regular">
-      <div className="flex flex-col justify-center items-center px-6 py-12 lg:px-20">
-        <div className="w-full max-w-lg space-y-10">
+      <div className="flex flex-col justify-center items-center px-6 py-6 lg:px-20">
+        <div className="w-full max-w-lg space-y-5">
           <div className="text-center">
             <div className="flex flex-col items-center gap-3">
               <div className="w-14 h-14 bg-primary/20 rounded-2xl flex items-center justify-center">
@@ -49,6 +49,14 @@ const SignUpPage = () => {
                 Welcome to Codeleap
               </h1>
             </div>
+          </div>
+
+          <div className="bg-red-900/20 border border-red-500/50 rounded-lg p-3">
+            <p className="text-red-400 text-sm text-center">
+              <strong>Note: </strong>The backend runs on a free render instance,
+              so it may sleep at times. if login/Singup takes longer, please
+              wait 3-5 minutes.
+            </p>
           </div>
 
           <form

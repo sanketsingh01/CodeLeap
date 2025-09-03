@@ -7,7 +7,6 @@ import { useNavigate } from "react-router-dom";
 import google from "./assets/google.svg";
 
 import { z } from "zod";
-import AuthImagePattern from "../componenets/AuthImagePattern.jsx";
 import { useAuthStore } from "../store/useAuthStore.js";
 
 const LoginSchema = z.object({
@@ -39,8 +38,8 @@ const LoginPage = () => {
 
   return (
     <div className="min-h-screen grid grid-cols-1 lg:grid-cols-1 text-white parkinsans-Regular">
-      <div className="flex flex-col justify-center items-center px-6 py-12 lg:px-20">
-        <div className="w-full max-w-lg space-y-10">
+      <div className="flex flex-col justify-center items-center px-6 lg:px-20">
+        <div className="w-full max-w-lg space-y-5">
           <div className="text-center">
             <div className="flex flex-col items-center gap-3">
               <div className="w-14 h-14 bg-primary/20 rounded-2xl flex items-center justify-center">
@@ -53,6 +52,14 @@ const LoginPage = () => {
                 Login to your account below
               </p>
             </div>
+          </div>
+
+          <div className="bg-red-900/20 border border-red-500/50 rounded-lg p-3">
+            <p className="text-red-400 text-sm text-center">
+              <strong>Note:</strong> The backend runs on a free Render instance,
+              so it may sleep at times. If login/signup takes longer, lease wait
+              3-5 minutes.
+            </p>
           </div>
 
           <form
@@ -156,13 +163,6 @@ const LoginPage = () => {
           </p>
         </div>
       </div>
-
-      {/* <AuthImagePattern
-        title={"Welcome back!"}
-        subtitle={
-          "Sign in to continue your journey with us. Don't have an account? Create one now."
-        }
-      /> */}
     </div>
   );
 };
