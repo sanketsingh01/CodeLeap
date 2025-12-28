@@ -136,8 +136,6 @@ const ProblemPage = () => {
     }
   }, [submission]);
 
-  console.log("Submission: ", submissions);
-
   const handleLanguageChange = (e) => {
     const language = e.target.value;
     setSelectedLanguage(language);
@@ -156,7 +154,7 @@ const ProblemPage = () => {
       executeCode(code, language_id, stdin, expected_outputs, id, false);
       startCooldown();
     } catch (error) {
-      console.log("Error running code: ", error);
+      console.error("Error running code: ", error);
     }
   };
 
@@ -172,13 +170,13 @@ const ProblemPage = () => {
       executeCode(code, language_id, stdin, expected_outputs, id, true);
       startCooldown();
     } catch (error) {
-      console.log("Error submitting code: ", error);
+      console.error("Error submitting code: ", error);
     }
   };
 
   const handleBookmark = (problemId) => {
     setSelectedProblemId(problemId);
-    console.log("Selected Problem: ", selectedProblemId);
+    console.error("Selected Problem: ", selectedProblemId);
     setIsAddToPlaylistModalOpen(true);
   };
 
@@ -187,7 +185,7 @@ const ProblemPage = () => {
       navigator.clipboard.writeText(window.location.href);
       toast.success("Link copied to clipboard");
     } catch (error) {
-      console.log("Failed to copy url: ", error);
+      console.error("Failed to copy url: ", error);
       toast.error("Failed to copy url");
     }
   };

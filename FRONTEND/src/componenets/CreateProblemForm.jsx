@@ -584,7 +584,6 @@ const CreateProblemForm = () => {
         "/problems/create-problem",
         value
       );
-      console.log(response.data);
       toast.success(response.data.message || "Problem created successfully");
       navigation("/");
     } catch (error) {

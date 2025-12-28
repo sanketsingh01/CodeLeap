@@ -82,7 +82,6 @@ const ProblemsTable = ({ problems }) => {
     );
   }, [problems, authUser]);
 
-  console.log("solvedProblems: ", solvedProblems);
 
   const solvedStats = useMemo(() => {
     const stats = { EASY: 0, MEDIUM: 0, HARD: 0 };
@@ -107,7 +106,6 @@ const ProblemsTable = ({ problems }) => {
 
   const handleAddToPlaylist = (problemId) => {
     setSelectedProblemId(problemId);
-    console.log("SelectedProblems: ", selectedProblemId);
     setIsAddToPlaylistModalOpen(true);
   };
 

@@ -35,11 +35,6 @@ const PlaylistDetailsPage = () => {
     );
   }, [problems, authUser]);
 
-  problems.forEach((problem) => {
-    if (problem.solvedBy) console.log(problem.solvedBy);
-    else console.log(null);
-  });
-
   const problemsWithSolved = useMemo(() => {
     if (!currentPlaylist?.problems) return [];
     return currentPlaylist.problems.map((p) => ({

@@ -20,17 +20,12 @@ const LoginHeatmap = ({ loginMap = {} }) => {
     end: today,
   });
 
-  console.log("Total days in range:", allDays.length);
-  console.log("Start date:", format(startDate, "yyyy-MM-dd (EEE)"));
-  console.log("End date:", format(today, "yyyy-MM-dd (EEE)"));
-
   // Group days by month for debugging
   const monthCounts = {};
   allDays.forEach((day) => {
     const monthKey = format(day, "yyyy-MM");
     monthCounts[monthKey] = (monthCounts[monthKey] || 0) + 1;
   });
-  console.log("Days per month:", monthCounts);
 
   // Create grid: 53 weeks × 7 days
   const totalWeeks = 53;

@@ -53,8 +53,6 @@ const Profile = ({ user }) => {
     getAllSubmissions();
   }, []);
 
-  console.log("Submissions: ", submissions);
-
   const loginMap = authUser?.loginMap || {};
 
   const SolvedProblems = useMemo(() => {
