@@ -142,7 +142,6 @@ export const addProblemToPlaylist = async (req, res) => {
         );
     }
 
-    console.log('PROB_IDS: ', problemIds);
     const problemsInPlaylist = await db.problemInPlaylist.createMany({
       data: problemIds.map((problemId) => ({
         playlistId,

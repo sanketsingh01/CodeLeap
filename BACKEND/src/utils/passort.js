@@ -43,13 +43,11 @@ passport.use(
 );
 
 passport.serializeUser((user, done) => {
-  console.log('Serilizing user: ', user.id);
   done(null, user.id);
 });
 
 passport.deserializeUser(async (id, done) => {
   try {
-    console.log('Deserializing user with ID:', id);
     const user = await db.user.findUnique({
       where: {
         id,
@@ -57,14 +55,12 @@ passport.deserializeUser(async (id, done) => {
     });
 
     if (!user) {
-      console.log('User not found during deserialization:', id);
       return done(null, false);
     }
 
-    console.log('User found:', user.email);
     done(null, user);
   } catch (error) {
-    console.log('Error during deserialization:', error);
+    console.error('Error during deserialization:', error);
     done(error, null);
   }
 });

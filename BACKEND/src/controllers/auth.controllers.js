@@ -88,7 +88,6 @@ const register = async (req, res) => {
     res.cookie('accessToken', accessToken, AccessCookieOptions);
     res.cookie('refreshToken', refreshToken, RefreshCookieOptions);
 
-    console.log(user);
     const registerUser = {
       id: user.id,
       name: user.name,
@@ -101,7 +100,7 @@ const register = async (req, res) => {
       .status(201)
       .json(new ApiResponse(200, registerUser, 'User registered successfully'));
   } catch (error) {
-    console.log(error);
+    console.error(error);
     return res
       .status(400)
       .json(
@@ -116,7 +115,6 @@ const register = async (req, res) => {
 
 const verifyUser = async (req, res) => {
   const token = req.params.token;
-  console.log(token);
   if (!token) {
     throw new ApiError(400, 'Token not found');
   }
@@ -132,7 +130,6 @@ const verifyUser = async (req, res) => {
       throw new ApiError(400, 'User not found');
     }
 
-    console.log(user.id);
     await db.user.update({
       where: {
         id: user.id,
@@ -143,12 +140,11 @@ const verifyUser = async (req, res) => {
       },
     });
 
-    console.log(user);
     res
       .status(200)
       .json(new ApiResponse(200, user, 'User verified successfully'));
   } catch (error) {
-    console.log(error);
+    console.error(error);
     return res
       .status(400)
       .json(
@@ -249,7 +245,6 @@ const login = async (req, res) => {
     res.cookie('accessToken', accessToken, AccessCookieOptions);
     res.cookie('refreshToken', refreshToken, RefreshCookieOptions);
 
-    console.log(user);
     const loginUser = {
       id: user.id,
       name: user.name,
@@ -264,7 +259,7 @@ const login = async (req, res) => {
       .status(200)
       .json(new ApiResponse(200, loginUser, 'User logged in successfully'));
   } catch (error) {
-    console.log(error);
+    console.error(error);
     return res
       .status(400)
       .json(
@@ -277,11 +272,6 @@ const googleLogin = async (req, res) => {
   const user = req.user;
 
   try {
-    console.log('=== GOOGLE LOGIN DEBUG ===');
-    console.log('User from req.user:', user);
-    console.log('Session ID:', req.sessionID);
-    console.log('Session before:', req.session);
-
     if (!user) {
       throw new ApiError(401, 'User not Found');
     }
@@ -323,15 +313,9 @@ const googleLogin = async (req, res) => {
     res.cookie('accessToken', accessToken, AccessCookieOptions);
     res.cookie('refreshToken', refreshToken, RefreshCookieOptions);
 
-    console.log('Session after:', req.session);
-    console.log(
-      'Cookies set, redirecting to:',
-      `${process.env.FONTEND_URL}/problems`,
-    );
-
     res.redirect(`${process.env.FONTEND_URL}/problems`);
   } catch (error) {
-    console.log(error);
+    console.error(error);
     return res
       .status(400)
       .json(
@@ -342,10 +326,8 @@ const googleLogin = async (req, res) => {
 
 const TokenRefresh = async (req, res) => {
   try {
-    console.log(req.cookies);
     const refreshToken = req.cookies?.refreshToken;
 
-    console.log('Refresh Token found', refreshToken ? 'YES' : 'NO');
     if (!refreshToken) {
       throw new ApiError(403, 'Refresh token not found');
     }
@@ -364,7 +346,6 @@ const TokenRefresh = async (req, res) => {
       refreshToken,
       process.env.JWT_REFERSH_TOKEN_SECRET,
     );
-    console.log(decodedData);
 
     if (!decodedData) {
       throw new ApiError(403, 'Refresh Token Expired');
@@ -402,7 +383,6 @@ const TokenRefresh = async (req, res) => {
     res.cookie('accessToken', newAccessToken, AccessCookieOptions);
     res.cookie('refreshToken', newRefreshToken, RefreshCookieOptions);
 
-    console.log(user);
     const RefreshedUser = {
       id: user.id,
       name: user.name,
@@ -418,7 +398,7 @@ const TokenRefresh = async (req, res) => {
         new ApiResponse(200, RefreshedUser, 'Tokens refreshed successfully'),
       );
   } catch (error) {
-    console.log(error);
+    console.error(error);
     return res.status(400).json(new ApiError(400, error.message));
   }
 };
@@ -450,7 +430,7 @@ const logout = async (req, res) => {
 
     res.status(200).json(new ApiResponse(200, null, 'User logged out'));
   } catch (error) {
-    console.log(error);
+    console.error(error);
     return res.status(400).json(new ApiError(400, error.message));
   }
 };
@@ -461,7 +441,7 @@ const check = async (req, res) => {
       .status(200)
       .json(new ApiResponse(200, req.user, 'User authenticated successfully'));
   } catch (error) {
-    console.log(error);
+    console.error(error);
     res.status(500).json(new ApiError(400, 'Error checking user'));
   }
 };

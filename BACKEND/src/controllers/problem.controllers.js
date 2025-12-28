@@ -29,7 +29,6 @@ const createProblem = async (req, res) => {
   try {
     for (const [language, solutionCode] of Object.entries(refrenceSolution)) {
       const languageId = getJudge0LanguageId(language);
-      console.log(languageId);
 
       if (!languageId) {
         return res
@@ -54,7 +53,6 @@ const createProblem = async (req, res) => {
 
       for (let i = 0; i < results.length; i++) {
         const result = results[i];
-        console.log('Result------', result);
 
         if (result.status.id !== 3) {
           return res
@@ -90,7 +88,7 @@ const createProblem = async (req, res) => {
         new ApiResponse(201, newProblem, 'New Problem is created successfully'),
       );
   } catch (error) {
-    console.log(error);
+    console.error(error);
     return res.status(400).json(new ApiError(400, error.message));
   }
 };
@@ -117,7 +115,7 @@ const getAllProblems = async (req, res) => {
         new ApiResponse(200, problems, 'All problems Fetched Successfully'),
       );
   } catch (error) {
-    console.log(error);
+    console.error(error);
     return res.status(400).json(new ApiError(400, error.message));
   }
 };
@@ -140,7 +138,7 @@ const getProblemById = async (req, res) => {
       .status(200)
       .json(new ApiResponse(200, problem, 'Problem Fetched Successfully'));
   } catch (error) {
-    console.log(error);
+    console.error(error);
     return res.status(400).json(new ApiError(400, error.message));
   }
 };
@@ -179,7 +177,6 @@ const updateProblem = async (req, res) => {
 
     for (const [language, solutionCode] of Object.entries(refrenceSolution)) {
       const languageId = getJudge0LanguageId(language);
-      console.log(languageId);
 
       if (!languageId) {
         return res
@@ -204,7 +201,6 @@ const updateProblem = async (req, res) => {
 
       for (let i = 0; i < results.length; i++) {
         const result = results[i];
-        console.log('Result------', result);
 
         if (result.status.id !== 3) {
           return res
@@ -242,7 +238,7 @@ const updateProblem = async (req, res) => {
         new ApiResponse(201, UpdatedProblem, 'Problem Updated Successfully'),
       );
   } catch (error) {
-    console.log(error);
+    console.error(error);
     return res.status(400).json(new ApiError(400, error.message));
   }
 };
@@ -277,7 +273,7 @@ const deleteProblem = async (req, res) => {
       .status(200)
       .json(new ApiResponse(200, {}, 'Problem Deleted Successfully'));
   } catch (error) {
-    console.log(error);
+    console.error(error);
     return res.status(400).json(new ApiError(400, error.message));
   }
 };
@@ -305,7 +301,7 @@ const getAllProblemsSolvedByUser = async (req, res) => {
       .status(200)
       .json(new ApiResponse(200, problems, 'Problems fetched Successfully'));
   } catch (error) {
-    console.log(error);
+    console.error(error);
     return res.status(400).json(new ApiError(400, error.message));
   }
 };

@@ -18,7 +18,7 @@ export const getAllSubmissions = async (req, res) => {
         new ApiResponse(200, submission, 'Submissions fetched successfully'),
       );
   } catch (error) {
-    console.log(error);
+    console.error(error);
     return res.status(400).json(new ApiError(400, error.message));
   }
 };
@@ -41,7 +41,7 @@ export const getSubmissionForProblem = async (req, res) => {
         new ApiResponse(200, submissions, 'Submissions fetched successfully'),
       );
   } catch (error) {
-    console.log(error);
+    console.error(error);
     return res.status(400).json(new ApiError(400, error.message));
   }
 };
@@ -62,7 +62,7 @@ export const getAllTheSubmissionsForProblem = async (req, res) => {
         new ApiResponse(200, submissions, 'Submissions fetched successfully'),
       );
   } catch (error) {
-    console.log(error);
+    console.error(error);
     return res.status(400).json(new ApiError(400, error.message));
   }
 };
