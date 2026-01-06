@@ -132,7 +132,7 @@ const Footer = () => {
 
       {/* Bottom Section */}
       <div className="mt-12 border-t border-gray-700 pt-6 flex flex-col md:flex-row justify-between items-center text-base text-gray-400">
-        <p>© Copyright 2025</p>
+        <p>© Copyright 2026</p>
         <div className="flex gap-4 mt-4 md:mt-0">
           <a
             href="https://x.com/SinghSanket78"
