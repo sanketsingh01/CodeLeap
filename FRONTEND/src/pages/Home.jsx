@@ -1,9 +1,9 @@
 import React from "react";
-import Hero from "../componenets/Hero.jsx";
-import FeatureGrid from "../componenets/FeatureGrid.jsx";
-import CodingJourney from "../componenets/whyUs.jsx";
-import Comunitysection from "../componenets/Comunitysection.jsx";
-import CommunityCard from "../componenets/MailCard.jsx";
+import Hero from "../components/Hero.jsx";
+import FeatureGrid from "../components/FeatureGrid.jsx";
+import CodingJourney from "../components/whyUs.jsx";
+import Comunitysection from "../components/Comunitysection.jsx";
+import CommunityCard from "../components/MailCard.jsx";
 import Reviews from "./Reviews.jsx";
 
 const Home = () => {

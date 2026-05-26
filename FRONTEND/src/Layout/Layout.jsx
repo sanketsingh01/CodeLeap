@@ -16,7 +16,7 @@ import AllPlaylistsPage from "../pages/PlaylistsPage.jsx";
 import PlaylistDetailpage from "../pages/PlaylistDetailpage.jsx";
 import Profile from "../pages/Profile.jsx";
 import NotFoundPage from "../pages/NotFoundPage.jsx";
-import AdminRoute from "../componenets/AdminRoute.jsx";
+import AdminRoute from "../components/AdminRoute.jsx";
 
 import { useAuthStore } from "../store/useAuthStore.js";
 
@@ -43,7 +43,7 @@ const Layout = () => {
     return () => clearInterval(interval);
   }, [checkAuth, refreshToken]);
 
-  // Still checking
+  // 1. Still checking
   // if (isCheckingAuth && !authUser && !authError) {
   //   return (
   //     <div className="flex items-center justify-center h-screen">
@@ -52,7 +52,7 @@ const Layout = () => {
   //   );
   // }
 
-  //  if Backend unreachable
+  // 2. Backend unreachable
   if (authError) {
     return (
       <div className="flex flex-col items-center justify-center h-screen text-center px-4">
@@ -70,6 +70,7 @@ const Layout = () => {
     );
   }
 
+  // 3. Normal app
   return (
     <div className="w-full">
       <Toaster />

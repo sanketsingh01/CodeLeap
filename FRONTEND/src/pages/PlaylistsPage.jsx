@@ -11,7 +11,7 @@ import {
 } from "lucide-react";
 import { useNavigate } from "react-router-dom";
 
-import CreatePlaylistModal from "../componenets/CreatePlaylistModal.jsx";
+import CreatePlaylistModal from "../components/CreatePlaylistModal.jsx";
 import { useAuthStore } from "../store/useAuthStore.js";
 
 import amazonIcon from "./assets/AmazonIcon.webp";
@@ -124,7 +124,7 @@ const AllPlaylistsPage = () => {
                     </h2>
                     <p className="text-sm text-gray-300 mb-6">
                       {playlist.description?.toLowerCase() ===
-                      "after solving this problem you can able to solve any js problem"
+                        "after solving this problem you can able to solve any js problem"
                         ? "after solving these problems, you'll be able to solve any js problem"
                         : playlist.description}
                     </p>

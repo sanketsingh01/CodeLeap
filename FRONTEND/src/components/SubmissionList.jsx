@@ -1,10 +1,9 @@
 import React from "react";
 import {
-  CheckCircle2,
-  XCircle,
   Clock,
   MemoryStick as Memory,
   Calendar,
+  CrosshairIcon,
 } from "lucide-react";
 
 const SubmissionList = ({ submissions, isLoading }) => {
@@ -47,8 +46,13 @@ const SubmissionList = ({ submissions, isLoading }) => {
 
   if (!submissions?.length) {
     return (
-      <div className="text-center p-8 ">
-        <div className="text-base-content/70">No Sumissions Found</div>
+      <div className="flex flex-col items-center justify-center py-12 text-center">
+        <div className="p-4 bg-zinc-700/30 rounded-xl mb-4 border border-zinc-600/30">
+          <CrosshairIcon className="w-8 h-8 text-zinc-400" />
+        </div>
+        <h3 className="text-lg font-medium text-white mb-2">
+          No Submission yet.
+        </h3>
       </div>
     );
   }

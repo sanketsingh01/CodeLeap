@@ -4,7 +4,7 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { Link } from "react-router-dom";
 import { Code, Eye, EyeOff, Loader2, Lock, Mail } from "lucide-react";
 import { z } from "zod";
-import AuthImagePattern from "../componenets/AuthImagePattern.jsx";
+import AuthImagePattern from "../components/AuthImagePattern.jsx";
 import { useAuthStore } from "../store/useAuthStore.js";
 import google from "./assets/google.svg";
 
@@ -69,9 +69,8 @@ const SignUpPage = () => {
                 <input
                   type="text"
                   {...register("name")}
-                  className={`w-full pl-10 py-2 bg-zinc-800 text-white rounded-lg border focus:outline-none focus:ring-2 focus:ring-[#F4FF54]/50 transition ${
-                    errors.name ? "border-red-500" : "border-zinc-700"
-                  }`}
+                  className={`w-full pl-10 py-2 bg-zinc-800 text-white rounded-lg border focus:outline-none focus:ring-2 focus:ring-[#F4FF54]/50 transition ${errors.name ? "border-red-500" : "border-zinc-700"
+                    }`}
                   placeholder="John Doe"
                 />
               </div>
@@ -89,9 +88,8 @@ const SignUpPage = () => {
                 <input
                   type="email"
                   {...register("email")}
-                  className={`w-full pl-10 py-2 bg-zinc-800 text-white rounded-lg border focus:outline-none focus:ring-2 focus:ring-[#F4FF54]/50 transition ${
-                    errors.email ? "border-red-500" : "border-zinc-700"
-                  }`}
+                  className={`w-full pl-10 py-2 bg-zinc-800 text-white rounded-lg border focus:outline-none focus:ring-2 focus:ring-[#F4FF54]/50 transition ${errors.email ? "border-red-500" : "border-zinc-700"
+                    }`}
                   placeholder="you@example.com"
                 />
               </div>
@@ -111,9 +109,8 @@ const SignUpPage = () => {
                 <input
                   type={showPassword ? "text" : "password"}
                   {...register("password")}
-                  className={`w-full pl-10 pr-10 py-2 bg-zinc-800 text-white rounded-lg border focus:outline-none focus:ring-2 focus:ring-[#F4FF54]/50 transition ${
-                    errors.password ? "border-red-500" : "border-zinc-700"
-                  }`}
+                  className={`w-full pl-10 pr-10 py-2 bg-zinc-800 text-white rounded-lg border focus:outline-none focus:ring-2 focus:ring-[#F4FF54]/50 transition ${errors.password ? "border-red-500" : "border-zinc-700"
+                    }`}
                   placeholder="••••••••"
                 />
                 <button
@@ -158,8 +155,8 @@ const SignUpPage = () => {
             <button
               type="button"
               onClick={() =>
-                (window.location.href =
-                  "https://codeleap-47he.onrender.com/api/v1/auth/google")
+              (window.location.href =
+                "https://codeleap-47he.onrender.com/api/v1/auth/google")
               }
               className="w-full py-2 rounded-lg font-semibold text-white bg-blue-600 hover:bg-blue-600/80 transition flex items-center justify-center gap-2 cursor-pointer"
             >

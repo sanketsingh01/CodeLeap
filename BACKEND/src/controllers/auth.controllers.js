@@ -74,7 +74,7 @@ const register = async (req, res) => {
       sameSite: 'none',
       secure: true,
       maxAge: 1000 * 60 * 15, // 15 minutes
-      domain: '.codeleap.in',
+      // domain: '.codeleap.in',
     };
 
     const RefreshCookieOptions = {
@@ -82,7 +82,7 @@ const register = async (req, res) => {
       sameSite: 'none',
       secure: true,
       maxAge: 1000 * 60 * 60 * 24 * 7, // 7 days
-      domain: '.codeleap.in',
+      // domain: '.codeleap.in',
     };
 
     res.cookie('accessToken', accessToken, AccessCookieOptions);
@@ -231,7 +231,7 @@ const login = async (req, res) => {
       sameSite: 'none',
       secure: true,
       maxAge: 1000 * 60 * 15, // 15 minutes
-      domain: '.codeleap.in',
+      // domain: '.codeleap.in',
     };
 
     const RefreshCookieOptions = {
@@ -239,7 +239,7 @@ const login = async (req, res) => {
       sameSite: 'none',
       secure: true,
       maxAge: 1000 * 60 * 60 * 24 * 7, // 7 days
-      domain: '.codeleap.in',
+      // domain: '.codeleap.in',
     };
 
     res.cookie('accessToken', accessToken, AccessCookieOptions);
@@ -299,7 +299,7 @@ const googleLogin = async (req, res) => {
       sameSite: isProduction ? 'none' : 'lax',
       secure: isProduction,
       maxAge: 1000 * 60 * 15, // 15 minutes
-      domain: '.codeleap.in',
+      // domain: '.codeleap.in',
     };
 
     const RefreshCookieOptions = {
@@ -307,7 +307,7 @@ const googleLogin = async (req, res) => {
       sameSite: isProduction ? 'none' : 'lax',
       secure: isProduction,
       maxAge: 1000 * 60 * 60 * 24 * 7, // 7 days
-      domain: '.codeleap.in',
+      // domain: '.codeleap.in',
     };
 
     res.cookie('accessToken', accessToken, AccessCookieOptions);
@@ -369,7 +369,7 @@ const TokenRefresh = async (req, res) => {
       sameSite: 'none',
       secure: true,
       maxAge: 1000 * 60 * 15, // 15 minutes
-      domain: '.codeleap.in',
+      // domain: '.codeleap.in',
     };
 
     const RefreshCookieOptions = {
@@ -377,7 +377,7 @@ const TokenRefresh = async (req, res) => {
       sameSite: 'none',
       secure: true,
       maxAge: 1000 * 60 * 60 * 24 * 7, // 7 days
-      domain: '.codeleap.in',
+      // domain: '.codeleap.in',
     };
 
     res.cookie('accessToken', newAccessToken, AccessCookieOptions);
@@ -409,13 +409,13 @@ const logout = async (req, res) => {
       httpOnly: true,
       sameSite: 'none',
       secure: true,
-      domain: '.codeleap.in',
+      // domain: '.codeleap.in',
     });
     res.clearCookie('refreshToken', {
       httpOnly: true,
       sameSite: 'none',
       secure: true,
-      domain: '.codeleap.in',
+      // domain: '.codeleap.in',
     });
 
     await db.user.update({

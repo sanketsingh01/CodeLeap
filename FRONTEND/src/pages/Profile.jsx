@@ -16,7 +16,7 @@ import {
 import { useAuthStore } from "../store/useAuthStore";
 import { useProblemStore } from "../store/useProblemStore.js";
 import { useSubmissionStore } from "../store/useSubmissionStore.js";
-import LoginHeatmap from "../componenets/LoginHeatmap.jsx";
+import LoginHeatmap from "../components/LoginHeatmap.jsx";
 import profile from "./assets/avatar1.webp";
 
 import {
@@ -382,13 +382,12 @@ const Profile = ({ user }) => {
                           </td>
                           <td className="px-4 py-3">
                             <span
-                              className={`inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium ${
-                                problem.difficulty === "EASY"
+                              className={`inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium ${problem.difficulty === "EASY"
                                   ? "bg-emerald-100 text-emerald-800 dark:bg-emerald-900/20 dark:text-emerald-400"
                                   : problem.difficulty === "MEDIUM"
-                                  ? "bg-yellow-100 text-yellow-800 dark:bg-yellow-900/20 dark:text-yellow-400"
-                                  : "bg-red-100 text-red-800 dark:bg-red-900/20 dark:text-red-400"
-                              }`}
+                                    ? "bg-yellow-100 text-yellow-800 dark:bg-yellow-900/20 dark:text-yellow-400"
+                                    : "bg-red-100 text-red-800 dark:bg-red-900/20 dark:text-red-400"
+                                }`}
                             >
                               {problem.difficulty}
                             </span>

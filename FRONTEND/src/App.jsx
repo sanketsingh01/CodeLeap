@@ -1,7 +1,7 @@
 import React from "react";
 import { useLocation } from "react-router-dom";
-import Navbar from "./componenets/navbar.jsx";
-import Footer from "./componenets/Footer.jsx";
+import Navbar from "./components/navbar.jsx";
+import Footer from "./components/Footer.jsx";
 import Layout from "./Layout/Layout.jsx";
 
 const App = () => {
@@ -12,7 +12,7 @@ const App = () => {
     location.pathname.toLowerCase()
   );
 
-  const shouldhidefooter = /^\/problem\/[^/]+$/.test(
+  const shouldhideNavfooter = /^\/problem\/[^/]+$/.test(
     location.pathname.toLowerCase()
   );
 
@@ -20,11 +20,13 @@ const App = () => {
 
   return (
     <div className="flex flex-col min-h-screen bg-gradient-to-br from-black via-zinc-800 to-black text-white">
-      {!shouldHideHeaderFooter && <Navbar />}
+      {!(shouldHideHeaderFooter || shouldhideNavfooter) && <Navbar />}
       <Layout />
-      {!(shouldHideHeaderFooter || shouldhidefooter || shouldhidefooter1) && (
-        <Footer />
-      )}
+      {!(
+        shouldHideHeaderFooter ||
+        shouldhideNavfooter ||
+        shouldhidefooter1
+      ) && <Footer />}
     </div>
   );
 };
