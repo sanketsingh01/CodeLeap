@@ -20,7 +20,7 @@
   /* Primary brand — rgb(22, 76, 255) */
   --brand: #1c49ff;
   --brand-from: #1c49ff; /* rgb(22, 76, 255) */
-  --brand-to: #b6faff; /* darker companion for gradient depth */
+  --brand-to: #164cff; /* darker companion for gradient depth */
   --brand-gradient: linear-gradient(180deg, #1c49ff 0%, #b6faff 100%);
   --brand-gradient-h: linear-gradient(90deg, #1c49ff 0%, #b6faff 70%);
   --brand-gradient-d: linear-gradient(135deg, #1c49ff 50%, #b6faff 100%);
@@ -34,9 +34,9 @@
   --sky-400: #1c49ff;
   --sky-500: #1c49ff; /* Primary */
   --sky-600: #1c49ff;
-  --sky-700: #b6faff;
-  --sky-800: #b6faff;
-  --sky-900: #b6faff;
+  --sky-700: #164cff;
+  --sky-800: #164cff;
+  --sky-900: #164cff;
   --sky-rgb: 22, 76, 255;
 
   /* Legacy accent aliases — pointed to the brand */

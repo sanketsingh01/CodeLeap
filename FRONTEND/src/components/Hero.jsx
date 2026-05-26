@@ -3,12 +3,12 @@ import "../index.css";
 import { motion } from "motion/react";
 import { ArrowRight, Play, Sparkles, CheckCircle2 } from "lucide-react";
 import { Link } from "react-router-dom";
+import { LogoCloud } from "./logo-cloud";
 
-const trustedBy = ["Google", "Meta", "Amazon", "Microsoft", "Netflix"];
 
 const Hero = () => {
   return (
-    <section className="relative w-full overflow-hidden pt-32 pb-20 px-6 sm:px-10 md:px-16 lg:px-24">
+    <section className="relative w-full overflow-hidden pt-32 pb-10 px-6 sm:px-10 md:px-16 lg:px-24">
 
       <div className="max-w-7xl mx-auto flex flex-col items-center text-center">
 
@@ -181,21 +181,24 @@ const Hero = () => {
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           transition={{ delay: 1, duration: 0.6 }}
-          className="mt-16 w-full max-w-4xl"
+          className="mt-18 w-full max-w-4xl"
         >
-          <p className="text-xs uppercase tracking-[0.2em] text-[var(--ink-400)] font-semibold mb-4">
-            Trusted by engineers preparing for
-          </p>
-          <div className="flex flex-wrap items-center justify-center gap-x-10 gap-y-3 text-[var(--ink-400)] font-jakarta font-semibold">
-            {trustedBy.map((name) => (
-              <span
-                key={name}
-                className="text-lg sm:text-xl opacity-70 hover:opacity-100 transition-opacity"
-              >
-                {name}
+          <div className="w-full">
+            <h2 className="mb-5 text-center">
+              <span className="block font-medium text-2xl text-muted-foreground">
+                Trusted by Engineers
               </span>
-            ))}
+              <span className="font-black text-2xl text-primary tracking-tight md:text-3xl">
+                Preparing for
+              </span>
+            </h2>
+            <div className="relative mx-auto max-w-3xl *:border-y-0">
+              <div className="pointer-events-none absolute -top-px left-1/2 h-px w-screen -translate-x-1/2" />
+              <LogoCloud />
+              <div className="pointer-events-none absolute -bottom-px left-1/2 h-px w-screen -translate-x-1/2 " />
+            </div>
           </div>
+
         </motion.div>
       </div>
     </section>
