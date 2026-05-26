@@ -2,9 +2,18 @@ import React, { useState } from "react";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Link } from "react-router-dom";
-import { Code, Eye, EyeOff, Loader2, Lock, Mail } from "lucide-react";
+import {
+  Eye,
+  EyeOff,
+  Loader2,
+  Lock,
+  Mail,
+  User,
+  Sparkles,
+  ArrowLeft,
+  CheckCircle2,
+} from "lucide-react";
 import { z } from "zod";
-import AuthImagePattern from "../components/AuthImagePattern.jsx";
 import { useAuthStore } from "../store/useAuthStore.js";
 import google from "./assets/google.svg";
 
@@ -16,7 +25,6 @@ const SignUpSchema = z.object({
 
 const SignUpPage = () => {
   const [showPassword, setShowPassword] = useState(false);
-
   const { signup, isSigninUp } = useAuthStore();
 
   const {
@@ -36,152 +44,204 @@ const SignUpPage = () => {
   };
 
   return (
-    <div className="min-h-screen grid grid-cols-1 lg:grid-cols-1 text-white parkinsans-Regular">
-      <div className="flex flex-col justify-center items-center px-6 py-6 lg:px-20">
-        <div className="w-full max-w-lg space-y-5">
-          <div className="text-center">
-            <div className="flex flex-col items-center gap-3">
-              <div className="w-14 h-14 bg-primary/20 rounded-2xl flex items-center justify-center">
-                <Code className="w-7 h-7 text-[#F4FF54]" />
-              </div>
-              <h1 className="text-4xl font-extrabold tracking-tight">
-                Welcome to Codeleap
-              </h1>
-            </div>
-          </div>
+    <div className="min-h-screen grid grid-cols-1 lg:grid-cols-2 bg-[var(--surface)]">
+      {/* Left: Form */}
+      <div className="flex flex-col px-6 sm:px-10 lg:px-16 py-10">
+        <Link
+          to="/"
+          className="inline-flex items-center gap-1.5 text-sm font-medium text-[var(--ink-700)] hover:text-[var(--sky-600)] transition-colors w-fit"
+        >
+          <ArrowLeft className="w-4 h-4" />
+          Back to home
+        </Link>
 
-          <div className="bg-red-900/20 border border-red-500/50 rounded-lg p-3">
-            <p className="text-red-400 text-sm text-center">
-              <strong>Note: </strong>The backend runs on a free render instance,
-              so it may sleep at times. if login/Singup takes longer, please
-              wait 3-5 minutes.
+        <div className="flex-1 flex items-center">
+          <div className="w-full max-w-md mx-auto space-y-6">
+            <div>
+              <div className="flex items-center gap-2 mb-6">
+                <span className="w-10 h-10 rounded-xl bg-gradient-to-br from-[var(--sky-500)] to-[var(--sky-700)] flex items-center justify-center shadow-md shadow-sky-200">
+                  <Sparkles className="w-5 h-5 text-white" />
+                </span>
+                <span className="font-jakarta text-xl font-extrabold">
+                  <span className="text-[var(--ink-900)]">code</span>
+                  <span className="sky-gradient-text">leap</span>
+                </span>
+              </div>
+              <h1 className="font-jakarta text-3xl md:text-4xl font-extrabold text-[var(--ink-900)]">
+                Create your account.
+              </h1>
+              <p className="font-inter mt-2 text-[var(--ink-500)]">
+                Start free. Upgrade anytime. Cancel whenever.
+              </p>
+            </div>
+
+            <div className="bg-[var(--sky-50)] border border-[var(--sky-200)] rounded-xl p-3 text-xs text-[var(--ink-700)]">
+              <strong className="text-[var(--sky-700)]">Note:</strong> Our
+              backend is on a free Render instance. If sign-up is slow, please
+              wait 3–5 minutes.
+            </div>
+
+            <form onSubmit={handleSubmit(onSubmit)} className="space-y-5">
+              <div>
+                <label className="block mb-1.5 text-sm font-medium text-[var(--ink-700)]">
+                  Name
+                </label>
+                <div className="relative">
+                  <User className="absolute left-3.5 top-1/2 -translate-y-1/2 text-[var(--ink-400)] w-4 h-4" />
+                  <input
+                    type="text"
+                    {...register("name")}
+                    placeholder="Jane Doe"
+                    className={`w-full pl-10 pr-3 py-3 bg-white text-[var(--ink-900)] rounded-xl border outline-none transition-all placeholder-[var(--ink-400)] focus:border-[var(--sky-500)] focus:shadow-[0_0_0_4px_rgba(22,76,255,0.14)] ${
+                      errors.name ? "border-red-300" : "border-[var(--ink-200)]"
+                    }`}
+                  />
+                </div>
+                {errors.name && (
+                  <p className="text-red-500 text-xs mt-1.5">
+                    {errors.name.message}
+                  </p>
+                )}
+              </div>
+
+              <div>
+                <label className="block mb-1.5 text-sm font-medium text-[var(--ink-700)]">
+                  Email
+                </label>
+                <div className="relative">
+                  <Mail className="absolute left-3.5 top-1/2 -translate-y-1/2 text-[var(--ink-400)] w-4 h-4" />
+                  <input
+                    type="email"
+                    {...register("email")}
+                    placeholder="you@example.com"
+                    className={`w-full pl-10 pr-3 py-3 bg-white text-[var(--ink-900)] rounded-xl border outline-none transition-all placeholder-[var(--ink-400)] focus:border-[var(--sky-500)] focus:shadow-[0_0_0_4px_rgba(22,76,255,0.14)] ${
+                      errors.email
+                        ? "border-red-300"
+                        : "border-[var(--ink-200)]"
+                    }`}
+                  />
+                </div>
+                {errors.email && (
+                  <p className="text-red-500 text-xs mt-1.5">
+                    {errors.email.message}
+                  </p>
+                )}
+              </div>
+
+              <div>
+                <label className="block mb-1.5 text-sm font-medium text-[var(--ink-700)]">
+                  Set password
+                </label>
+                <div className="relative">
+                  <Lock className="absolute left-3.5 top-1/2 -translate-y-1/2 text-[var(--ink-400)] w-4 h-4" />
+                  <input
+                    type={showPassword ? "text" : "password"}
+                    {...register("password")}
+                    placeholder="••••••••"
+                    className={`w-full pl-10 pr-10 py-3 bg-white text-[var(--ink-900)] rounded-xl border outline-none transition-all placeholder-[var(--ink-400)] focus:border-[var(--sky-500)] focus:shadow-[0_0_0_4px_rgba(22,76,255,0.14)] ${
+                      errors.password
+                        ? "border-red-300"
+                        : "border-[var(--ink-200)]"
+                    }`}
+                  />
+                  <button
+                    type="button"
+                    onClick={() => setShowPassword(!showPassword)}
+                    className="absolute right-3 top-1/2 -translate-y-1/2 text-[var(--ink-400)] hover:text-[var(--sky-600)] transition-colors cursor-pointer"
+                  >
+                    {showPassword ? (
+                      <EyeOff className="w-4 h-4" />
+                    ) : (
+                      <Eye className="w-4 h-4" />
+                    )}
+                  </button>
+                </div>
+                {errors.password && (
+                  <p className="text-red-500 text-xs mt-1.5">
+                    {errors.password.message}
+                  </p>
+                )}
+              </div>
+
+              <button
+                type="submit"
+                disabled={isSigninUp}
+                className="btn-sky w-full py-3 rounded-xl font-semibold inline-flex items-center justify-center gap-2 disabled:opacity-60 disabled:cursor-not-allowed"
+              >
+                {isSigninUp ? (
+                  <>
+                    <Loader2 className="w-4 h-4 animate-spin" /> Creating
+                    account...
+                  </>
+                ) : (
+                  "Create Account"
+                )}
+              </button>
+
+              <div className="relative text-center">
+                <span className="absolute left-0 top-1/2 w-full border-t border-[var(--ink-200)]" />
+                <span className="bg-[var(--surface)] px-3 text-xs text-[var(--ink-400)] relative font-medium uppercase tracking-wider">
+                  or
+                </span>
+              </div>
+
+              <button
+                type="button"
+                onClick={() =>
+                  (window.location.href =
+                    "https://codeleap-47he.onrender.com/api/v1/auth/google")
+                }
+                className="btn-ghost-sky w-full py-3 rounded-xl font-semibold inline-flex items-center justify-center gap-2"
+              >
+                <img src={google} alt="Google" className="w-5 h-5" />
+                Continue with Google
+              </button>
+            </form>
+
+            <p className="text-center text-sm text-[var(--ink-500)]">
+              Already have an account?{" "}
+              <Link
+                to="/login"
+                className="text-[var(--sky-600)] font-semibold hover:underline"
+              >
+                Sign in
+              </Link>
             </p>
           </div>
-
-          <form
-            onSubmit={handleSubmit(onSubmit)}
-            className="bg-zinc-900 p-6 rounded-2xl shadow-lg space-y-6"
-          >
-            <div>
-              <label className="block mb-2 text-sm font-medium">Name</label>
-              <div className="relative">
-                <Code className="absolute left-3 top-1/2 transform -translate-y-1/2 text-zinc-500 w-5 h-5" />
-                <input
-                  type="text"
-                  {...register("name")}
-                  className={`w-full pl-10 py-2 bg-zinc-800 text-white rounded-lg border focus:outline-none focus:ring-2 focus:ring-[#F4FF54]/50 transition ${errors.name ? "border-red-500" : "border-zinc-700"
-                    }`}
-                  placeholder="John Doe"
-                />
-              </div>
-              {errors.name && (
-                <p className="text-red-500 text-sm mt-1">
-                  {errors.name.message}
-                </p>
-              )}
-            </div>
-
-            <div>
-              <label className="block mb-2 text-sm font-medium">Email</label>
-              <div className="relative">
-                <Mail className="absolute left-3 top-1/2 transform -translate-y-1/2 text-zinc-500 w-5 h-5" />
-                <input
-                  type="email"
-                  {...register("email")}
-                  className={`w-full pl-10 py-2 bg-zinc-800 text-white rounded-lg border focus:outline-none focus:ring-2 focus:ring-[#F4FF54]/50 transition ${errors.email ? "border-red-500" : "border-zinc-700"
-                    }`}
-                  placeholder="you@example.com"
-                />
-              </div>
-              {errors.email && (
-                <p className="text-red-500 text-sm mt-1">
-                  {errors.email.message}
-                </p>
-              )}
-            </div>
-
-            <div>
-              <label className="block mb-2 text-sm font-medium">
-                Set Password
-              </label>
-              <div className="relative">
-                <Lock className="absolute left-3 top-1/2 transform -translate-y-1/2 text-zinc-500 w-5 h-5" />
-                <input
-                  type={showPassword ? "text" : "password"}
-                  {...register("password")}
-                  className={`w-full pl-10 pr-10 py-2 bg-zinc-800 text-white rounded-lg border focus:outline-none focus:ring-2 focus:ring-[#F4FF54]/50 transition ${errors.password ? "border-red-500" : "border-zinc-700"
-                    }`}
-                  placeholder="••••••••"
-                />
-                <button
-                  type="button"
-                  className="absolute right-3 top-1/2 transform -translate-y-1/2 text-zinc-500"
-                  onClick={() => setShowPassword(!showPassword)}
-                >
-                  {showPassword ? (
-                    <EyeOff className="w-5 h-5" />
-                  ) : (
-                    <Eye className="w-5 h-5" />
-                  )}
-                </button>
-              </div>
-              {errors.password && (
-                <p className="text-red-500 text-sm mt-1">
-                  {errors.password.message}
-                </p>
-              )}
-            </div>
-
-            <button
-              type="submit"
-              className="w-full py-2 rounded-lg font-semibold bg-[#F4FF54] text-black hover:bg-[#F4FF54]/90 transition flex items-center justify-center gap-2 cursor-pointer"
-              disabled={isSigninUp}
-            >
-              {isSigninUp ? (
-                <>
-                  <Loader2 className="h-5 w-5 animate-spin" /> Loading...
-                </>
-              ) : (
-                "Sign Up"
-              )}
-            </button>
-
-            <div className="flex items-center justify-center gap-2">
-              <div className="h-[1px] bg-zinc-700 w-full" />
-              <span className="text-zinc-400 text-sm">or</span>
-              <div className="h-[1px] bg-zinc-700 w-full" />
-            </div>
-
-            <button
-              type="button"
-              onClick={() =>
-              (window.location.href =
-                "https://codeleap-47he.onrender.com/api/v1/auth/google")
-              }
-              className="w-full py-2 rounded-lg font-semibold text-white bg-blue-600 hover:bg-blue-600/80 transition flex items-center justify-center gap-2 cursor-pointer"
-            >
-              <img
-                src={google}
-                alt="Google logo"
-                className="w-6 h-6 bg-white"
-              />
-              Continue with Google
-            </button>
-          </form>
-
-          <p className="text-center text-base text-gray-400">
-            Already have an account?{" "}
-            <Link to="/login" className="text-[#F4FF54] hover:underline">
-              Sign in
-            </Link>
-          </p>
         </div>
       </div>
 
-      {/* <AuthImagePattern
-        title={"Welcome to CodeLeap"}
-        subtitle={"Create your account to explore the power of CodeLeap."}
-      /> */}
+      {/* Right: Gradient panel */}
+      <div className="hidden lg:flex relative items-center justify-center overflow-hidden bg-gradient-to-br from-[var(--sky-500)] via-[var(--sky-600)] to-[var(--sky-800)] p-12">
+        <div className="absolute inset-0 bg-[radial-gradient(circle_at_20%_20%,rgba(255,255,255,0.25),transparent_60%)]" />
+        <div className="absolute inset-0 bg-[radial-gradient(circle_at_80%_80%,rgba(255,255,255,0.18),transparent_60%)]" />
+
+        <div className="relative max-w-md text-white">
+          <Sparkles className="w-8 h-8 mb-6 opacity-80" />
+          <h2 className="font-jakarta text-4xl font-extrabold leading-tight">
+            Join 10,000+ developers leveling up.
+          </h2>
+          <p className="font-inter mt-4 text-white/90 text-lg">
+            Get instant access to curated problem sets, the AI Coding Partner,
+            and a beautiful workspace built for focus.
+          </p>
+          <ul className="mt-8 space-y-3 text-white/90">
+            {[
+              "Free forever plan, no credit card",
+              "1,000+ curated problems",
+              "AI hints and complexity analysis",
+              "Track progress with streaks & heatmaps",
+            ].map((item) => (
+              <li key={item} className="flex items-center gap-2.5">
+                <span className="w-5 h-5 rounded-full bg-white/20 backdrop-blur flex items-center justify-center">
+                  <CheckCircle2 className="w-3.5 h-3.5" />
+                </span>
+                {item}
+              </li>
+            ))}
+          </ul>
+        </div>
+      </div>
     </div>
   );
 };

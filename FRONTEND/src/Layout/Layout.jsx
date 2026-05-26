@@ -6,7 +6,7 @@ import { Loader } from "lucide-react";
 import Home from "../pages/Home.jsx";
 import FAQ from "../pages/FAQ.jsx";
 import About from "../pages/AboutUs.jsx";
-import PricingComingSoon from "../pages/PricingComingSoon.jsx";
+import Pricing from "../pages/Pricing.jsx";
 import LoginPage from "../pages/LoginPage.jsx";
 import SignUpPage from "../pages/SignUpPage.jsx";
 import ProblemsHome from "../pages/Problems.jsx";
@@ -55,14 +55,19 @@ const Layout = () => {
   // 2. Backend unreachable
   if (authError) {
     return (
-      <div className="flex flex-col items-center justify-center h-screen text-center px-4">
-        <h2 className="text-2xl font-bold mb-4">⚠️ Backend Unavailable</h2>
-        <p className="mb-6 text-gray-300">
-          Our servers are currently unreachable. Please try again later.
+      <div className="flex flex-col items-center justify-center min-h-screen text-center px-4 bg-[var(--surface)]">
+        <div className="w-16 h-16 rounded-2xl bg-[var(--sky-50)] flex items-center justify-center text-[var(--sky-600)] mb-5 text-3xl">
+          !
+        </div>
+        <h2 className="font-jakarta text-2xl font-bold text-[var(--ink-900)] mb-2">
+          Backend unavailable
+        </h2>
+        <p className="mb-6 text-[var(--ink-500)] max-w-md">
+          Our servers are currently unreachable. Please try again in a moment.
         </p>
         <button
           onClick={() => window.location.reload()}
-          className="px-4 py-2 bg-blue-600 rounded-lg hover:bg-blue-700"
+          className="btn-sky px-5 py-2.5 rounded-full text-sm font-semibold"
         >
           Retry
         </button>
@@ -78,7 +83,7 @@ const Layout = () => {
         <Route path="/" element={<Home />} />
         <Route path="/FAQ" element={<FAQ />} />
         <Route path="/About" element={<About />} />
-        <Route path="/Pricing" element={<PricingComingSoon />} />
+        <Route path="/Pricing" element={<Pricing />} />
         <Route path="/Playlist/:id" element={<PlaylistDetailpage />} />
         <Route path="/profile" element={<Profile />} />
         <Route

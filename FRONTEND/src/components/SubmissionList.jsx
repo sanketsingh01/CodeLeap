@@ -3,7 +3,9 @@ import {
   Clock,
   MemoryStick as Memory,
   Calendar,
-  CrosshairIcon,
+  Inbox,
+  CheckCircle2,
+  XCircle,
 } from "lucide-react";
 
 const SubmissionList = ({ submissions, isLoading }) => {
@@ -11,7 +13,6 @@ const SubmissionList = ({ submissions, isLoading }) => {
     try {
       return JSON.parse(data);
     } catch (error) {
-      console.error("Error Parsing Data: ", data);
       return [];
     }
   };
@@ -20,7 +21,6 @@ const SubmissionList = ({ submissions, isLoading }) => {
     const memoryArray = safeParse(memoryData).map((m) =>
       parseFloat(m.split(" ")[0])
     );
-
     if (memoryArray.length === 0) return 0;
     return (
       memoryArray.reduce((acc, curr) => acc + curr, 0) / memoryArray.length
@@ -31,7 +31,6 @@ const SubmissionList = ({ submissions, isLoading }) => {
     const timeArray = safeParse(timeData).map((t) =>
       parseFloat(t.split(" ")[0])
     );
-
     if (timeArray.length === 0) return 0;
     return timeArray.reduce((acc, curr) => acc + curr, 0) / timeArray.length;
   };
@@ -39,82 +38,99 @@ const SubmissionList = ({ submissions, isLoading }) => {
   if (isLoading) {
     return (
       <div className="flex justify-center items-center p-8">
-        <span className="loading loading-spinner loading-lg text-primary"></span>
+        <div className="w-8 h-8 border-2 border-[var(--sky-500)] border-t-transparent rounded-full animate-spin" />
       </div>
     );
   }
 
   if (!submissions?.length) {
     return (
-      <div className="flex flex-col items-center justify-center py-12 text-center">
-        <div className="p-4 bg-zinc-700/30 rounded-xl mb-4 border border-zinc-600/30">
-          <CrosshairIcon className="w-8 h-8 text-zinc-400" />
+      <div className="flex flex-col items-center justify-center py-14 text-center">
+        <div className="p-4 bg-[var(--sky-50)] rounded-2xl mb-4 border border-[var(--sky-200)]">
+          <Inbox className="w-8 h-8 text-[var(--sky-500)]" />
         </div>
-        <h3 className="text-lg font-medium text-white mb-2">
-          No Submission yet.
+        <h3 className="font-jakarta text-lg font-semibold text-[var(--ink-900)] mb-1">
+          No submissions yet
         </h3>
+        <p className="text-sm text-[var(--ink-500)]">
+          Submit your code to see your history here.
+        </p>
       </div>
     );
   }
 
   return (
-    <div className="overflow-x-auto rounded-xl border border-zinc-700">
-      <table className="table w-full text-sm text-white">
-        <thead className="bg-zinc-800 text-zinc-400 uppercase text-xs">
-          <tr>
-            <th className="py-3 px-4">#</th>
-            <th>Status</th>
-            <th>Language</th>
-            <th>
-              <div className="flex items-center gap-1">
-                <Clock className="w-4 h-4" />
+    <div className="overflow-x-auto rounded-2xl border border-[var(--ink-200)] bg-white">
+      <table className="w-full text-sm">
+        <thead>
+          <tr className="text-xs uppercase tracking-wider text-[var(--ink-500)] bg-[var(--surface-container-low)]">
+            <th className="py-3 px-4 text-left font-semibold">#</th>
+            <th className="py-3 px-4 text-left font-semibold">Status</th>
+            <th className="py-3 px-4 text-left font-semibold">Language</th>
+            <th className="py-3 px-4 text-left font-semibold">
+              <span className="inline-flex items-center gap-1.5">
+                <Clock className="w-3.5 h-3.5" />
                 Runtime
-              </div>
+              </span>
             </th>
-            <th>
-              <div className="flex items-center gap-1">
-                <Memory className="w-4 h-4" />
+            <th className="py-3 px-4 text-left font-semibold">
+              <span className="inline-flex items-center gap-1.5">
+                <Memory className="w-3.5 h-3.5" />
                 Memory
-              </div>
+              </span>
             </th>
-            <th>
-              <div className="flex items-center gap-1">
-                <Calendar className="w-4 h-4" />
+            <th className="py-3 px-4 text-left font-semibold">
+              <span className="inline-flex items-center gap-1.5">
+                <Calendar className="w-3.5 h-3.5" />
                 Date
-              </div>
+              </span>
             </th>
           </tr>
         </thead>
         <tbody>
-          {[...submissions].reverse().map((submission, index) => {
-            const avgMemory = calculateAverageMemory(submission.memory);
-            const avgTime = calculateAverageTime(submission.time);
-            const statusColor =
-              submission.status === "Accepted"
-                ? "text-green-400"
-                : submission.status === "Compile Error"
-                ? "text-red-500"
-                : "text-red-400";
+          {[...submissions].reverse().map((s, idx) => {
+            const avgMemory = calculateAverageMemory(s.memory);
+            const avgTime = calculateAverageTime(s.time);
+            const accepted = s.status === "Accepted";
 
             return (
               <tr
-                key={submission.id}
-                className="border-b border-zinc-700 hover:bg-zinc-800 transition"
+                key={s.id}
+                className="border-t border-[var(--ink-100)] hover:bg-[var(--surface-container-low)]/60 transition-colors"
               >
-                <td className="py-3 px-4">{submissions.length - index}</td>
-                <td className={`font-semibold ${statusColor}`}>
-                  {submission.status}
+                <td className="py-3 px-4 text-[var(--ink-500)] font-mono-code">
+                  {submissions.length - idx}
                 </td>
-                <td>
-                  <span className="bg-zinc-700 px-2 py-1 rounded text-xs">
-                    {submission.language}
+                <td className="py-3 px-4">
+                  <span
+                    className={`inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-xs font-semibold ${
+                      accepted
+                        ? "bg-emerald-50 text-emerald-700 border border-emerald-200"
+                        : "bg-red-50 text-red-700 border border-red-200"
+                    }`}
+                  >
+                    {accepted ? (
+                      <CheckCircle2 className="w-3.5 h-3.5" />
+                    ) : (
+                      <XCircle className="w-3.5 h-3.5" />
+                    )}
+                    {s.status}
                   </span>
                 </td>
-                <td>{avgTime !== null ? `${avgTime.toFixed(0)} ms` : "N/A"}</td>
-                <td>
-                  {avgMemory !== null ? `${avgMemory.toFixed(1)} MB` : "N/A"}
+                <td className="py-3 px-4">
+                  <span className="bg-[var(--sky-50)] text-[var(--sky-700)] px-2 py-1 rounded-md text-xs font-medium border border-[var(--sky-200)]">
+                    {s.language}
+                  </span>
                 </td>
-                <td>{new Date(submission.createdAt).toLocaleDateString()}</td>
+                <td className="py-3 px-4 text-[var(--ink-700)] font-mono-code">
+                  {avgTime ? `${avgTime.toFixed(0)} ms` : "N/A"}
+                </td>
+                <td className="py-3 px-4 text-[var(--ink-700)] font-mono-code">
+                  {avgMemory ? `${avgMemory.toFixed(1)} MB` : "N/A"}
+                </td>
+                <td className="py-3 px-4 text-[var(--ink-500)]">
+                  {new Date(s.createdAt).toLocaleDateString()}
+                </td>
               </tr>
             );
           })}

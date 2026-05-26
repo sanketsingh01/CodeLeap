@@ -4,6 +4,8 @@ import {
   XCircle,
   Clock,
   MemoryStick as Memory,
+  Activity,
+  Gauge,
 } from "lucide-react";
 
 const SubmissionResults = ({ submission }) => {
@@ -11,110 +13,159 @@ const SubmissionResults = ({ submission }) => {
   const timeArr = JSON.parse(submission.time || "[]");
 
   const avgMemory =
-    memoryArr.map(parseFloat).reduce((a, b) => a + b, 0) / memoryArr.length;
+    memoryArr.map(parseFloat).reduce((a, b) => a + b, 0) /
+    (memoryArr.length || 1);
 
   const avgTime =
-    timeArr.map(parseFloat).reduce((a, b) => a + b, 0) / timeArr.length;
+    timeArr.map(parseFloat).reduce((a, b) => a + b, 0) /
+    (timeArr.length || 1);
 
   const passedTests = submission.testcases.filter((tc) => tc.passed).length;
   const totalTests = submission.testcases.length;
   const successRate = (passedTests / totalTests) * 100;
+  const accepted = submission.status === "Accepted";
 
   return (
-    <div className="space-y-8 p-4 md:p-6 max-w-7xl mx-auto">
-      {/* Summary Cards */}
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+    <div className="space-y-5 p-2">
+      {/* Status banner */}
+      <div
+        className={`rounded-2xl border p-5 flex items-center gap-4 ${
+          accepted
+            ? "bg-emerald-50 border-emerald-200"
+            : "bg-red-50 border-red-200"
+        }`}
+      >
+        <div
+          className={`w-12 h-12 rounded-xl flex items-center justify-center ${
+            accepted
+              ? "bg-emerald-500 text-white"
+              : "bg-red-500 text-white"
+          }`}
+        >
+          {accepted ? (
+            <CheckCircle2 className="w-7 h-7" />
+          ) : (
+            <XCircle className="w-7 h-7" />
+          )}
+        </div>
+        <div>
+          <h3
+            className={`font-jakarta text-xl font-bold ${
+              accepted ? "text-emerald-700" : "text-red-700"
+            }`}
+          >
+            {submission.status}
+          </h3>
+          <p className="text-sm text-[var(--ink-500)]">
+            {passedTests} of {totalTests} test cases passed
+          </p>
+        </div>
+      </div>
+
+      {/* Summary stats */}
+      <div className="grid grid-cols-2 md:grid-cols-3 gap-3">
         {[
-          {
-            label: "Status",
-            value: submission.status,
-            color:
-              submission.status === "Accepted"
-                ? "text-green-600"
-                : "text-red-600",
-          },
           {
             label: "Success Rate",
             value: `${successRate.toFixed(1)}%`,
-            color: "text-blue-600",
+            icon: Gauge,
+            color: "text-[var(--sky-600)]",
+            bg: "bg-[var(--sky-50)]",
           },
           {
             label: "Avg. Runtime",
             value: `${avgTime.toFixed(3)} s`,
-            color: "text-purple-600",
-            icon: <Clock className="w-4 h-4" />,
+            icon: Clock,
+            color: "text-[var(--sky-700)]",
+            bg: "bg-[var(--sky-50)]",
           },
           {
             label: "Avg. Memory",
             value: `${avgMemory.toFixed(0)} KB`,
-            color: "text-orange-600",
-            icon: <Memory className="w-4 h-4" />,
+            icon: Memory,
+            color: "text-amber-600",
+            bg: "bg-amber-50",
           },
-        ].map((card, idx) => (
-          <div
-            key={idx}
-            className="bg-white dark:bg-base-200 border border-gray-200 dark:border-base-300 rounded-2xl shadow-md p-5 hover:shadow-xl transition-all duration-300"
-          >
-            <h3 className="text-sm font-semibold text-gray-500 mb-1 flex items-center gap-2">
-              {card.icon}
-              {card.label}
-            </h3>
-            <div className={`text-xl font-bold ${card.color}`}>
-              {card.value}
+        ].map((card, idx) => {
+          const Icon = card.icon;
+          return (
+            <div
+              key={idx}
+              className="rounded-xl border border-[var(--ink-200)] bg-white p-4"
+            >
+              <div className="flex items-center gap-2 mb-2">
+                <span
+                  className={`w-7 h-7 rounded-lg ${card.bg} ${card.color} inline-flex items-center justify-center`}
+                >
+                  <Icon className="w-4 h-4" />
+                </span>
+                <p className="text-xs font-semibold text-[var(--ink-500)] uppercase tracking-wider">
+                  {card.label}
+                </p>
+              </div>
+              <p className="font-jakarta text-lg font-bold text-[var(--ink-900)]">
+                {card.value}
+              </p>
             </div>
-          </div>
-        ))}
+          );
+        })}
       </div>
 
-      {/* Test Cases Results */}
-      <div className="bg-white dark:bg-base-100 rounded-2xl shadow-xl p-6">
-        <h2 className="text-xl font-semibold mb-4 text-gray-800 dark:text-white">
-          Test Case Results
-        </h2>
-
+      {/* Test cases table */}
+      <div className="rounded-2xl border border-[var(--ink-200)] bg-white overflow-hidden">
+        <div className="px-5 py-3 border-b border-[var(--ink-200)] bg-[var(--surface-container-low)] flex items-center gap-2">
+          <Activity className="w-4 h-4 text-[var(--sky-600)]" />
+          <h4 className="font-jakarta font-semibold text-[var(--ink-900)]">
+            Test Case Results
+          </h4>
+        </div>
         <div className="overflow-x-auto">
-          <table className="table w-full table-auto text-sm">
+          <table className="w-full text-sm">
             <thead>
-              <tr className="bg-base-200 text-gray-600 dark:text-gray-300">
-                <th>Status</th>
-                <th>Expected Output</th>
-                <th>Your Output</th>
-                <th>Memory</th>
-                <th>Time</th>
+              <tr className="text-xs uppercase text-[var(--ink-500)] tracking-wider">
+                <th className="text-left py-3 px-5 font-semibold">Status</th>
+                <th className="text-left py-3 px-5 font-semibold">
+                  Expected
+                </th>
+                <th className="text-left py-3 px-5 font-semibold">Output</th>
+                <th className="text-left py-3 px-5 font-semibold">Memory</th>
+                <th className="text-left py-3 px-5 font-semibold">Time</th>
               </tr>
             </thead>
             <tbody>
-              {submission.testcases.map((testCase) => (
-                <tr key={testCase.id} className="hover:bg-base-100 transition">
-                  <td>
+              {submission.testcases.map((tc) => (
+                <tr
+                  key={tc.id}
+                  className="border-t border-[var(--ink-100)] hover:bg-[var(--surface-container-low)]/60 transition-colors"
+                >
+                  <td className="py-3 px-5">
                     <span
-                      className={`inline-flex items-center gap-1 px-2 py-1 rounded-full text-xs font-medium ${
-                        testCase.passed
-                          ? "bg-green-100 text-green-700"
-                          : "bg-red-100 text-red-700"
+                      className={`inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-xs font-semibold ${
+                        tc.passed
+                          ? "bg-emerald-50 text-emerald-700 border border-emerald-200"
+                          : "bg-red-50 text-red-700 border border-red-200"
                       }`}
                     >
-                      {testCase.passed ? (
-                        <>
-                          <CheckCircle2 className="w-4 h-4" />
-                          Passed
-                        </>
+                      {tc.passed ? (
+                        <CheckCircle2 className="w-3.5 h-3.5" />
                       ) : (
-                        <>
-                          <XCircle className="w-4 h-4" />
-                          Failed
-                        </>
+                        <XCircle className="w-3.5 h-3.5" />
                       )}
+                      {tc.passed ? "Passed" : "Failed"}
                     </span>
                   </td>
-                  <td className="font-mono whitespace-pre-wrap">
-                    {testCase.expected}
+                  <td className="py-3 px-5 font-mono-code text-[var(--ink-700)] whitespace-pre-wrap">
+                    {tc.expected}
                   </td>
-                  <td className="font-mono whitespace-pre-wrap">
-                    {testCase.stdout || "null"}
+                  <td className="py-3 px-5 font-mono-code text-[var(--ink-700)] whitespace-pre-wrap">
+                    {tc.stdout || "null"}
                   </td>
-                  <td className="text-center">{testCase.memory}</td>
-                  <td className="text-center">{testCase.time}</td>
+                  <td className="py-3 px-5 text-[var(--ink-500)]">
+                    {tc.memory}
+                  </td>
+                  <td className="py-3 px-5 text-[var(--ink-500)]">
+                    {tc.time}
+                  </td>
                 </tr>
               ))}
             </tbody>

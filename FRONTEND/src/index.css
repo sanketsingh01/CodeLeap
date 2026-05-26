@@ -1,121 +1,149 @@
-@import "tailwindcss";
-@plugin "daisyui";
-@import "tailwindcss";
-
+@import url("https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Inter:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600;700&display=swap");
 @import url("https://fonts.googleapis.com/css2?family=Parkinsans:wght@300..800&display=swap");
-
 @import url("https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&family=Parkinsans:wght@300..800&display=swap");
 
-@import "tw-animate-css";
+@import "tailwindcss";
+@plugin "daisyui";
 
+@import "tw-animate-css";
 @import "shadcn/tailwind.css";
 
 @custom-variant dark (&:is(.dark *));
 
-.parkinsans-font {
-  font-family: "Parkinsans", sans-serif;
-  font-optical-sizing: auto;
-  font-weight: 700;
-  font-style: normal;
+/* ===========================================
+   Luminous Sky Design System
+   =========================================== */
+
+/* Site-wide font (Parkinsans) — applied to every element below */
+
+:root {
+  /* Primary brand — rgb(22, 76, 255) */
+  --brand: #1c49ff;
+  --brand-from: #1c49ff; /* rgb(22, 76, 255) */
+  --brand-to: #b6faff; /* darker companion for gradient depth */
+  --brand-gradient: linear-gradient(180deg, #1c49ff 0%, #b6faff 100%);
+  --brand-gradient-h: linear-gradient(90deg, #1c49ff 0%, #b6faff 70%);
+  --brand-gradient-d: linear-gradient(135deg, #1c49ff 50%, #b6faff 100%);
+
+  /* Sky scale — anchored on the brand. Light "shades" stay neutral
+     so no tinted blue background ever shows. */
+  --sky-50: #fafafa;
+  --sky-100: #fafafa;
+  --sky-200: #e2e8f0; /* neutral grey border */
+  --sky-300: #94a3b8; /* neutral grey text   */
+  --sky-400: #1c49ff;
+  --sky-500: #1c49ff; /* Primary */
+  --sky-600: #1c49ff;
+  --sky-700: #b6faff;
+  --sky-800: #b6faff;
+  --sky-900: #b6faff;
+  --sky-rgb: 22, 76, 255;
+
+  /* Legacy accent aliases — pointed to the brand */
+  --pink-400: #164cff;
+  --purple-500: #0e3fd9;
+  --purple-400: #164cff;
+
+  /* Surfaces — page base is #fafafa, cards stay pure white for contrast */
+  --surface: #fafafa;
+  --surface-container-low: #fafafa;
+  --surface-container: #fafafa;
+  --surface-elevated: #ffffff;
+
+  /* Ink (neutrals) */
+  --ink-900: #0c1a2e;
+  --ink-700: #334155;
+  --ink-500: #64748b;
+  --ink-400: #94a3b8;
+  --ink-300: #cbd5e1;
+  --ink-200: #e2e8f0;
+  --ink-100: #f1f5f9;
+
+  /* Semantic */
+  --success: #10b981;
+  --warning: #f59e0b;
+  --danger: #ef4444;
+
+  /* Shadows */
+  --shadow-sky: 0 10px 30px -10px rgba(28, 73, 255, 0.3);
+  --shadow-soft:
+    0 1px 2px rgba(12, 26, 46, 0.04), 0 4px 16px rgba(12, 26, 46, 0.06);
+  --shadow-glow:
+    0 0 0 4px rgba(22, 76, 255, 0.16), 0 12px 40px rgba(22, 76, 255, 0.3);
+  --hero-shadow: 0 4px 12px 2px rgb(22, 76, 255);
+  --radius: 0.875rem;
+
+  /* shadcn defaults mapped to the new brand */
+  --background: #fafafa;
+  --foreground: #0c1a2e;
+  --card: #ffffff;
+  --card-foreground: #0c1a2e;
+  --popover: #ffffff;
+  --popover-foreground: #0c1a2e;
+  --primary: #164cff;
+  --primary-foreground: #ffffff;
+  --secondary: #fafafa;
+  --secondary-foreground: #0c1a2e;
+  --muted: #fafafa;
+  --muted-foreground: #64748b;
+  --accent: #fafafa;
+  --accent-foreground: #0c1a2e;
+  --destructive: #ef4444;
+  --border: #e2e8f0;
+  --input: #e2e8f0;
+  --ring: #164cff;
+  --chart-1: #164cff;
+  --chart-2: #0e3fd9;
+  --chart-3: #164cff;
+  --chart-4: #10b981;
+  --chart-5: #f59e0b;
+  --sidebar: #fafafa;
+  --sidebar-foreground: #0c1a2e;
+  --sidebar-primary: #164cff;
+  --sidebar-primary-foreground: #ffffff;
+  --sidebar-accent: #fafafa;
+  --sidebar-accent-foreground: #0c1a2e;
+  --sidebar-border: #e2e8f0;
+  --sidebar-ring: #164cff;
 }
 
-.font-roboto {
-  font-family: "Roboto", sans-serif;
-}
-
-.raleway-font-regular {
-  font-family: "Raleway", sans-serif;
-  font-optical-sizing: auto;
-  font-weight: 500;
-  font-style: normal;
-}
-
-.raleway-font-bold {
-  font-family: "Raleway", sans-serif;
-  font-optical-sizing: auto;
-  font-weight: 900;
-  font-style: normal;
-}
-
-.parkinsans-Regular {
-  font-family: "Parkinsans", sans-serif;
-  font-optical-sizing: auto;
-  font-weight: 500;
-  font-style: normal;
-}
-
-nav {
-  font-family: "Parkinsans", sans-serif;
-  font-optical-sizing: auto;
-  font-weight: 500;
-  font-style: normal;
-}
-
-.inter-Regular {
-  font-family: "Inter", sans-serif;
-  font-optical-sizing: auto;
-  font-weight: 500;
-  font-style: normal;
-}
-
-.inter-bold {
-  font-family: "Inter", sans-serif;
-  font-optical-sizing: auto;
-  font-weight: 700;
-  font-style: normal;
-}
-
-@keyframes blink {
-  0%,
-  100% {
-    opacity: 1;
-  }
-  50% {
-    opacity: 0;
-  }
-}
-
-.animate-blink {
-  animation: blink 1s infinite;
-}
-
-.animate-pulse {
-  animation: pulse 4s cubic-bezier(0.4, 0, 0.6, 1) infinite;
-}
-
-.delay-100 {
-  animation-delay: 1s;
-}
-
-.delay-200 {
-  animation-delay: 2s;
-}
-
-.delay-300 {
-  animation-delay: 3s;
-}
-
-.delay-500 {
-  animation-delay: 5s;
-}
-
-.delay-700 {
-  animation-delay: 7s;
-}
-
-@keyframes pulse {
-  0%,
-  100% {
-    opacity: 0.3;
-    transform: scale(1);
-  }
-  50% {
-    opacity: 0.8;
-    transform: scale(1.05);
-  }
+.dark {
+  --background: #0c1a2e;
+  --foreground: #ffffff;
+  --card: #102137;
+  --card-foreground: #ffffff;
+  --popover: #102137;
+  --popover-foreground: #ffffff;
+  --primary: #164cff;
+  --primary-foreground: #ffffff;
+  --secondary: #1e293b;
+  --secondary-foreground: #ffffff;
+  --muted: #1e293b;
+  --muted-foreground: #94a3b8;
+  --accent: #1e293b;
+  --accent-foreground: #ffffff;
+  --destructive: #f87171;
+  --border: rgba(255, 255, 255, 0.08);
+  --input: rgba(255, 255, 255, 0.12);
+  --ring: #164cff;
+  --sidebar: #0c1a2e;
+  --sidebar-foreground: #ffffff;
+  --sidebar-primary: #164cff;
+  --sidebar-primary-foreground: #ffffff;
+  --sidebar-accent: #1e293b;
+  --sidebar-accent-foreground: #ffffff;
+  --sidebar-border: rgba(255, 255, 255, 0.08);
+  --sidebar-ring: #164cff;
 }
 
 @theme inline {
+  /* Force every Tailwind font utility (font-sans, font-mono, font-serif)
+     to use Parkinsans so the entire UI shares one typeface. */
+  --font-sans: "Parkinsans", system-ui, sans-serif;
+  --font-mono: "Parkinsans", system-ui, sans-serif;
+  --font-serif: "Parkinsans", system-ui, sans-serif;
+  --default-font-family: "Parkinsans", system-ui, sans-serif;
+
   --radius-sm: calc(var(--radius) - 4px);
   --radius-md: calc(var(--radius) - 2px);
   --radius-lg: var(--radius);
@@ -123,6 +151,7 @@ nav {
   --radius-2xl: calc(var(--radius) + 8px);
   --radius-3xl: calc(var(--radius) + 12px);
   --radius-4xl: calc(var(--radius) + 16px);
+
   --color-background: var(--background);
   --color-foreground: var(--foreground);
   --color-card: var(--card);
@@ -154,84 +183,250 @@ nav {
   --color-sidebar-accent-foreground: var(--sidebar-accent-foreground);
   --color-sidebar-border: var(--sidebar-border);
   --color-sidebar-ring: var(--sidebar-ring);
+
+  --color-sky-50: var(--sky-50);
+  --color-sky-100: var(--sky-100);
+  --color-sky-200: var(--sky-200);
+  --color-sky-300: var(--sky-300);
+  --color-sky-400: var(--sky-400);
+  --color-sky-500: var(--sky-500);
+  --color-sky-600: var(--sky-600);
+  --color-sky-700: var(--sky-700);
+  --color-sky-800: var(--sky-800);
+  --color-sky-900: var(--sky-900);
+  --color-ink-900: var(--ink-900);
+  --color-ink-500: var(--ink-500);
+  --color-surface: var(--surface);
+  --color-surface-low: var(--surface-container-low);
 }
 
-:root {
-  --radius: 0.625rem;
-  --background: oklch(1 0 0);
-  --foreground: oklch(0.145 0 0);
-  --card: oklch(1 0 0);
-  --card-foreground: oklch(0.145 0 0);
-  --popover: oklch(1 0 0);
-  --popover-foreground: oklch(0.145 0 0);
-  --primary: oklch(0.205 0 0);
-  --primary-foreground: oklch(0.985 0 0);
-  --secondary: oklch(0.97 0 0);
-  --secondary-foreground: oklch(0.205 0 0);
-  --muted: oklch(0.97 0 0);
-  --muted-foreground: oklch(0.556 0 0);
-  --accent: oklch(0.97 0 0);
-  --accent-foreground: oklch(0.205 0 0);
-  --destructive: oklch(0.577 0.245 27.325);
-  --border: oklch(0.922 0 0);
-  --input: oklch(0.922 0 0);
-  --ring: oklch(0.708 0 0);
-  --chart-1: oklch(0.646 0.222 41.116);
-  --chart-2: oklch(0.6 0.118 184.704);
-  --chart-3: oklch(0.398 0.07 227.392);
-  --chart-4: oklch(0.828 0.189 84.429);
-  --chart-5: oklch(0.769 0.188 70.08);
-  --sidebar: oklch(0.985 0 0);
-  --sidebar-foreground: oklch(0.145 0 0);
-  --sidebar-primary: oklch(0.205 0 0);
-  --sidebar-primary-foreground: oklch(0.985 0 0);
-  --sidebar-accent: oklch(0.97 0 0);
-  --sidebar-accent-foreground: oklch(0.205 0 0);
-  --sidebar-border: oklch(0.922 0 0);
-  --sidebar-ring: oklch(0.708 0 0);
+/* ===========================================
+   Typography — Parkinsans everywhere
+   =========================================== */
+.font-jakarta,
+.font-inter,
+.font-mono-code,
+.font-roboto,
+.parkinsans-font,
+.parkinsans-Regular,
+.raleway-font-bold,
+.raleway-font-regular,
+.inter-Regular,
+.inter-bold {
+  font-family: "Parkinsans", system-ui, sans-serif;
+  font-optical-sizing: auto;
 }
 
-.dark {
-  --background: oklch(0.145 0 0);
-  --foreground: oklch(0.985 0 0);
-  --card: oklch(0.205 0 0);
-  --card-foreground: oklch(0.985 0 0);
-  --popover: oklch(0.205 0 0);
-  --popover-foreground: oklch(0.985 0 0);
-  --primary: oklch(0.922 0 0);
-  --primary-foreground: oklch(0.205 0 0);
-  --secondary: oklch(0.269 0 0);
-  --secondary-foreground: oklch(0.985 0 0);
-  --muted: oklch(0.269 0 0);
-  --muted-foreground: oklch(0.708 0 0);
-  --accent: oklch(0.269 0 0);
-  --accent-foreground: oklch(0.985 0 0);
-  --destructive: oklch(0.704 0.191 22.216);
-  --border: oklch(1 0 0 / 10%);
-  --input: oklch(1 0 0 / 15%);
-  --ring: oklch(0.556 0 0);
-  --chart-1: oklch(0.488 0.243 264.376);
-  --chart-2: oklch(0.696 0.17 162.48);
-  --chart-3: oklch(0.769 0.188 70.08);
-  --chart-4: oklch(0.627 0.265 303.9);
-  --chart-5: oklch(0.645 0.246 16.439);
-  --sidebar: oklch(0.205 0 0);
-  --sidebar-foreground: oklch(0.985 0 0);
-  --sidebar-primary: oklch(0.488 0.243 264.376);
-  --sidebar-primary-foreground: oklch(0.985 0 0);
-  --sidebar-accent: oklch(0.269 0 0);
-  --sidebar-accent-foreground: oklch(0.985 0 0);
-  --sidebar-border: oklch(1 0 0 / 10%);
-  --sidebar-ring: oklch(0.556 0 0);
+.parkinsans-Regular,
+.parkinsans-font,
+.raleway-font-bold,
+.raleway-font-regular {
+  font-weight: 500;
+  font-style: normal;
+}
+
+.inter-Regular {
+  font-weight: 500;
+}
+
+.inter-bold,
+.font-bold {
+  font-weight: 700;
+}
+
+nav {
+  font-family: "Parkinsans", system-ui, sans-serif;
+  font-weight: 500;
+}
+
+html,
+body {
+  font-family: "Parkinsans", system-ui, sans-serif;
+  background-color: var(--surface);
+  color: var(--ink-900);
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+}
+
+* {
+  font-family: "Parkinsans", system-ui, sans-serif;
+}
+
+/* ===========================================
+   Reusable Luminous Sky components
+   =========================================== */
+.sky-gradient-text {
+  background: var(--brand-gradient-h);
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  color: transparent;
+}
+
+/* Page base — soft off‑white, no tinted shades */
+.sky-gradient-bg {
+  background: #fafafa;
+}
+
+.sky-radial-bg {
+  background: #fafafa;
+}
+
+.btn-sky {
+  background: var(--brand-gradient-d);
+  color: white;
+  box-shadow: var(--shadow-sky);
+  transition:
+    transform 0.18s ease,
+    box-shadow 0.18s ease,
+    filter 0.18s ease;
+}
+.btn-sky:hover {
+  transform: translateY(-1px);
+  box-shadow: var(--shadow-glow);
+  filter: brightness(1.05);
+}
+
+.btn-ghost-sky {
+  background: white;
+  color: var(--ink-900);
+  border: 1px solid var(--ink-200);
+  transition: all 0.18s ease;
+}
+.btn-ghost-sky:hover {
+  border-color: var(--brand-from);
+  color: var(--brand-to);
+  box-shadow: 0 4px 14px rgba(22, 76, 255, 0.14);
+}
+
+.card-sky {
+  background: white;
+  border: 1px solid var(--ink-200);
+  border-radius: 1rem;
+  box-shadow: var(--shadow-soft);
+  transition:
+    transform 0.2s ease,
+    box-shadow 0.2s ease,
+    border-color 0.2s ease;
+}
+.card-sky:hover {
+  transform: translateY(-2px);
+  border-color: var(--ink-200);
+  box-shadow: 0 12px 32px rgba(22, 76, 255, 0.16);
+}
+
+/* No background pattern — page tone */
+.dotted-bg {
+  background: #fafafa;
+}
+
+/* ===========================================
+   Animations
+   =========================================== */
+@keyframes blink {
+  0%,
+  100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0;
+  }
+}
+
+.animate-blink {
+  animation: blink 1s infinite;
+}
+
+.animate-pulse {
+  animation: pulse 4s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+}
+
+.delay-100 {
+  animation-delay: 1s;
+}
+.delay-200 {
+  animation-delay: 2s;
+}
+.delay-300 {
+  animation-delay: 3s;
+}
+.delay-500 {
+  animation-delay: 5s;
+}
+.delay-700 {
+  animation-delay: 7s;
+}
+
+@keyframes pulse {
+  0%,
+  100% {
+    opacity: 0.3;
+    transform: scale(1);
+  }
+  50% {
+    opacity: 0.8;
+    transform: scale(1.05);
+  }
+}
+
+@keyframes float-y {
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-8px);
+  }
+}
+
+.animate-float {
+  animation: float-y 6s ease-in-out infinite;
+}
+
+@keyframes shine {
+  0% {
+    background-position: -200% center;
+  }
+  100% {
+    background-position: 200% center;
+  }
+}
+
+.animate-shine {
+  background-size: 200% auto;
+  animation: shine 5s linear infinite;
+}
+
+/* Scrollbar - subtle for light theme */
+::-webkit-scrollbar {
+  width: 10px;
+  height: 10px;
+}
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+::-webkit-scrollbar-thumb {
+  background: rgba(12, 26, 46, 0.12);
+  border-radius: 999px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: rgba(22, 76, 255, 0.4);
 }
 
 @layer base {
   * {
     @apply border-border outline-ring/50;
-    @apply border-border outline-ring/50;
   }
   body {
     @apply bg-background text-foreground;
-    @apply bg-background text-foreground;
+  }
+  h1,
+  h2,
+  h3,
+  h4,
+  h5,
+  h6 {
+    font-family: "Parkinsans", system-ui, sans-serif;
+    color: var(--ink-900);
   }
 }

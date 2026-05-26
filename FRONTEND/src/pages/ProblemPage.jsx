@@ -5,30 +5,35 @@ import {
   Play,
   FileText,
   Lightbulb,
-  Code2,
   Clock,
-  Award,
-  Target,
   Send,
   Lock,
   ChevronLeft,
   ChevronRight,
   Shuffle,
   Gem,
+  Flame,
   Diamond,
-  Leaf,
   Moon,
   Sun,
   User,
   Maximize2,
-  List,
   Copy,
-  Bug,
   Paperclip,
   CheckCircle,
   Briefcase,
   ChevronDown,
   Check,
+  Sparkles,
+  Bot,
+  X,
+  RefreshCw,
+  Tag,
+  PanelRightClose,
+  PanelRightOpen,
+  ArrowLeft,
+  Bookmark,
+  Loader2,
 } from "lucide-react";
 import { toast } from "react-hot-toast";
 
@@ -46,11 +51,26 @@ import {
   DropdownMenuTrigger,
 } from "../components/ui/dropdown-menu.jsx";
 
-const RESIZER_WIDTH = 6;
-const MIN_LEFT_PANEL = 25;
-const MAX_LEFT_PANEL = 65;
+const MIN_LEFT_PANEL = 22;
+const MAX_LEFT_PANEL = 55;
+const MIN_RIGHT_PANEL = 18;
+const MAX_RIGHT_PANEL = 42;
 const MIN_EDITOR_HEIGHT = 30;
-const MAX_EDITOR_HEIGHT = 85;
+const MAX_EDITOR_HEIGHT = 80;
+
+const SAMPLE_AI_MESSAGES = [
+  {
+    role: "assistant",
+    content:
+      "Hi! I'm Codeleap AI. Ask me for hints, complexity analysis, or help debugging your solution.",
+  },
+];
+
+const QUICK_ACTIONS = [
+  { label: "Give me a hint", icon: Lightbulb, prompt: "Give me a subtle hint without spoiling the solution." },
+  { label: "Explain approach", icon: Sparkles, prompt: "Explain a clean approach for this problem." },
+  { label: "Analyze complexity", icon: Bot, prompt: "What's the time and space complexity of my solution?" },
+];
 
 const ProblemPage = () => {
   const { id } = useParams();
@@ -60,10 +80,10 @@ const ProblemPage = () => {
     isLoading: isSubmissionsLoading,
     getSubmissionForProblem,
   } = useSubmissionStore();
+
   const [code, setCode] = useState("");
   const [activeTab, setActiveTab] = useState("description");
   const [selectedLanguage, setSelectedLanguage] = useState("JAVASCRIPT");
-  const [isBookmarked, setIsBookmarked] = useState(false);
   const [testCases, setTestCases] = useState([]);
   const [activeTestCase, setActiveTestCase] = useState(0);
   const [activeResultTab, setActiveResultTab] = useState("testcases");
@@ -72,27 +92,66 @@ const ProblemPage = () => {
   const [isAddToPlaylistModalOpen, setIsAddToPlaylistModalOpen] = useState(false);
   const [darkMode, setDarkMode] = useState(false);
 
-  // Resizable layout state
-  const [leftPanelWidthPercent, setLeftPanelWidthPercent] = useState(42);
-  const [editorHeightPercent, setEditorHeightPercent] = useState(55);
-  const [isDraggingVertical, setIsDraggingVertical] = useState(false);
+  // AI sidebar state
+  const [aiOpen, setAiOpen] = useState(true);
+  const [aiMessages, setAiMessages] = useState(SAMPLE_AI_MESSAGES);
+  const [aiInput, setAiInput] = useState("");
+
+  // Resizable layout: left | center | right
+  const [leftPanelWidthPercent, setLeftPanelWidthPercent] = useState(34);
+  const [rightPanelWidthPercent, setRightPanelWidthPercent] = useState(26);
+  const [editorHeightPercent, setEditorHeightPercent] = useState(60);
+  const [isDraggingLeft, setIsDraggingLeft] = useState(false);
+  const [isDraggingRight, setIsDraggingRight] = useState(false);
   const [isDraggingHorizontal, setIsDraggingHorizontal] = useState(false);
+
   const mainContainerRef = useRef(null);
-  const rightPanelRef = useRef(null);
+  const centerPanelRef = useRef(null);
 
   const monaco = useMonaco();
 
   useEffect(() => {
-    if (monaco) {
-      monaco.editor.defineTheme("black", {
-        base: "vs-dark",
-        inherit: true,
-        rules: [],
-        colors: {
-          "editor.background": "#18181B",
-        },
-      });
-    }
+    if (!monaco) return;
+    // Light theme tuned to Luminous Sky
+    monaco.editor.defineTheme("luminous-light", {
+      base: "vs",
+      inherit: true,
+      rules: [
+        { token: "comment", foreground: "94a3b8", fontStyle: "italic" },
+        { token: "keyword", foreground: "164cff", fontStyle: "bold" },
+        { token: "string", foreground: "0e3fd9" },
+        { token: "number", foreground: "1144e8" },
+        { token: "type", foreground: "0e3fd9" },
+      ],
+      colors: {
+        "editor.background": "#ffffff",
+        "editor.foreground": "#0c1a2e",
+        "editorLineNumber.foreground": "#cbd5e1",
+        "editorLineNumber.activeForeground": "#164cff",
+        "editor.lineHighlightBackground": "#fafafa",
+        "editor.selectionBackground": "#dbeafe",
+        "editorCursor.foreground": "#164cff",
+        "editorIndentGuide.background1": "#e2e8f0",
+      },
+    });
+
+    monaco.editor.defineTheme("luminous-dark", {
+      base: "vs-dark",
+      inherit: true,
+      rules: [
+        { token: "comment", foreground: "64748b", fontStyle: "italic" },
+        { token: "keyword", foreground: "164cff", fontStyle: "bold" },
+        { token: "string", foreground: "0e3fd9" },
+        { token: "number", foreground: "1144e8" },
+      ],
+      colors: {
+        "editor.background": "#0c1a2e",
+        "editor.foreground": "#ffffff",
+        "editorLineNumber.foreground": "#334155",
+        "editorLineNumber.activeForeground": "#164cff",
+        "editor.lineHighlightBackground": "#102137",
+      },
+    });
   }, [monaco]);
 
   const { executeCode, submission, isExecuting, clearSubmission } =
@@ -113,23 +172,25 @@ const ProblemPage = () => {
   }, [cooldown]);
 
   useEffect(() => {
-    if (problem) {
-      const availableLanguages = Object.keys(problem.codeSnippet || {});
-      const defaultLanguage = availableLanguages.includes("JAVASCRIPT")
-        ? "JAVASCRIPT"
-        : availableLanguages[0] || "JAVASCRIPT";
-      if (
-        !code &&
-        selectedLanguage === "JAVASCRIPT" &&
-        !availableLanguages.includes("JAVASCRIPT")
-      ) {
-        setSelectedLanguage(defaultLanguage);
-      }
-      setCode(problem.codeSnippet?.[selectedLanguage] || "");
-      setTestCases(
-        problem.testcases?.map((tc) => ({ input: tc.input, output: tc.output })) || []
-      );
+    if (!problem) return;
+    const availableLanguages = Object.keys(problem.codeSnippet || {});
+    const defaultLanguage = availableLanguages.includes("JAVASCRIPT")
+      ? "JAVASCRIPT"
+      : availableLanguages[0] || "JAVASCRIPT";
+    if (
+      !code &&
+      selectedLanguage === "JAVASCRIPT" &&
+      !availableLanguages.includes("JAVASCRIPT")
+    ) {
+      setSelectedLanguage(defaultLanguage);
     }
+    setCode(problem.codeSnippet?.[selectedLanguage] || "");
+    setTestCases(
+      problem.testcases?.map((tc) => ({
+        input: tc.input,
+        output: tc.output,
+      })) || []
+    );
   }, [problem, selectedLanguage]);
 
   useEffect(() => {
@@ -166,7 +227,7 @@ const ProblemPage = () => {
   };
 
   const handleRunCode = (e) => {
-    e.preventDefault();
+    e?.preventDefault?.();
     if (cooldown > 0) return;
     try {
       const language_id = getLanguageId(selectedLanguage);
@@ -180,7 +241,7 @@ const ProblemPage = () => {
   };
 
   const handleSubmitCode = (e) => {
-    e.preventDefault();
+    e?.preventDefault?.();
     if (cooldown > 0) return;
     try {
       const language_id = getLanguageId(selectedLanguage);
@@ -200,28 +261,79 @@ const ProblemPage = () => {
 
   const handleCopyCode = () => {
     navigator.clipboard.writeText(code);
-    toast.success("Code copied");
+    toast.success("Code copied to clipboard");
   };
 
-  // Vertical resize: left panel vs right panel
-  const handleVerticalMouseDown = useCallback((e) => {
+  const handleResetCode = () => {
+    setCode(problem?.codeSnippet?.[selectedLanguage] || "");
+    toast.success("Code reset");
+  };
+
+  const handleAiSend = (text) => {
+    const content = (text ?? aiInput).trim();
+    if (!content) return;
+    setAiMessages((prev) => [
+      ...prev,
+      { role: "user", content },
+      {
+        role: "assistant",
+        content:
+          "I'm a UI demo for the AI Coding Partner. Hook me up to your favourite model to get hints, complexity analysis, and debugging help right here.",
+      },
+    ]);
+    setAiInput("");
+  };
+
+  // Left resizer
+  const handleLeftMouseDown = useCallback((e) => {
     e.preventDefault();
-    setIsDraggingVertical(true);
+    setIsDraggingLeft(true);
   }, []);
 
+  // Right resizer
+  const handleRightMouseDown = useCallback((e) => {
+    e.preventDefault();
+    setIsDraggingRight(true);
+  }, []);
+
+  // Horizontal resizer
+  const handleHorizontalMouseDown = useCallback((e) => {
+    e.preventDefault();
+    setIsDraggingHorizontal(true);
+  }, []);
+
+  // Combined mouse handler for left/right vertical resizing
   useEffect(() => {
-    if (!isDraggingVertical) return;
+    if (!isDraggingLeft && !isDraggingRight) return;
     const handleMove = (e) => {
       const container = mainContainerRef.current;
       if (!container) return;
       const rect = container.getBoundingClientRect();
       const x = e.clientX - rect.left;
       const percent = (x / rect.width) * 100;
-      setLeftPanelWidthPercent(
-        Math.min(MAX_LEFT_PANEL, Math.max(MIN_LEFT_PANEL, percent))
-      );
+      if (isDraggingLeft) {
+        const maxAllowed = 100 - rightPanelWidthPercent - 12;
+        setLeftPanelWidthPercent(
+          Math.min(
+            Math.min(MAX_LEFT_PANEL, maxAllowed),
+            Math.max(MIN_LEFT_PANEL, percent)
+          )
+        );
+      } else if (isDraggingRight) {
+        const fromRightPercent = 100 - percent;
+        const maxAllowed = 100 - leftPanelWidthPercent - 12;
+        setRightPanelWidthPercent(
+          Math.min(
+            Math.min(MAX_RIGHT_PANEL, maxAllowed),
+            Math.max(MIN_RIGHT_PANEL, fromRightPercent)
+          )
+        );
+      }
     };
-    const handleUp = () => setIsDraggingVertical(false);
+    const handleUp = () => {
+      setIsDraggingLeft(false);
+      setIsDraggingRight(false);
+    };
     document.addEventListener("mousemove", handleMove);
     document.addEventListener("mouseup", handleUp);
     document.body.style.cursor = "col-resize";
@@ -232,18 +344,13 @@ const ProblemPage = () => {
       document.body.style.cursor = "";
       document.body.style.userSelect = "";
     };
-  }, [isDraggingVertical]);
+  }, [isDraggingLeft, isDraggingRight, leftPanelWidthPercent, rightPanelWidthPercent]);
 
-  // Horizontal resize: editor vs test cases (within right panel)
-  const handleHorizontalMouseDown = useCallback((e) => {
-    e.preventDefault();
-    setIsDraggingHorizontal(true);
-  }, []);
-
+  // Horizontal resize
   useEffect(() => {
     if (!isDraggingHorizontal) return;
     const handleMove = (e) => {
-      const panel = rightPanelRef.current;
+      const panel = centerPanelRef.current;
       if (!panel) return;
       const rect = panel.getBoundingClientRect();
       const y = e.clientY - rect.top;
@@ -267,25 +374,27 @@ const ProblemPage = () => {
 
   if (isProblemLoading || !problem) {
     return (
-      <div className="min-h-screen bg-zinc-900 flex items-center justify-center">
-        <div className="flex flex-col items-center gap-4">
-          <div className="w-12 h-12 border-4 border-[#F4FF54] border-t-transparent rounded-full animate-spin" />
-          <p className="text-zinc-300 font-medium">Loading problem...</p>
+      <div className="min-h-screen bg-[var(--surface)] flex items-center justify-center">
+        <div className="flex flex-col items-center gap-3">
+          <Loader2 className="w-10 h-10 text-[var(--sky-500)] animate-spin" />
+          <p className="text-[var(--ink-500)] font-medium">
+            Loading problem...
+          </p>
         </div>
       </div>
     );
   }
 
-  const getDifficultyColor = (difficulty) => {
+  const getDifficultyBadge = (difficulty) => {
     switch (difficulty?.toLowerCase()) {
       case "easy":
-        return "bg-emerald-100 text-emerald-700 border-emerald-200";
+        return "bg-emerald-50 text-emerald-700 border-emerald-200";
       case "medium":
-        return "bg-amber-100 text-amber-700 border-amber-200";
+        return "bg-amber-50 text-amber-700 border-amber-200";
       case "hard":
-        return "bg-red-100 text-red-700 border-red-200";
+        return "bg-red-50 text-red-700 border-red-200";
       default:
-        return "bg-gray-100 text-gray-700 border-gray-200";
+        return "bg-[var(--sky-50)] text-[var(--sky-700)] border-[var(--sky-200)]";
     }
   };
 
@@ -295,103 +404,196 @@ const ProblemPage = () => {
     { key: "submissions", label: "Submissions", icon: Clock, locked: false },
   ];
 
+  // Theme classes
+  const isDark = darkMode;
+  const themeBg = isDark ? "bg-[var(--ink-900)]" : "bg-[var(--surface)]";
+  const themePanel = isDark
+    ? "bg-[#102137] border-white/10"
+    : "bg-white border-[var(--ink-200)]";
+  const themeText = isDark ? "text-[var(--surface)]" : "text-[var(--ink-900)]";
+  const themeMuted = isDark ? "text-[var(--ink-400)]" : "text-[var(--ink-500)]";
+  const themeHeaderBg = isDark
+    ? "bg-[#102137]/60 border-white/10"
+    : "bg-white/80 border-[var(--ink-200)]";
+  const themeChip = isDark
+    ? "bg-white/5 text-[var(--ink-400)] border-white/10"
+    : "bg-[var(--surface-container-low)] text-[var(--ink-500)] border-[var(--ink-200)]";
+  const themeCodeBlock = isDark
+    ? "bg-[#0c1a2e] border-white/10 text-[var(--surface)]"
+    : "bg-[var(--surface-container-low)] border-[var(--ink-200)] text-[var(--ink-900)]";
+
   return (
-    <div
-      className={`min-h-screen flex flex-col ${darkMode ? "bg-zinc-900 text-white" : "bg-gray-200 text-gray-900"
-        }`}
-    >
-      {/* Top bar - like reference image */}
+    <div className={`h-screen flex flex-col ${themeBg} ${themeText} font-inter overflow-hidden`}>
+      {/* Top bar */}
       <header
-        className={`flex-shrink-0 flex items-center justify-between px-4 py-3 ${darkMode ? "bg-zinc-800 border-zinc-700" : "bg-gray-200/60"
-          }`}
+        className={`flex-shrink-0 flex items-center justify-between px-4 lg:px-6 py-3 border-b ${themeHeaderBg} backdrop-blur-xl`}
       >
-        <div className="flex items-center gap-3">
+        {/* Left cluster */}
+        <div className="flex items-center gap-2">
           <Link
             to="/problems"
-            className="flex items-center gap-2 font-medium hover:opacity-80"
+            className={`inline-flex items-center gap-2 px-3 py-1.5 rounded-lg text-sm font-medium transition-colors ${
+              isDark
+                ? "text-[var(--surface)] hover:bg-white/10"
+                : "text-[var(--ink-700)] hover:bg-[var(--surface-container-low)]"
+            }`}
           >
-            <span>Problem List</span>
+            <ArrowLeft className="w-4 h-4" />
+            <span className="hidden sm:inline">Problem List</span>
           </Link>
+          <div className="hidden md:flex items-center gap-1">
+            <button
+              type="button"
+              className={`p-1.5 rounded-md transition-colors ${
+                isDark ? "hover:bg-white/10" : "hover:bg-[var(--surface-container-low)]"
+              }`}
+              aria-label="Previous"
+            >
+              <ChevronLeft className="w-4 h-4" />
+            </button>
+            <button
+              type="button"
+              className={`p-1.5 rounded-md transition-colors ${
+                isDark ? "hover:bg-white/10" : "hover:bg-[var(--surface-container-low)]"
+              }`}
+              aria-label="Next"
+            >
+              <ChevronRight className="w-4 h-4" />
+            </button>
+            <button
+              type="button"
+              className={`p-1.5 rounded-md transition-colors ${
+                isDark ? "hover:bg-white/10" : "hover:bg-[var(--surface-container-low)]"
+              }`}
+              aria-label="Shuffle"
+            >
+              <Shuffle className="w-4 h-4" />
+            </button>
+          </div>
+        </div>
+
+        {/* Center: Submit */}
+        <div className="flex items-center gap-2">
           <button
             type="button"
-            className="p-1.5 rounded hover:bg-black/10 dark:hover:bg-white/10"
-            aria-label="Previous"
+            onClick={handleRunCode}
+            disabled={isExecuting || cooldown > 0}
+            className={`inline-flex items-center gap-1.5 px-4 py-2 rounded-lg text-sm font-semibold transition-all disabled:opacity-60 disabled:cursor-not-allowed ${
+              isDark
+                ? "bg-white/10 hover:bg-white/15 text-[var(--surface)]"
+                : "bg-[var(--surface-container-low)] hover:bg-[var(--surface-container)] text-[var(--ink-700)] border border-[var(--ink-200)]"
+            }`}
           >
-            <ChevronLeft className="w-5 h-5" />
+            {isExecuting ? (
+              <Loader2 className="w-4 h-4 animate-spin" />
+            ) : (
+              <Play className="w-4 h-4" />
+            )}
+            Run
           </button>
           <button
             type="button"
-            className="p-1.5 rounded hover:bg-black/10 dark:hover:bg-white/10"
-            aria-label="Next"
+            onClick={handleSubmitCode}
+            disabled={isExecuting || cooldown > 0}
+            className="btn-sky inline-flex items-center gap-1.5 px-5 py-2 rounded-lg text-sm font-semibold disabled:opacity-60 disabled:cursor-not-allowed"
           >
-            <ChevronRight className="w-5 h-5" />
-          </button>
-          <button
-            type="button"
-            className="p-1.5 rounded hover:bg-black/10 dark:hover:bg-white/10"
-            aria-label="Shuffle"
-          >
-            <Shuffle className="w-5 h-5" />
+            {isExecuting ? (
+              <Loader2 className="w-4 h-4 animate-spin" />
+            ) : (
+              <Send className="w-4 h-4" />
+            )}
+            Submit
           </button>
         </div>
 
-        <button
-          type="button"
-          onClick={handleSubmitCode}
-          disabled={isExecuting || cooldown > 0}
-          className="inline-flex items-center gap-2 px-5 py-2.5 bg-amber-400 hover:bg-amber-500 text-gray-900 font-semibold rounded-lg shadow disabled:opacity-50 disabled:cursor-not-allowed"
-        >
-          <Play className="w-4 h-4" />
-          Submit
-        </button>
+        {/* Right cluster */}
+        <div className="flex items-center gap-2 lg:gap-4">
+          <div className="hidden sm:flex items-center gap-3">
+            <span
+              className={`inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-xs font-semibold ${
+                isDark
+                  ? "bg-orange-500/10 text-orange-400"
+                  : "bg-orange-50 text-orange-600"
+              }`}
+              title="Daily streak"
+            >
+              <Flame className="w-3.5 h-3.5" /> 12
+            </span>
+            <span
+              className={`inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-xs font-semibold ${
+                isDark
+                  ? "bg-[var(--sky-500)]/10 text-[var(--sky-300)]"
+                  : "bg-[var(--sky-50)] text-[var(--sky-600)]"
+              }`}
+              title="Gems"
+            >
+              <Gem className="w-3.5 h-3.5" /> 75
+            </span>
+            <span
+              className={`inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-xs font-semibold ${
+                isDark
+                  ? "bg-[var(--sky-700)]/10 text-[var(--sky-300)]"
+                  : "bg-[var(--sky-50)] text-[var(--sky-700)]"
+              }`}
+              title="Diamonds"
+            >
+              <Diamond className="w-3.5 h-3.5" /> 3
+            </span>
+          </div>
 
-        <div className="flex items-center gap-4">
-          <span className="flex items-center gap-1.5 text-sm">
-            <Leaf className="w-4 h-4 text-green-600" /> 0
-          </span>
-          <span className="flex items-center gap-1.5 text-sm">
-            <Gem className="w-4 h-4 text-purple-500" /> 75
-          </span>
-          <span className="flex items-center gap-1.5 text-sm">
-            <Diamond className="w-4 h-4 text-amber-500" /> 0
-          </span>
           <button
             type="button"
-            onClick={() => setDarkMode((d) => !d)}
-            className="p-2 rounded-full hover:bg-black/10 dark:hover:bg-white/10"
-            aria-label="Toggle theme"
+            onClick={() => setAiOpen((v) => !v)}
+            className={`p-2 rounded-lg transition-colors ${
+              isDark ? "hover:bg-white/10" : "hover:bg-[var(--surface-container-low)]"
+            }`}
+            aria-label="Toggle AI panel"
           >
-            {darkMode ? (
-              <Sun className="w-5 h-5" />
+            {aiOpen ? (
+              <PanelRightClose className="w-4 h-4" />
             ) : (
-              <Moon className="w-5 h-5" />
+              <PanelRightOpen className="w-4 h-4" />
             )}
           </button>
           <button
             type="button"
-            className="p-2 rounded-full hover:bg-black/10 dark:hover:bg-white/10"
+            onClick={() => setDarkMode((d) => !d)}
+            className={`p-2 rounded-lg transition-colors ${
+              isDark ? "hover:bg-white/10" : "hover:bg-[var(--surface-container-low)]"
+            }`}
+            aria-label="Toggle theme"
+          >
+            {isDark ? <Sun className="w-4 h-4" /> : <Moon className="w-4 h-4" />}
+          </button>
+          <button
+            type="button"
+            className={`p-2 rounded-lg transition-colors ${
+              isDark ? "hover:bg-white/10" : "hover:bg-[var(--surface-container-low)]"
+            }`}
             aria-label="Profile"
           >
-            <User className="w-5 h-5" />
+            <User className="w-4 h-4" />
           </button>
         </div>
       </header>
 
-      {/* Main content: resizable left | right */}
+      {/* Main 3-pane container */}
       <div
         ref={mainContainerRef}
-        className="flex-1 flex min-h-0 overflow-hidden p-4"
+        className="flex-1 flex min-h-0 overflow-hidden p-3 gap-0"
       >
-        {/* Left panel - Problem description */}
+        {/* Pane 1: Problem description */}
         <div
-          className={`flex-shrink-0 flex flex-col min-h-0 overflow-hidden rounded-md ${darkMode ? "border border-zinc-50/20" : "shadow-[0px_2px_3px_-1px_rgba(0,0,0,0.1),0px_1px_0px_0px_rgba(25,28,33,0.02),0px_0px_0px_1px_rgba(25,28,33,0.08)]"}`}
+          className={`flex-shrink-0 flex flex-col min-h-0 overflow-hidden rounded-xl border ${themePanel} shadow-[var(--shadow-soft)]`}
           style={{ width: `${leftPanelWidthPercent}%` }}
         >
+          {/* Tabs */}
           <div
-            className={`border-b ${darkMode ? "border-zinc-700 bg-zinc-800/50" : "border-gray-200 bg-white"
-              }`}
+            className={`border-b ${
+              isDark ? "border-white/10" : "border-[var(--ink-200)]"
+            }`}
           >
-            <div className="flex items-center justify-between">
+            <div className="flex items-center justify-between px-2">
               <nav className="flex">
                 {leftTabs.map(({ key, label, icon: Icon, locked }) => (
                   <button
@@ -399,111 +601,126 @@ const ProblemPage = () => {
                     type="button"
                     onClick={() => !locked && setActiveTab(key)}
                     disabled={locked}
-                    className={`flex items-center gap-2 px-5 py-3 text-sm font-medium border-b-2 transition-colors ${activeTab === key
-                      ? darkMode
-                        ? "text-[#F4FF54] border-[#F4FF54]"
-                        : "text-amber-600 border-amber-500"
-                      : locked
-                        ? "text-gray-400 border-transparent cursor-not-allowed"
-                        : darkMode
-                          ? "text-zinc-400 border-transparent hover:text-zinc-200"
-                          : "text-gray-500 border-transparent hover:text-gray-700"
-                      }`}
+                    className={`flex items-center gap-1.5 px-4 py-3 text-sm font-medium border-b-2 transition-colors ${
+                      activeTab === key
+                        ? isDark
+                          ? "text-[var(--sky-300)] border-[var(--sky-400)]"
+                          : "text-[var(--sky-600)] border-[var(--sky-500)]"
+                        : locked
+                        ? `${themeMuted} border-transparent cursor-not-allowed opacity-50`
+                        : `${themeMuted} border-transparent hover:text-[var(--sky-600)]`
+                    }`}
                   >
                     <Icon className="w-4 h-4" />
                     {label}
                   </button>
                 ))}
               </nav>
-              <button
-                type="button"
-                className="p-2 mr-2 rounded hover:bg-black/5 dark:hover:bg-white/5"
-                aria-label="Fullscreen"
-              >
-                <Maximize2 className="w-4 h-4" />
-              </button>
+              <div className="flex items-center gap-1">
+                <button
+                  type="button"
+                  onClick={() => handleBookmark(id)}
+                  className={`p-2 rounded-md transition-colors ${
+                    isDark ? "hover:bg-white/10" : "hover:bg-[var(--surface-container-low)]"
+                  }`}
+                  aria-label="Bookmark"
+                >
+                  <Bookmark className="w-4 h-4" />
+                </button>
+                <button
+                  type="button"
+                  className={`p-2 rounded-md transition-colors ${
+                    isDark ? "hover:bg-white/10" : "hover:bg-[var(--surface-container-low)]"
+                  }`}
+                  aria-label="Fullscreen"
+                >
+                  <Maximize2 className="w-4 h-4" />
+                </button>
+              </div>
             </div>
           </div>
 
-          <div
-            className={`flex-1 overflow-y-auto p-5 ${darkMode ? "bg-zinc-900" : "bg-white"
-              }`}
-          >
-            <h1 className="text-xl font-bold mb-3">{problem.title}</h1>
-            <div className="flex flex-wrap gap-2 mb-4">
-              {problem.difficulty && (
-                <span
-                  className={`px-3 py-1 rounded-full text-xs font-semibold border ${getDifficultyColor(
-                    problem.difficulty
-                  )}`}
-                >
-                  {problem.difficulty}
-                </span>
-              )}
-              <span
-                className={`px-3 py-1 rounded-full text-xs border ${darkMode ? "bg-zinc-700 text-zinc-300" : "bg-gray-100 text-gray-600"
-                  }`}
-              >
-                Tags
-              </span>
-              <span
-                className={`px-3 py-1 rounded-full text-xs border flex items-center gap-1 ${darkMode ? "bg-zinc-700 text-zinc-300" : "bg-gray-100 text-gray-600"
-                  }`}
-              >
-                <Briefcase className="w-3 h-3" />
-                Companies
-              </span>
-              <span
-                className={`px-3 py-1 rounded-full text-xs border flex items-center gap-1 ${darkMode ? "bg-zinc-700 text-zinc-300" : "bg-gray-100 text-gray-600"
-                  }`}
-              >
-                <Lightbulb className="w-3 h-3" />
-                Hints
-              </span>
-            </div>
-
+          {/* Body */}
+          <div className="flex-1 overflow-y-auto p-5">
             {activeTab === "description" && (
-              <div
-                className={`prose max-w-none text-sm leading-relaxed ${darkMode ? "prose-invert" : ""
-                  }`}
-              >
-                <p className="whitespace-pre-wrap">{problem.description}</p>
-                {problem.examples && (
-                  <div className="mt-4">
-                    <h3 className="font-semibold mb-2">Example 1:</h3>
-                    {Object.entries(problem.examples).map(([lang, ex], idx) => (
-                      <div
-                        key={idx}
-                        className={`rounded-lg p-4 my-2 ${darkMode ? "bg-zinc-800" : "bg-gray-100"
-                          }`}
-                      >
-                        <div className="mb-2">
-                          <span className="text-xs font-semibold uppercase text-gray-500 dark:text-zinc-400">
-                            Input
-                          </span>
-                          <pre className="mt-1 text-sm font-mono">{ex.input}</pre>
-                        </div>
-                        <div>
-                          <span className="text-xs font-semibold uppercase text-gray-500 dark:text-zinc-400">
-                            Output
-                          </span>
-                          <pre className="mt-1 text-sm font-mono">{ex.output}</pre>
-                        </div>
-                      </div>
-                    ))}
-                  </div>
-                )}
-                {problem.constraints && (
-                  <div className="mt-4">
-                    <h3 className="font-semibold mb-2">Constraints</h3>
-                    <code
-                      className={`block p-3 rounded text-sm ${darkMode ? "bg-white" : "bg-red-400"}`}
+              <>
+                <h1 className="font-jakarta text-2xl font-extrabold mb-3 leading-tight">
+                  {problem.title}
+                </h1>
+                <div className="flex flex-wrap gap-2 mb-5">
+                  {problem.difficulty && (
+                    <span
+                      className={`px-2.5 py-1 rounded-full text-xs font-semibold border ${getDifficultyBadge(
+                        problem.difficulty
+                      )}`}
                     >
-                      {problem.constraints}
-                    </code>
-                  </div>
-                )}
-              </div>
+                      {problem.difficulty}
+                    </span>
+                  )}
+                  <span className={`px-2.5 py-1 rounded-full text-xs border inline-flex items-center gap-1 ${themeChip}`}>
+                    <Tag className="w-3 h-3" /> Tags
+                  </span>
+                  <span className={`px-2.5 py-1 rounded-full text-xs border inline-flex items-center gap-1 ${themeChip}`}>
+                    <Briefcase className="w-3 h-3" /> Companies
+                  </span>
+                  <span className={`px-2.5 py-1 rounded-full text-xs border inline-flex items-center gap-1 ${themeChip}`}>
+                    <Lightbulb className="w-3 h-3" /> Hints
+                  </span>
+                </div>
+
+                <div className="prose max-w-none">
+                  <p className={`text-[15px] leading-relaxed whitespace-pre-wrap ${themeText}`}>
+                    {problem.description}
+                  </p>
+
+                  {problem.examples && (
+                    <div className="mt-6">
+                      <h3 className="font-jakarta font-semibold text-base mb-3">
+                        Examples
+                      </h3>
+                      {Object.entries(problem.examples).map(([lang, ex], idx) => (
+                        <div
+                          key={idx}
+                          className={`rounded-xl border p-4 my-3 ${themeCodeBlock}`}
+                        >
+                          <div className="text-xs font-semibold uppercase tracking-wider mb-1 text-[var(--sky-600)]">
+                            Example {idx + 1}
+                          </div>
+                          <div className="mb-2">
+                            <span className={`text-[11px] font-semibold uppercase tracking-wider ${themeMuted}`}>
+                              Input
+                            </span>
+                            <pre className="mt-1 text-sm font-mono-code">
+                              {ex.input}
+                            </pre>
+                          </div>
+                          <div>
+                            <span className={`text-[11px] font-semibold uppercase tracking-wider ${themeMuted}`}>
+                              Output
+                            </span>
+                            <pre className="mt-1 text-sm font-mono-code">
+                              {ex.output}
+                            </pre>
+                          </div>
+                        </div>
+                      ))}
+                    </div>
+                  )}
+
+                  {problem.constraints && (
+                    <div className="mt-6">
+                      <h3 className="font-jakarta font-semibold text-base mb-3">
+                        Constraints
+                      </h3>
+                      <code
+                        className={`block p-3 rounded-xl text-sm font-mono-code border ${themeCodeBlock}`}
+                      >
+                        {problem.constraints}
+                      </code>
+                    </div>
+                  )}
+                </div>
+              </>
             )}
 
             {activeTab === "submissions" && (
@@ -512,54 +729,79 @@ const ProblemPage = () => {
                 isLoading={isSubmissionsLoading}
               />
             )}
+
+            {activeTab === "solutions" && (
+              <div className="text-center py-14">
+                <div className="inline-flex items-center justify-center w-12 h-12 rounded-xl bg-[var(--sky-50)] text-[var(--sky-500)] mb-3">
+                  <Lock className="w-6 h-6" />
+                </div>
+                <p className="font-jakarta font-semibold">
+                  Solutions are unlocked with Pro
+                </p>
+                <p className={`text-sm mt-1 ${themeMuted}`}>
+                  Upgrade to view curated, optimal solutions.
+                </p>
+              </div>
+            )}
           </div>
         </div>
 
-        {/* Vertical resizer */}
+        {/* Left resizer */}
         <div
           role="separator"
-          aria-label="Resize panels"
-          onMouseDown={handleVerticalMouseDown}
-          className={`shrink-0 w-4 flex items-center justify-center cursor-col-resize`}
+          aria-label="Resize left panel"
+          onMouseDown={handleLeftMouseDown}
+          className="shrink-0 w-2 flex items-center justify-center cursor-col-resize group"
         >
-          <div className="w-1 h-12 rounded-full bg-gray-400 dark:bg-zinc-500" />
+          <div
+            className={`w-0.5 h-12 rounded-full transition-colors ${
+              isDark
+                ? "bg-white/15 group-hover:bg-[var(--sky-400)]"
+                : "bg-[var(--ink-200)] group-hover:bg-[var(--sky-500)]"
+            }`}
+          />
         </div>
 
-        {/* Right panel - Editor + Test cases */}
+        {/* Pane 2: Editor + Tests */}
         <div
-          ref={rightPanelRef}
-          className="flex-1 min-w-0 flex flex-col min-h-0 overflow-hidden rounded-md"
+          ref={centerPanelRef}
+          className="flex-1 min-w-0 flex flex-col min-h-0 overflow-hidden gap-0"
         >
-          {/* Code editor section */}
+          {/* Editor section */}
           <div
-            className={`flex-shrink-0 flex flex-col min-h-0 rounded-md ${darkMode ? "border border-zinc-50/20" : "shadow-[0px_2px_3px_-1px_rgba(0,0,0,0.1),0px_1px_0px_0px_rgba(25,28,33,0.02),0px_0px_0px_1px_rgba(25,28,33,0.08)] bg-white"}`}
+            className={`flex-shrink-0 flex flex-col min-h-0 rounded-xl border overflow-hidden ${themePanel} shadow-[var(--shadow-soft)]`}
             style={{ height: `${editorHeightPercent}%` }}
           >
+            {/* Editor toolbar */}
             <div
-              className={`flex items-center justify-between px-3 py-2 border-b ${darkMode ? "bg-zinc-800 border-zinc-700" : "bg-gray-100 border-gray-200"
-                }`}
+              className={`flex items-center justify-between px-3 py-2 border-b ${
+                isDark
+                  ? "bg-[#0c1a2e]/80 border-white/10"
+                  : "bg-[var(--surface-container-low)] border-[var(--ink-200)]"
+              }`}
             >
-              <div className="flex items-center gap-2">
+              <div className="flex items-center gap-1.5">
                 <DropdownMenu>
                   <DropdownMenuTrigger asChild>
                     <button
                       type="button"
-                      className={`inline-flex items-center gap-2 rounded px-3 py-1.5 text-sm font-medium cursor-pointer border outline-none focus:ring-2 focus:ring-amber-400/50 ${
-                        darkMode
-                          ? "bg-zinc-700 border-zinc-600 text-white hover:bg-zinc-600"
-                          : "bg-white border-gray-300 text-gray-800 hover:bg-gray-50"
+                      className={`inline-flex items-center gap-1.5 rounded-md px-3 py-1.5 text-xs font-semibold cursor-pointer border outline-none transition-colors ${
+                        isDark
+                          ? "bg-white/5 border-white/10 text-[var(--surface)] hover:bg-white/10"
+                          : "bg-white border-[var(--ink-200)] text-[var(--ink-700)] hover:border-[var(--sky-300)]"
                       }`}
                     >
-                      {selectedLanguage.charAt(0) + selectedLanguage.slice(1).toLowerCase()}
-                      <ChevronDown className="h-4 w-4 opacity-70" />
+                      {selectedLanguage.charAt(0) +
+                        selectedLanguage.slice(1).toLowerCase()}
+                      <ChevronDown className="h-3.5 w-3.5 opacity-70" />
                     </button>
                   </DropdownMenuTrigger>
                   <DropdownMenuContent
                     align="start"
                     className={
-                      darkMode
-                        ? "bg-zinc-800 border-zinc-600 text-white"
-                        : "bg-white border-gray-200"
+                      isDark
+                        ? "bg-[#102137] border-white/10 text-[var(--surface)]"
+                        : "bg-white border-[var(--ink-200)]"
                     }
                   >
                     {Object.keys(problem.codeSnippet || {}).map((lang) => (
@@ -567,14 +809,14 @@ const ProblemPage = () => {
                         key={lang}
                         onSelect={() => handleLanguageChange(lang)}
                         className={
-                          darkMode
-                            ? "focus:bg-zinc-700 focus:text-white cursor-pointer"
-                            : "focus:bg-gray-100 cursor-pointer"
+                          isDark
+                            ? "focus:bg-white/10 cursor-pointer text-xs"
+                            : "focus:bg-[var(--sky-50)] focus:text-[var(--sky-700)] cursor-pointer text-xs"
                         }
                       >
-                        <span className="w-4 h-4 mr-2 inline-flex items-center justify-center">
+                        <span className="w-4 h-4 mr-1.5 inline-flex items-center justify-center">
                           {selectedLanguage === lang ? (
-                            <Check className="h-4 w-4" />
+                            <Check className="h-3.5 w-3.5" />
                           ) : null}
                         </span>
                         {lang.charAt(0) + lang.slice(1).toLowerCase()}
@@ -582,62 +824,67 @@ const ProblemPage = () => {
                     ))}
                   </DropdownMenuContent>
                 </DropdownMenu>
+              </div>
+              <div className="flex items-center gap-0.5">
                 <button
                   type="button"
-                  className="p-2 rounded hover:bg-black/10 dark:hover:bg-white/10"
-                  aria-label="Menu"
+                  onClick={handleResetCode}
+                  className={`p-1.5 rounded-md transition-colors ${
+                    isDark
+                      ? "hover:bg-white/10 text-[var(--ink-400)]"
+                      : "hover:bg-white text-[var(--ink-500)]"
+                  }`}
+                  aria-label="Reset"
+                  title="Reset code"
                 >
-                  <List className="w-4 h-4" />
+                  <RefreshCw className="w-3.5 h-3.5" />
                 </button>
                 <button
                   type="button"
                   onClick={handleCopyCode}
-                  className="p-2 rounded hover:bg-black/10 dark:hover:bg-white/10"
+                  className={`p-1.5 rounded-md transition-colors ${
+                    isDark
+                      ? "hover:bg-white/10 text-[var(--ink-400)]"
+                      : "hover:bg-white text-[var(--ink-500)]"
+                  }`}
                   aria-label="Copy"
+                  title="Copy code"
                 >
-                  <Copy className="w-4 h-4" />
+                  <Copy className="w-3.5 h-3.5" />
                 </button>
                 <button
                   type="button"
-                  className="p-2 rounded hover:bg-black/10 dark:hover:bg-white/10"
-                  aria-label="Debug"
-                >
-                  <Bug className="w-4 h-4" />
-                </button>
-                <button
-                  type="button"
-                  className="p-2 rounded hover:bg-black/10 dark:hover:bg-white/10"
+                  className={`p-1.5 rounded-md transition-colors ${
+                    isDark
+                      ? "hover:bg-white/10 text-[var(--ink-400)]"
+                      : "hover:bg-white text-[var(--ink-500)]"
+                  }`}
                   aria-label="Fullscreen"
+                  title="Fullscreen"
                 >
-                  <Maximize2 className="w-4 h-4" />
-                </button>
-              </div>
-              <div className="flex items-center gap-2">
-                <button
-                  type="button"
-                  onClick={handleRunCode}
-                  disabled={isExecuting || cooldown > 0}
-                  className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded text-sm font-medium bg-gray-200 dark:bg-zinc-600 hover:bg-gray-300 dark:hover:bg-zinc-500 disabled:opacity-50 text-gray-800 dark:text-white"
-                >
-                  {isExecuting ? (
-                    <span className="w-4 h-4 border-2 border-gray-500 border-t-transparent rounded-full animate-spin" />
-                  ) : (
-                    <Play className="w-4 h-4" />
-                  )}
-                  Run
+                  <Maximize2 className="w-3.5 h-3.5" />
                 </button>
               </div>
             </div>
-            <div className="flex-1 min-h-0 py-4">
+
+            {/* Monaco */}
+            <div className="flex-1 min-h-0">
               <Editor
                 language={selectedLanguage.toLowerCase()}
-                theme={darkMode ? "black" : "light"}
+                theme={isDark ? "luminous-dark" : "luminous-light"}
                 value={code}
                 onChange={(value) => setCode(value || "")}
                 options={{
                   fontSize: 14,
+                  fontFamily: "'Parkinsans', system-ui, sans-serif",
+                  fontLigatures: true,
                   minimap: { enabled: false },
                   scrollBeyondLastLine: false,
+                  padding: { top: 14, bottom: 14 },
+                  smoothScrolling: true,
+                  cursorBlinking: "smooth",
+                  renderLineHighlight: "all",
+                  scrollbar: { verticalScrollbarSize: 8, horizontalScrollbarSize: 8 },
                 }}
               />
             </div>
@@ -648,16 +895,27 @@ const ProblemPage = () => {
             role="separator"
             aria-label="Resize editor and test cases"
             onMouseDown={handleHorizontalMouseDown}
-            className={`shrink-0 h-4 flex items-center justify-center cursor-row-resize`}
+            className="shrink-0 h-2 flex items-center justify-center cursor-row-resize group"
           >
-            <div className="h-1 w-12 rounded-full bg-gray-400 dark:bg-zinc-500" />
+            <div
+              className={`h-0.5 w-12 rounded-full transition-colors ${
+                isDark
+                  ? "bg-white/15 group-hover:bg-[var(--sky-400)]"
+                  : "bg-[var(--ink-200)] group-hover:bg-[var(--sky-500)]"
+              }`}
+            />
           </div>
 
-          {/* Test cases / Submission results */}
-          <div className={`flex-1 min-h-0 flex flex-col overflow-hidden rounded-md ${darkMode ? "border border-zinc-50/20" : "shadow-[0px_2px_3px_-1px_rgba(0,0,0,0.1),0px_1px_0px_0px_rgba(25,28,33,0.02),0px_0px_0px_1px_rgba(25,28,33,0.08)]"}`}>
+          {/* Test cases / submissions results */}
+          <div
+            className={`flex-1 min-h-0 flex flex-col overflow-hidden rounded-xl border ${themePanel} shadow-[var(--shadow-soft)]`}
+          >
             <div
-              className={`flex items-center justify-between ${darkMode ? "border-zinc-700 bg-zinc-800/50" : "border-gray-200 bg-white"
-                }`}
+              className={`flex items-center justify-between border-b px-2 ${
+                isDark
+                  ? "border-white/10 bg-[#0c1a2e]/80"
+                  : "border-[var(--ink-200)] bg-[var(--surface-container-low)]"
+              }`}
             >
               <nav className="flex">
                 {[
@@ -668,42 +926,36 @@ const ProblemPage = () => {
                     key={key}
                     type="button"
                     onClick={() => setActiveResultTab(key)}
-                    className={`flex items-center gap-2 px-4 py-3 text-sm font-medium border-b-2 transition-colors ${activeResultTab === key
-                      ? darkMode
-                        ? "text-[#F4FF54] border-[#F4FF54]"
-                        : "text-amber-600 border-amber-500"
-                      : darkMode
-                        ? "text-zinc-400 border-transparent hover:text-zinc-200"
-                        : "text-gray-500 border-transparent hover:text-gray-700"
-                      }`}
+                    className={`flex items-center gap-1.5 px-4 py-3 text-sm font-medium border-b-2 transition-colors ${
+                      activeResultTab === key
+                        ? isDark
+                          ? "text-[var(--sky-300)] border-[var(--sky-400)]"
+                          : "text-[var(--sky-600)] border-[var(--sky-500)]"
+                        : `${themeMuted} border-transparent hover:text-[var(--sky-600)]`
+                    }`}
                   >
                     <Icon className="w-4 h-4" />
                     {label}
                   </button>
                 ))}
               </nav>
-              <button
-                type="button"
-                className="p-2 mr-2 rounded hover:bg-black/5 dark:hover:bg-white/5"
-                aria-label="Fullscreen"
-              >
-                <Maximize2 className="w-4 h-4" />
-              </button>
             </div>
 
-            <div
-              className={`flex-1 overflow-y-auto p-4 ${darkMode ? "bg-zinc-900" : "bg-white"
-                }`}
-            >
+            <div className="flex-1 overflow-y-auto p-4">
               {activeResultTab === "results" ? (
                 submission ? (
-                  <div className="max-h-full overflow-y-auto">
-                    <SubmissionResults submission={submission} />
-                  </div>
+                  <SubmissionResults submission={submission} />
                 ) : (
-                  <div className="flex flex-col items-center justify-center py-8 text-center text-gray-500 dark:text-zinc-400">
-                    <Play className="w-10 h-10 mb-2 opacity-50" />
-                    <p>Run or submit to see results here.</p>
+                  <div className={`flex flex-col items-center justify-center py-10 text-center ${themeMuted}`}>
+                    <div className="w-12 h-12 rounded-xl bg-[var(--sky-50)] text-[var(--sky-500)] flex items-center justify-center mb-3">
+                      <Play className="w-6 h-6" />
+                    </div>
+                    <p className="font-jakarta font-semibold text-[var(--ink-900)] dark:text-[var(--surface)]">
+                      Run your code to see results
+                    </p>
+                    <p className={`text-sm mt-1 ${themeMuted}`}>
+                      Hit Run or Submit at the top to test your solution.
+                    </p>
                   </div>
                 )
               ) : (
@@ -714,39 +966,40 @@ const ProblemPage = () => {
                         key={idx}
                         type="button"
                         onClick={() => setActiveTestCase(idx)}
-                        className={`px-4 py-2 rounded-lg text-sm font-medium ${activeTestCase === idx
-                          ? darkMode
-                            ? "bg-[#F4FF54] text-black"
-                            : "bg-amber-100 text-amber-800"
-                          : darkMode
-                            ? "bg-zinc-700 text-zinc-300 hover:bg-zinc-600"
-                            : "bg-gray-100 text-gray-700 hover:bg-gray-200"
-                          }`}
+                        className={`px-3.5 py-1.5 rounded-full text-xs font-semibold border transition-colors ${
+                          activeTestCase === idx
+                            ? "bg-[var(--sky-500)] text-white border-[var(--sky-500)] shadow-sm"
+                            : isDark
+                            ? "bg-white/5 text-[var(--ink-400)] border-white/10 hover:bg-white/10"
+                            : "bg-white text-[var(--ink-700)] border-[var(--ink-200)] hover:border-[var(--sky-300)]"
+                        }`}
                       >
                         Case {idx + 1}
                       </button>
                     ))}
                   </div>
                   {testCases[activeTestCase] && (
-                    <div>
-                      <p className="text-xs font-semibold uppercase text-gray-500 dark:text-zinc-400 mb-2">
-                        Input
-                      </p>
-                      <pre
-                        className={`p-4 rounded-lg text-sm font-mono overflow-x-auto ${darkMode ? "bg-zinc-800" : "bg-gray-100"
-                          }`}
-                      >
-                        {testCases[activeTestCase].input}
-                      </pre>
-                      <p className="text-xs font-semibold uppercase text-gray-500 dark:text-zinc-400 mt-3 mb-2">
-                        Expected Output
-                      </p>
-                      <pre
-                        className={`p-4 rounded-lg text-sm font-mono overflow-x-auto ${darkMode ? "bg-zinc-800" : "bg-gray-100"
-                          }`}
-                      >
-                        {testCases[activeTestCase].output}
-                      </pre>
+                    <div className="space-y-3">
+                      <div>
+                        <p className={`text-[11px] font-semibold uppercase tracking-wider mb-1.5 ${themeMuted}`}>
+                          Input
+                        </p>
+                        <pre
+                          className={`p-3 rounded-xl text-sm font-mono-code overflow-x-auto border ${themeCodeBlock}`}
+                        >
+                          {testCases[activeTestCase].input}
+                        </pre>
+                      </div>
+                      <div>
+                        <p className={`text-[11px] font-semibold uppercase tracking-wider mb-1.5 ${themeMuted}`}>
+                          Expected Output
+                        </p>
+                        <pre
+                          className={`p-3 rounded-xl text-sm font-mono-code overflow-x-auto border ${themeCodeBlock}`}
+                        >
+                          {testCases[activeTestCase].output}
+                        </pre>
+                      </div>
                     </div>
                   )}
                 </div>
@@ -754,6 +1007,153 @@ const ProblemPage = () => {
             </div>
           </div>
         </div>
+
+        {/* Right resizer + Pane 3 (AI) */}
+        {aiOpen && (
+          <>
+            <div
+              role="separator"
+              aria-label="Resize right panel"
+              onMouseDown={handleRightMouseDown}
+              className="shrink-0 w-2 flex items-center justify-center cursor-col-resize group"
+            >
+              <div
+                className={`w-0.5 h-12 rounded-full transition-colors ${
+                  isDark
+                    ? "bg-white/15 group-hover:bg-[var(--sky-400)]"
+                    : "bg-[var(--ink-200)] group-hover:bg-[var(--sky-500)]"
+                }`}
+              />
+            </div>
+
+            {/* Pane 3: AI sidebar */}
+            <aside
+              className={`flex-shrink-0 flex flex-col min-h-0 overflow-hidden rounded-xl border ${themePanel} shadow-[var(--shadow-soft)]`}
+              style={{ width: `${rightPanelWidthPercent}%` }}
+            >
+              {/* AI header */}
+              <div
+                className={`flex items-center justify-between px-4 py-3 border-b ${
+                  isDark ? "border-white/10" : "border-[var(--ink-200)]"
+                }`}
+              >
+                <div className="flex items-center gap-2.5">
+                  <span className="w-8 h-8 rounded-lg bg-gradient-to-br from-[var(--sky-500)] to-[var(--sky-700)] flex items-center justify-center shadow-md shadow-sky-200">
+                    <Sparkles className="w-4 h-4 text-white" />
+                  </span>
+                  <div>
+                    <p className="font-jakarta font-semibold text-sm">
+                      Ask Codeleap
+                    </p>
+                    <p className={`text-[10px] uppercase tracking-wider ${themeMuted}`}>
+                      AI Coding Partner
+                    </p>
+                  </div>
+                </div>
+                <button
+                  type="button"
+                  onClick={() => setAiOpen(false)}
+                  className={`p-1.5 rounded-md transition-colors ${
+                    isDark ? "hover:bg-white/10" : "hover:bg-[var(--surface-container-low)]"
+                  }`}
+                  aria-label="Close AI"
+                >
+                  <X className="w-4 h-4" />
+                </button>
+              </div>
+
+              {/* Messages */}
+              <div className="flex-1 overflow-y-auto p-4 space-y-3">
+                {aiMessages.map((m, i) => (
+                  <div
+                    key={i}
+                    className={`flex ${
+                      m.role === "user" ? "justify-end" : "justify-start"
+                    }`}
+                  >
+                    <div
+                      className={`max-w-[88%] px-3.5 py-2.5 rounded-2xl text-sm leading-relaxed ${
+                        m.role === "user"
+                          ? "bg-gradient-to-br from-[var(--sky-500)] to-[var(--sky-600)] text-white rounded-br-md"
+                          : isDark
+                          ? "bg-white/5 text-[var(--surface)] border border-white/10 rounded-bl-md"
+                          : "bg-[var(--surface-container-low)] text-[var(--ink-700)] border border-[var(--ink-200)] rounded-bl-md"
+                      }`}
+                    >
+                      {m.content}
+                    </div>
+                  </div>
+                ))}
+              </div>
+
+              {/* Quick actions */}
+              <div
+                className={`px-3 py-2 border-t ${
+                  isDark ? "border-white/10" : "border-[var(--ink-200)]"
+                }`}
+              >
+                <div className="flex flex-wrap gap-1.5">
+                  {QUICK_ACTIONS.map((qa) => {
+                    const Icon = qa.icon;
+                    return (
+                      <button
+                        key={qa.label}
+                        type="button"
+                        onClick={() => handleAiSend(qa.prompt)}
+                        className={`inline-flex items-center gap-1.5 px-2.5 py-1.5 rounded-full text-[11px] font-semibold border transition-colors ${
+                          isDark
+                            ? "bg-white/5 border-white/10 text-[var(--ink-400)] hover:text-[var(--sky-300)] hover:border-[var(--sky-400)]"
+                            : "bg-white border-[var(--ink-200)] text-[var(--ink-700)] hover:border-[var(--sky-300)] hover:text-[var(--sky-600)]"
+                        }`}
+                      >
+                        <Icon className="w-3 h-3" />
+                        {qa.label}
+                      </button>
+                    );
+                  })}
+                </div>
+              </div>
+
+              {/* Input */}
+              <form
+                onSubmit={(e) => {
+                  e.preventDefault();
+                  handleAiSend();
+                }}
+                className={`p-3 border-t ${
+                  isDark ? "border-white/10" : "border-[var(--ink-200)]"
+                }`}
+              >
+                <div
+                  className={`flex items-center gap-2 p-1.5 rounded-full border transition-all ${
+                    isDark
+                      ? "bg-white/5 border-white/10 focus-within:border-[var(--sky-400)]"
+                      : "bg-white border-[var(--ink-200)] focus-within:border-[var(--sky-500)] focus-within:shadow-[0_0_0_4px_rgba(22,76,255,0.14)]"
+                  }`}
+                >
+                  <input
+                    type="text"
+                    value={aiInput}
+                    onChange={(e) => setAiInput(e.target.value)}
+                    placeholder="Ask anything..."
+                    className={`flex-1 bg-transparent px-3 py-1.5 outline-none text-sm ${
+                      isDark
+                        ? "placeholder-[var(--ink-500)] text-[var(--surface)]"
+                        : "placeholder-[var(--ink-400)] text-[var(--ink-900)]"
+                    }`}
+                  />
+                  <button
+                    type="submit"
+                    className="btn-sky w-8 h-8 rounded-full inline-flex items-center justify-center"
+                    aria-label="Send"
+                  >
+                    <Send className="w-3.5 h-3.5" />
+                  </button>
+                </div>
+              </form>
+            </aside>
+          </>
+        )}
       </div>
 
       <AddtoPlaylist

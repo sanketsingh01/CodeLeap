@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { X, Plus, Loader } from "lucide-react";
+import { X, Plus, Loader2, Bookmark } from "lucide-react";
 import { usePlaylistStore } from "../store/usePlaylistStore.js";
 import { useAuthStore } from "../store/useAuthStore.js";
 
@@ -8,6 +8,7 @@ const AddtoPlaylist = ({ isOpen, onClose, problemId }) => {
     usePlaylistStore();
   const { authUser, checkAuth } = useAuthStore();
   const [selectedPlaylist, setSelectedPlaylist] = useState("");
+  const [tags, setTags] = useState("");
 
   useEffect(() => {
     if (isOpen) {
@@ -22,7 +23,6 @@ const AddtoPlaylist = ({ isOpen, onClose, problemId }) => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     if (!selectedPlaylist) return;
-
     await addProblemToPlaylist(selectedPlaylist, [problemId]);
     onClose();
   };
@@ -30,76 +30,83 @@ const AddtoPlaylist = ({ isOpen, onClose, problemId }) => {
   if (!isOpen) return null;
 
   return (
-    <div className="fixed inset-0 z-50 bg-black bg-opacity-60 backdrop-blur-sm flex items-center justify-center px-4">
-      <div className="bg-zinc-900 rounded-2xl shadow-2xl w-full max-w-lg border border-zinc-700">
-        <div className="flex justify-between items-center p-5 border-b border-zinc-700">
-          <h3 className="text-2xl font-semibold text-white">Add to Sheet</h3>
+    <div className="fixed inset-0 z-50 bg-black/40 backdrop-blur-sm flex items-center justify-center px-4">
+      <div className="bg-white rounded-2xl shadow-2xl w-full max-w-lg border border-[var(--ink-200)]">
+        <div className="flex justify-between items-center px-6 py-4 border-b border-[var(--ink-200)]">
+          <div className="flex items-center gap-2.5">
+            <span className="w-8 h-8 rounded-lg bg-[var(--sky-50)] text-[var(--sky-600)] flex items-center justify-center">
+              <Bookmark className="w-4 h-4" />
+            </span>
+            <h3 className="font-jakarta text-lg font-bold text-[var(--ink-900)]">
+              Add to sheet
+            </h3>
+          </div>
           <button
             onClick={onClose}
-            className="text-gray-400 hover:text-white transition"
+            className="p-1.5 rounded-lg text-[var(--ink-500)] hover:bg-[var(--surface-container-low)] transition-colors"
           >
-            <X className="w-6 h-6" />
+            <X className="w-4 h-4" />
           </button>
         </div>
 
         <form onSubmit={handleSubmit} className="p-6 space-y-5">
           <div>
-            <label className="block text-sm font-medium text-gray-300 mb-1">
-              Select Sheet
+            <label className="block text-sm font-medium text-[var(--ink-700)] mb-1.5">
+              Select sheet
             </label>
             <select
-              className="w-full px-4 py-2 bg-zinc-800 text-white border border-zinc-700 rounded-lg focus:outline-none focus:ring-2 focus:ring-yellow-400"
+              className="w-full px-4 py-2.5 bg-[var(--surface-container-low)] text-[var(--ink-900)] border border-[var(--ink-200)] rounded-xl outline-none focus:border-[var(--sky-400)]"
               value={selectedPlaylist}
               onChange={(e) => setSelectedPlaylist(e.target.value)}
               disabled={isLoading}
             >
-              <option value="">Select a Sheet</option>
+              <option value="">Choose a sheet</option>
               {playlists
                 .filter(
-                  (playlist) =>
+                  (p) =>
                     authUser?.role === "ADMIN" ||
-                    playlist.createdBy === authUser?.id
+                    p.createdBy === authUser?.id
                 )
-                .map((playlist) => (
-                  <option key={playlist.id} value={playlist.id}>
-                    {playlist.name}
+                .map((p) => (
+                  <option key={p.id} value={p.id}>
+                    {p.name}
                   </option>
                 ))}
             </select>
           </div>
 
           <div>
-            <label className="block text-sm font-medium text-gray-300 mb-1">
-              Add Tags (comma-separated)
+            <label className="block text-sm font-medium text-[var(--ink-700)] mb-1.5">
+              Add tags (comma-separated)
             </label>
             <input
               type="text"
-              className="w-full px-4 py-2 bg-zinc-800 text-white border border-zinc-700 rounded-lg focus:outline-none focus:ring-2 focus:ring-yellow-400"
-              placeholder="e.g. dp, sorting, array"
-              // value={tags}
+              value={tags}
               onChange={(e) => setTags(e.target.value)}
+              className="w-full px-4 py-2.5 bg-[var(--surface-container-low)] text-[var(--ink-900)] border border-[var(--ink-200)] rounded-xl outline-none focus:border-[var(--sky-400)] placeholder-[var(--ink-400)]"
+              placeholder="e.g. dp, sorting, array"
             />
           </div>
 
-          <div className="flex justify-end gap-3 pt-2">
+          <div className="flex justify-end gap-2 pt-2">
             <button
               type="button"
               onClick={onClose}
-              className="px-4 py-2 text-sm text-gray-300 bg-zinc-700 rounded-lg hover:bg-zinc-600 transition"
+              className="btn-ghost-sky px-4 py-2 rounded-full text-sm font-semibold"
             >
               Cancel
             </button>
             <button
               type="submit"
-              className="px-5 py-2 text-sm font-semibold bg-yellow-400 text-black rounded-lg hover:bg-yellow-300 transition flex items-center gap-2 cursor-pointer"
+              className="btn-sky px-5 py-2 rounded-full text-sm font-semibold inline-flex items-center gap-1.5 disabled:opacity-60 disabled:cursor-not-allowed"
               disabled={!selectedPlaylist || isLoading}
             >
               {isLoading ? (
-                <Loader className="w-4 h-4 animate-spin" />
+                <Loader2 className="w-4 h-4 animate-spin" />
               ) : (
                 <Plus className="w-4 h-4" />
               )}
-              Add to Sheet
+              Add to sheet
             </button>
           </div>
         </form>

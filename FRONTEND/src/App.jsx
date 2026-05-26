@@ -19,7 +19,7 @@ const App = () => {
   const shouldhidefooter1 = /^\/profile/.test(location.pathname.toLowerCase());
 
   return (
-    <div className="flex flex-col min-h-screen bg-gradient-to-br from-black via-zinc-800 to-black text-white">
+    <div className="flex flex-col min-h-screen bg-surface text-ink-900 parkinsans-Regular">
       {!(shouldHideHeaderFooter || shouldhideNavfooter) && <Navbar />}
       <Layout />
       {!(

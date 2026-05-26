@@ -1,107 +1,147 @@
 import React from "react";
 import { motion } from "framer-motion";
-import FeatureImg1 from "../assets/FeatureImg1.webp";
-import FeatureImg2 from "../assets/FeatureImg2.webp";
-import FeatureImg3 from "../assets/FeatureImg3.webp";
-import Icon1 from "../assets/Icon1.svg";
-import Icon2 from "../assets/Icon2.svg";
-import Icon3 from "../assets/Icon3.svg";
+import {
+  Code2,
+  Bot,
+  Trophy,
+  Layers,
+  Flame,
+  Building2,
+} from "lucide-react";
 import "../index.css";
 
 const features = [
   {
-    title: "Coding Challenges",
+    title: "Smart Practice",
     description:
-      "Engage with a variety of coding challenges tailored to different skill levels and topics.",
-    icon: Icon1,
-    type: "text",
+      "Curated problem sets tagged by company and difficulty so you can target exactly what's next on your interview list.",
+    icon: Layers,
+    accent: "from-[var(--sky-500)] to-[var(--sky-400)]",
+    tagBg: "bg-[var(--sky-50)] text-[var(--sky-600)]",
+    tag: "Curated",
   },
-  { image: FeatureImg1, type: "image" },
   {
-    title: "Practice - Problems",
+    title: "AI Coding Partner",
     description:
-      "Access a wide range of practice problems designed to sharpen your coding skills effectively.",
-    icon: Icon2,
-    type: "text",
+      "Ask Codeleap for hints, complexity analysis, and step-by-step debugging — right next to your editor.",
+    icon: Bot,
+    accent: "from-[var(--sky-600)] to-[var(--sky-800)]",
+    tagBg: "bg-[var(--sky-50)] text-[var(--sky-700)]",
+    tag: "AI-powered",
   },
-  { image: FeatureImg2, type: "image" },
   {
-    title: "Leaderboard Ranking",
+    title: "Integrated IDE",
     description:
-      "Compete with peers on the leaderboard and track your progress in real-time, with daily new challenges",
-    icon: Icon3,
-    type: "text",
+      "A snappy Monaco-based editor with syntax highlighting, multi-language support, and zero-config test runs.",
+    icon: Code2,
+    accent: "from-[var(--sky-500)] to-[var(--sky-700)]",
+    tagBg: "bg-[var(--sky-50)] text-[var(--sky-600)]",
+    tag: "Fast",
   },
-  { image: FeatureImg3, type: "image" },
+  {
+    title: "Progress Tracking",
+    description:
+      "Daily streaks, heatmaps, and a clear analytics dashboard that turns practice into measurable progress.",
+    icon: Flame,
+    accent: "from-[var(--sky-400)] to-[var(--sky-600)]",
+    tagBg: "bg-[var(--sky-50)] text-[var(--sky-600)]",
+    tag: "Insights",
+  },
+  {
+    title: "Company Tagging",
+    description:
+      "Filter by Google, Meta, Amazon, and 100+ other companies to prep for your dream role with surgical focus.",
+    icon: Building2,
+    accent: "from-[var(--sky-400)] to-[var(--sky-500)]",
+    tagBg: "bg-[var(--sky-50)] text-[var(--sky-600)]",
+    tag: "Targeted",
+  },
+  {
+    title: "Compete & Climb",
+    description:
+      "Friendly leaderboards, weekly challenges, and badges that keep practice feeling like a sport — not a chore.",
+    icon: Trophy,
+    accent: "from-[var(--sky-700)] to-[var(--sky-500)]",
+    tagBg: "bg-[var(--sky-50)] text-[var(--sky-700)]",
+    tag: "Community",
+  },
 ];
 
 const container = {
   hidden: {},
-  show: {
-    transition: {
-      staggerChildren: 0.3,
-    },
-  },
+  show: { transition: { staggerChildren: 0.08 } },
 };
 
 const item = {
-  hidden: { opacity: 0, y: 50 },
+  hidden: { opacity: 0, y: 24 },
   show: { opacity: 1, y: 0, transition: { duration: 0.5, ease: "easeOut" } },
 };
 
 const FeatureGrid = () => {
   return (
-    <div className="flex items-center justify-center p-6 min-h-screen">
-      <div className="flex flex-col w-full max-w-6xl mt-4">
+    <section className="w-full py-24 px-6 sm:px-10 md:px-16 lg:px-24 bg-[var(--surface-container-low)]">
+      <div className="max-w-7xl mx-auto">
         <motion.div
-          initial={{ opacity: 0, y: -60 }}
+          initial={{ opacity: 0, y: -30 }}
           whileInView={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.8, ease: "easeOut" }}
+          transition={{ duration: 0.6 }}
           viewport={{ once: true, amount: 0.4 }}
-          className="mb-8 text-center"
+          className="text-center max-w-3xl mx-auto mb-16"
         >
-          <h1 className="text-5xl md:text-6xl xl:text-6xl font-bold text-white mb-2 raleway-font-bold">
-            Key{" "}
-            <span className="text-gradient bg-clip-text text-transparent bg-gradient-to-r from-orange-400 to-yellow-300">
-              Features
-            </span>
-          </h1>
-          <div className="w-25 h-1 bg-gradient-to-r from-orange-400 to-yellow-300 mx-auto rounded-full"></div>
+          <span className="inline-block text-xs uppercase tracking-[0.2em] font-semibold text-[var(--sky-600)] mb-3">
+            Everything you need
+          </span>
+          <h2 className="font-jakarta text-4xl md:text-5xl lg:text-6xl font-extrabold leading-tight text-[var(--ink-900)]">
+            One platform.{" "}
+            <span className="sky-gradient-text">Every tool.</span>
+          </h2>
+          <p className="font-inter mt-4 text-base md:text-lg text-[var(--ink-500)]">
+            Codeleap brings together curated practice, an AI tutor, and a
+            high-performance IDE so you can focus on what matters: solving
+            problems.
+          </p>
         </motion.div>
 
         <motion.div
           variants={container}
           initial="hidden"
           whileInView="show"
-          viewport={{ once: true, amount: 0.2 }}
-          className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 w-full bg-[#121212] p-4 sm:p-6 lg:p-10 rounded-2xl"
+          viewport={{ once: true, amount: 0.15 }}
+          className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5"
         >
-          {features.map((itemData, idx) => (
-            <motion.div key={idx} variants={item} className="w-full">
-              {itemData.type === "text" ? (
-                <div className="bg-black text-white rounded-2xl p-4 sm:p-6 flex flex-col justify-between shadow-md h-auto md:h-72 w-full">
-                  <div className="text-3xl mb-2 border border-gray-800 w-14 h-14 flex items-center justify-center rounded-xl text-center">
-                    <img src={itemData.icon} alt="IconImg" className="w-8" />
+          {features.map((f) => {
+            const Icon = f.icon;
+            return (
+              <motion.div
+                key={f.title}
+                variants={item}
+                whileHover={{ y: -4 }}
+                className="card-sky group p-6 md:p-7 flex flex-col h-full"
+              >
+                <div className="flex items-center justify-between mb-5">
+                  <div
+                    className={`w-12 h-12 rounded-xl bg-gradient-to-br ${f.accent} flex items-center justify-center shadow-md shadow-sky-100 group-hover:scale-105 transition-transform`}
+                  >
+                    <Icon className="w-6 h-6 text-white" strokeWidth={2.2} />
                   </div>
-                  <h2 className="parkinsans-Regular text-4xl font-bold mb-2">
-                    {itemData.title}
-                  </h2>
-                  <p className="inter-Regular text-[#7E7E7D]">
-                    {itemData.description}
-                  </p>
+                  <span
+                    className={`text-[11px] font-semibold px-2.5 py-1 rounded-full ${f.tagBg}`}
+                  >
+                    {f.tag}
+                  </span>
                 </div>
-              ) : (
-                <img
-                  src={itemData.image}
-                  alt={`feature-${idx}`}
-                  className="bg-black rounded-2xl w-full h-52 sm:h-64 md:h-72 object-cover"
-                />
-              )}
-            </motion.div>
-          ))}
+                <h3 className="font-jakarta text-xl md:text-2xl font-bold text-[var(--ink-900)] mb-2">
+                  {f.title}
+                </h3>
+                <p className="font-inter text-sm md:text-base text-[var(--ink-500)] leading-relaxed">
+                  {f.description}
+                </p>
+              </motion.div>
+            );
+          })}
         </motion.div>
       </div>
-    </div>
+    </section>
   );
 };
 

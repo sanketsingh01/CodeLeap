@@ -1,163 +1,204 @@
 import React from "react";
-import "../../src/index.css";
+import "../index.css";
 import { motion } from "motion/react";
-import { ArrowUpRight } from "lucide-react";
+import { ArrowRight, Play, Sparkles, CheckCircle2 } from "lucide-react";
 import { Link } from "react-router-dom";
-import MagicSVG from "../assets/magic.svg";
-import PeerlistSVG from "../assets/PeerlistSvg_light.svg";
 
-// Add these styles to your CSS file or include them here
-const gradientTextStyle = {
-  background: "linear-gradient(90deg, #F4FF54 0%, #FFB800 50%, #F4FF54 100%)",
-  backgroundSize: "200% auto",
-  WebkitBackgroundClip: "text",
-  WebkitTextFillColor: "transparent",
-  backgroundClip: "text",
-  color: "transparent",
-  animation: "gradientFlow 3s linear infinite",
-};
-
-// Define the keyframes for the animation
-const keyframesStyle = `
-@keyframes gradientFlow {
-  0% {
-    background-position: 0% center;
-  }
-  100% {
-    background-position: 200% center;
-  }
-}
-`;
+const trustedBy = ["Google", "Meta", "Amazon", "Microsoft", "Netflix"];
 
 const Hero = () => {
-  React.useEffect(() => {
-    const style = document.createElement("style");
-    style.innerHTML = keyframesStyle;
-    document.head.appendChild(style);
-
-    return () => {
-      document.head.removeChild(style);
-    };
-  }, []);
-
   return (
-    <div
-      className="w-full text-white mt-15 pt-17 pb-16 flex flex-col justify-center items-center overflow-hidden px-6 sm:px-12 md:px-24 lg:px-36"
-      style={{
-        backgroundImage: `radial-gradient(circle, rgba(255, 255, 255, 0.2) 1px, transparent 1px)`,
-        backgroundSize: "20px 20px",
-        backgroundPosition: "0 0",
-      }}
-    >
-      {/* Heading */}
-      <motion.div
-        className="flex flex-col items-center text-center"
-        initial={{ y: -100, scale: 0.8, opacity: 0 }}
-        animate={{ y: 0, scale: 1, opacity: 1 }}
-        transition={{
-          type: "spring",
-          stiffness: 100,
-          damping: 15,
-          duration: 0.8,
-        }}
-      >
-        <motion.span
-          className="parkinsans-font text-5xl sm:text-5xl md:text-6xl lg:text-8xl pb-2"
-          initial={{ y: -20 }}
-          animate={{ y: 0 }}
-          transition={{ delay: 0.3, duration: 0.5 }}
-        >
-          Enhance Your
-        </motion.span>
-        <motion.span
-          className="parkinsans-font text-5xl sm:text-5xl md:text-6xl lg:text-8xl pt-2"
-          style={gradientTextStyle}
-          initial={{ y: -20 }}
-          animate={{ y: 0 }}
-          transition={{ delay: 0.5, duration: 0.5 }}
-        >
-          Coding Skills Today!
-        </motion.span>
-      </motion.div>
+    <section className="relative w-full overflow-hidden pt-32 pb-20 px-6 sm:px-10 md:px-16 lg:px-24">
 
-      {/* Subheading */}
-      <motion.div
-        initial={{ opacity: 0, y: 20 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ delay: 1.2, duration: 0.6 }}
-        className="pt-8 w-full sm:w-5/6 md:w-3/4 text-center px-2 sm:px-4"
-      >
-        <span className="inter-Regular text-base sm:text-lg md:text-xl text-white">
-          Learn Coding Effectively. Master coding challenges with practical
-          experience. And master in-demand programming skills through
-          interactive challenges and expert-led tutorials.
-        </span>
-      </motion.div>
+      <div className="max-w-7xl mx-auto flex flex-col items-center text-center">
 
-      {/* Buttons */}
-      <motion.div
-        initial={{ opacity: 0, y: 20 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ delay: 1.0, duration: 0.6 }}
-        className="pt-10 flex flex-col sm:flex-row gap-6 sm:gap-10 items-center"
-      >
-        <button className="parkinsans-Regular bg-black text-white py-2.5 px-6 sm:px-8 text-sm sm:text-base rounded-md border border-gray-400 hover:border-[#F4FF54] hover:shadow-[0_0_10px_2px_#F4FF54] transition-all duration-300 cursor-pointer">
-          Explore More
-        </button>
-        <button className="parkinsans-font relative overflow-hidden bg-[#F4FF54] text-black py-2.5 px-6 sm:px-8 text-sm sm:text-base rounded-md border flex gap-1 items-center group hover:shadow-[0_0_20px_#F4FF54] transition-all duration-300">
+        {/* Headline */}
+        <motion.h1
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ delay: 0.15, duration: 0.6 }}
+          className="text-5xl sm:text-6xl md:text-7xl lg:text-[70px] font-extrabold leading-[1.05] tracking-tight text-[var(--ink-900)] max-w-5xl"
+        >
+          Ace your next{" "}
+          <span className="sky-gradient-text animate-shine">tech interview</span>
+          <br className="hidden sm:block" />
+          with confidence and clarity.
+        </motion.h1>
+
+        {/* Subheading */}
+        <motion.p
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ delay: 0.3, duration: 0.6 }}
+          className="font-inter mt-6 text-base sm:text-lg md:text-xl text-[var(--ink-500)] max-w-4xl"
+        >
+          Codeleap is a premium developer-productivity platform built for
+          interview prep and competitive programming. Curated problem sets, a
+          high-performance IDE, and an AI partner — all in one airy workspace.
+        </motion.p>
+
+        {/* CTA Buttons */}
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ delay: 0.45, duration: 0.6 }}
+          className="mt-10 flex flex-col sm:flex-row gap-3 items-center"
+        >
+          <Link
+            to="/signup"
+            className="btn-sky inline-flex items-center gap-2 px-7 py-3.5 rounded-full text-base font-semibold"
+          >
+            Start Free
+            <ArrowRight size={18} />
+          </Link>
           <Link
             to="/problems"
-            className="relative z-10 flex items-center gap-1 cursor-pointer"
+            className="btn-ghost-sky inline-flex items-center gap-2 px-7 py-3.5 rounded-full text-base font-semibold"
           >
-            Get Started <ArrowUpRight size={20} color="black" />
+            <Play size={16} className="text-[var(--sky-500)]" />
+            Explore Problems
           </Link>
-          <span className="absolute inset-0 bg-gradient-to-r from-yellow-300 via-yellow-200 to-yellow-400 opacity-0 group-hover:opacity-100 blur-lg transition-all duration-500"></span>
-        </button>
-      </motion.div>
+        </motion.div>
 
-      {/* Main content container with image and peerlist badge */}
-      <motion.div
-        initial={{ opacity: 0, y: 20 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ delay: 0.8, duration: 0.6 }}
-        className="relative mt-6 md:mt-12 flex flex-col items-center"
-      >
-        {/* Magic Image */}
-        <img
-          src={MagicSVG}
-          alt="Magic effect"
-          className="text-white w-52 sm:w-64 md:w-72 h-auto mb-6"
-        />
+        {/* Micro feature list */}
+        <motion.div
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          transition={{ delay: 0.6, duration: 0.6 }}
+          className="mt-6 flex flex-wrap items-center justify-center gap-x-6 gap-y-2 text-sm text-[var(--ink-500)]"
+        >
+          {["No credit card", "Free forever plan", "1000+ problems"].map(
+            (item) => (
+              <span key={item} className="inline-flex items-center gap-1.5">
+                <CheckCircle2 className="w-4 h-4 text-[var(--sky-500)]" />
+                {item}
+              </span>
+            )
+          )}
+        </motion.div>
 
-        {/* Peerlist Badge - positioned below the image */}
-        <Link to="https://peerlist.io/sanket78/project/codeleap">
-          <motion.div
-            initial={{ opacity: 0, y: 30 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 1.5, duration: 0.6 }}
-            className="relative group cursor-pointer"
-          >
-            <img
-              src={PeerlistSVG}
-              alt="Peerlist badge"
-              className="w-44 md:w-48 bg-black/80 backdrop-blur-sm p-3 rounded-xl border border-gray-600 hover:border-[#F4FF54] shadow-lg hover:shadow-[0_0_20px_rgba(244,255,84,0.3)] transition-all duration-300"
-            />
+        {/* Product mockup */}
+        <motion.div
+          initial={{ opacity: 0, y: 40 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ delay: 0.7, duration: 0.8 }}
+          className="relative mt-16 w-full max-w-6xl"
+        >
 
-            {/* Enhanced Tooltip */}
-            <div className="absolute -top-12 left-1/2 transform -translate-x-1/2 opacity-0 group-hover:opacity-100 transition-all duration-300 pointer-events-none">
-              <div className="bg-gray-900 text-white text-sm font-medium py-2 px-4 rounded-lg shadow-xl border border-gray-700 whitespace-nowrap">
-                <div className="flex items-center gap-2">
-                  <span className="text-lg">🚀</span>
-                  <span>Upvote us on Peerlist</span>
-                </div>
-                {/* Tooltip arrow */}
-                <div className="absolute top-full left-1/2 transform -translate-x-1/2 w-0 h-0 border-l-4 border-r-4 border-t-4 border-l-transparent border-r-transparent border-t-gray-900"></div>
+          {/* IDE mockup card */}
+          <div className="relative rounded-2xl bg-white border border-(--ink-200) shadow-(--hero-shadow) overflow-hidden">
+            {/* Mockup top bar */}
+            <div className="flex items-center gap-2 px-4 py-3 bg-[var(--surface-container-low)] border-b border-[var(--ink-200)]">
+              <span className="w-3 h-3 rounded-full bg-red-400" />
+              <span className="w-3 h-3 rounded-full bg-amber-400" />
+              <span className="w-3 h-3 rounded-full bg-emerald-400" />
+              <div className="ml-3 px-3 py-1 rounded-md bg-white border border-[var(--ink-200)] text-xs text-[var(--ink-500)] font-mono-code">
+                codeleap.dev / problem / two-sum
               </div>
             </div>
-          </motion.div>
-        </Link>
-      </motion.div>
-    </div>
+
+            {/* Mockup body: 3-pane */}
+            <div className="grid grid-cols-12 min-h-[320px] md:min-h-[420px] text-left">
+              {/* Left: problem */}
+              <div className="col-span-12 md:col-span-4 border-r border-[var(--ink-200)] p-5 bg-white">
+                <div className="flex items-center gap-2 mb-3">
+                  <span className="px-2 py-0.5 text-[10px] font-semibold rounded-full bg-emerald-50 text-emerald-700 border border-emerald-200">
+                    Easy
+                  </span>
+                  <span className="px-2 py-0.5 text-[10px] font-semibold rounded-full bg-[var(--sky-50)] text-[var(--sky-600)] border border-[var(--sky-200)]">
+                    Arrays
+                  </span>
+                </div>
+                <h3 className="font-jakarta text-lg font-bold text-[var(--ink-900)] mb-2">
+                  1. Two Sum
+                </h3>
+                <p className="text-xs text-[var(--ink-500)] leading-relaxed">
+                  Given an array of integers <code className="font-mono-code text-[var(--sky-600)]">nums</code> and an integer{" "}
+                  <code className="font-mono-code text-[var(--sky-600)]">target</code>, return indices of the two numbers such that they
+                  add up to target.
+                </p>
+                <div className="mt-4 p-3 rounded-lg bg-[var(--surface-container-low)] text-[11px] font-mono-code text-[var(--ink-700)]">
+                  Input: nums = [2,7,11,15], target = 9
+                  <br />
+                  Output: [0,1]
+                </div>
+              </div>
+
+              {/* Center: editor */}
+              <div className="hidden md:block col-span-5 bg-[#0c1a2e] text-[var(--sky-100)] p-5 font-mono-code text-[12px] leading-6">
+                <div className="flex items-center gap-2 mb-3 text-[11px] text-[var(--ink-400)]">
+                  <span className="px-2 py-0.5 rounded bg-[var(--sky-500)]/20 text-[var(--sky-300)]">
+                    JavaScript
+                  </span>
+                  <span>main.js</span>
+                </div>
+                <pre className="whitespace-pre-wrap">
+                  {`function twoSum(nums, target) {
+  const seen = new Map();
+  for (let i = 0; i < nums.length; i++) {
+    const complement = target - nums[i];
+    if (seen.has(complement)) {
+      return [seen.get(complement), i];
+    }
+    seen.set(nums[i], i);
+  }
+}`}
+                </pre>
+                <div className="mt-4 px-2 py-1.5 rounded bg-emerald-500/10 text-emerald-300 text-[11px] inline-flex items-center gap-1.5">
+                  <CheckCircle2 className="w-3.5 h-3.5" />
+                  All 23 test cases passed · 64ms
+                </div>
+              </div>
+
+              {/* Right: AI panel */}
+              <div className="hidden md:block col-span-3 border-l border-[var(--ink-200)] p-4 bg-[var(--surface-container-low)]">
+                <div className="flex items-center gap-2 mb-3">
+                  <span className="w-7 h-7 rounded-lg bg-gradient-to-br from-[var(--sky-500)] to-[var(--sky-700)] flex items-center justify-center">
+                    <Sparkles className="w-4 h-4 text-white" />
+                  </span>
+                  <span className="font-jakarta font-semibold text-sm text-[var(--ink-900)]">
+                    Ask Codeleap
+                  </span>
+                </div>
+                <div className="space-y-2">
+                  <div className="bg-white rounded-xl px-3 py-2 text-[11px] text-[var(--ink-700)] border border-[var(--ink-200)] shadow-sm">
+                    Try a hash map for O(n) lookups instead of nested loops.
+                  </div>
+                  <div className="bg-white rounded-xl px-3 py-2 text-[11px] text-[var(--ink-700)] border border-[var(--ink-200)] shadow-sm">
+                    Time: O(n) · Space: O(n)
+                  </div>
+                  <div className="mt-3 px-3 py-2 rounded-full bg-white border border-[var(--ink-200)] text-[11px] text-[var(--ink-400)]">
+                    Ask anything...
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </motion.div>
+
+        {/* Trusted by */}
+        <motion.div
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          transition={{ delay: 1, duration: 0.6 }}
+          className="mt-16 w-full max-w-4xl"
+        >
+          <p className="text-xs uppercase tracking-[0.2em] text-[var(--ink-400)] font-semibold mb-4">
+            Trusted by engineers preparing for
+          </p>
+          <div className="flex flex-wrap items-center justify-center gap-x-10 gap-y-3 text-[var(--ink-400)] font-jakarta font-semibold">
+            {trustedBy.map((name) => (
+              <span
+                key={name}
+                className="text-lg sm:text-xl opacity-70 hover:opacity-100 transition-opacity"
+              >
+                {name}
+              </span>
+            ))}
+          </div>
+        </motion.div>
+      </div>
+    </section>
   );
 };
 

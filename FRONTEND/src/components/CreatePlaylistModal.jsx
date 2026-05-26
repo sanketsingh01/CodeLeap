@@ -1,6 +1,6 @@
 import React, { useEffect } from "react";
 import { useForm } from "react-hook-form";
-import { X } from "lucide-react";
+import { X, Sparkles } from "lucide-react";
 
 import { useAuthStore } from "../store/useAuthStore.js";
 
@@ -27,85 +27,87 @@ const CreatePlaylistModal = ({ isOpen, onClose, onSubmit }) => {
   };
 
   if (!isOpen) return null;
+
   return (
-    <div className="fixed inset-0 z-50 bg-black bg-opacity-60 backdrop-blur-sm flex items-center justify-center px-4">
-      <div className="bg-zinc-900 rounded-2xl shadow-2xl w-full max-w-lg border border-zinc-700">
-        {/* Modal Header */}
-        <div className="flex justify-between items-center p-5 border-b border-zinc-700">
-          <h3 className="text-2xl font-semibold text-white">
-            Create New Sheet
-          </h3>
+    <div className="fixed inset-0 z-50 bg-black/40 backdrop-blur-sm flex items-center justify-center px-4">
+      <div className="bg-white rounded-2xl shadow-2xl w-full max-w-lg border border-[var(--ink-200)]">
+        <div className="flex justify-between items-center px-6 py-4 border-b border-[var(--ink-200)]">
+          <div className="flex items-center gap-2.5">
+            <span className="w-8 h-8 rounded-lg bg-gradient-to-br from-[var(--sky-500)] to-[var(--sky-700)] flex items-center justify-center text-white">
+              <Sparkles className="w-4 h-4" />
+            </span>
+            <h3 className="font-jakarta text-lg font-bold text-[var(--ink-900)]">
+              Create new sheet
+            </h3>
+          </div>
           <button
             onClick={onClose}
-            className="text-gray-400 hover:text-white transition"
+            className="p-1.5 rounded-lg text-[var(--ink-500)] hover:bg-[var(--surface-container-low)] transition-colors"
           >
-            <X className="w-6 h-6" />
+            <X className="w-4 h-4" />
           </button>
         </div>
 
-        {/* Modal Form */}
         <form
           onSubmit={handleSubmit(handleFormSubmit)}
           className="p-6 space-y-5"
         >
-          {/* Playlist Name */}
           <div>
-            <label className="block text-sm font-medium text-gray-300 mb-1">
-              Sheet Name
+            <label className="block text-sm font-medium text-[var(--ink-700)] mb-1.5">
+              Sheet name
             </label>
             <input
               type="text"
-              placeholder="Enter Sheet name"
-              className="w-full px-4 py-2 bg-zinc-800 text-white border border-zinc-700 rounded-lg focus:outline-none focus:ring-2 focus:ring-yellow-400"
+              placeholder="e.g. Top Google Interview Questions"
+              className="w-full px-4 py-2.5 bg-white text-[var(--ink-900)] border border-[var(--ink-200)] rounded-xl outline-none transition-all focus:border-[var(--sky-500)] focus:shadow-[0_0_0_3px_rgba(22,76,255,0.14)] placeholder-[var(--ink-400)]"
               {...register("name", { required: "Playlist name is required" })}
             />
             {errors.name && (
-              <p className="text-sm text-red-500 mt-1">{errors.name.message}</p>
+              <p className="text-xs text-red-500 mt-1.5">
+                {errors.name.message}
+              </p>
             )}
           </div>
 
-          {/* Playlist Description */}
           <div>
-            <label className="block text-sm font-medium text-gray-300 mb-1">
+            <label className="block text-sm font-medium text-[var(--ink-700)] mb-1.5">
               Description
             </label>
             <textarea
               rows={4}
-              placeholder="Enter Sheet description"
-              className="w-full px-4 py-2 bg-zinc-800 text-white border border-zinc-700 rounded-lg focus:outline-none focus:ring-2 focus:ring-yellow-400"
+              placeholder="What is this sheet for?"
+              className="w-full px-4 py-2.5 bg-white text-[var(--ink-900)] border border-[var(--ink-200)] rounded-xl outline-none transition-all focus:border-[var(--sky-500)] focus:shadow-[0_0_0_3px_rgba(22,76,255,0.14)] placeholder-[var(--ink-400)] resize-none"
               {...register("description")}
             />
           </div>
 
-          {/* Public Playlist Checkbox */}
           {isAdmin && (
-            <div className="flex items-center space-x-2">
+            <div className="flex items-center gap-2 bg-[var(--sky-50)] border border-[var(--sky-200)] rounded-xl px-3.5 py-3">
               <input
                 type="checkbox"
                 id="isPublic"
                 {...register("isPublic")}
-                className="w-4 h-4 text-yellow-400 bg-zinc-800 border-zinc-700 rounded focus:ring-yellow-400"
+                className="w-4 h-4 accent-[var(--sky-500)]"
               />
-              <label htmlFor="isPublic" className="text-sm text-gray-300">
-                Make this Sheet public (visible to everyone)
+              <label htmlFor="isPublic" className="text-sm text-[var(--ink-700)]">
+                Make this sheet public (visible to everyone)
               </label>
             </div>
           )}
 
-          {/* Footer Buttons */}
-          <div className="flex justify-end gap-3 pt-2">
+          <div className="flex justify-end gap-2 pt-2">
             <button
               type="button"
               onClick={onClose}
-              className="px-4 py-2 text-sm text-gray-300 bg-zinc-700 rounded-lg hover:bg-zinc-600 transition cursor-pointer"
+              className="btn-ghost-sky px-4 py-2 rounded-full text-sm font-semibold"
             >
               Cancel
             </button>
             <button
               type="submit"
-              className="px-5 py-2 text-sm font-semibold bg-yellow-400 text-black rounded-lg hover:bg-yellow-300 transition cursor-pointer"
+              className="btn-sky px-5 py-2 rounded-full text-sm font-semibold"
             >
-              Create Sheet
+              Create sheet
             </button>
           </div>
         </form>

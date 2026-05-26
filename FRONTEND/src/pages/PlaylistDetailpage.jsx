@@ -1,10 +1,28 @@
 import React, { useEffect, useMemo } from "react";
 import { useParams, Link } from "react-router-dom";
-import { CheckCircle2, Circle, Loader2 } from "lucide-react";
+import {
+  CheckCircle2,
+  Circle,
+  Loader2,
+  ArrowLeft,
+  Sparkles,
+} from "lucide-react";
 
 import { usePlaylistStore } from "../store/usePlaylistStore.js";
 import { useAuthStore } from "../store/useAuthStore.js";
 import { useProblemStore } from "../store/useProblemStore.js";
+
+const difficultyText = {
+  EASY: "text-emerald-600",
+  MEDIUM: "text-amber-600",
+  HARD: "text-red-600",
+};
+
+const difficultyAccent = {
+  EASY: "border-emerald-300 bg-emerald-50 text-emerald-700",
+  MEDIUM: "border-amber-300 bg-amber-50 text-amber-700",
+  HARD: "border-red-300 bg-red-50 text-red-700",
+};
 
 const PlaylistDetailsPage = () => {
   const { authUser } = useAuthStore();
@@ -20,14 +38,6 @@ const PlaylistDetailsPage = () => {
     getAllProblems();
   }, [getAllProblems]);
 
-  // if (!currentPlaylist)
-  //   return (
-  //     <div className="text-white p-6 mt-17 flex items-center justify-center">
-  //       <Loader2 className="animate-spin" /> Loading"
-  //     </div>
-  //   );
-
-  // Derive the solved status based on authUser
   const solvedProblems = useMemo(() => {
     if (!authUser || !problems) return [];
     return problems.filter((problem) =>
@@ -51,105 +61,110 @@ const PlaylistDetailsPage = () => {
 
   if (isLoading) {
     return (
-      <div className="min-h-screen flex items-center justify-center bg-black text-white">
-        <div className="text-center space-y-4">
-          <Loader2 className="w-10 h-10 animate-spin mx-auto text-yellow-400" />
-          <p className="text-lg font-semibold">Loading problems...</p>
+      <div className="min-h-screen flex items-center justify-center bg-[var(--surface)]">
+        <div className="flex flex-col items-center gap-3">
+          <Loader2 className="w-10 h-10 text-[var(--sky-500)] animate-spin" />
+          <p className="text-[var(--ink-500)] font-medium">
+            Loading playlist...
+          </p>
         </div>
       </div>
     );
   }
 
-  return !currentPlaylist ? (
-    <div className="text-white p-6 mt-17 flex items-center justify-center">
-      <Loader2 className="animate-spin" /> Loading
-    </div>
-  ) : (
-    <div className="min-h-screen py-20 px-4 text-white mt-10">
-      <div className="max-w-6xl mx-auto space-y-5">
-        {/* Header */}
-        <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-6">
-          <div>
-            <h1 className="text-4xl font-bold">{currentPlaylist.name}</h1>
-            <p className="text-gray-400 mt-2">
-              {total} Problems • Last updated recently
-            </p>
-          </div>
-          <div className="flex flex-col items-center">
-            <div className="relative w-20 h-20">
-              <svg
-                className="absolute inset-0 w-full h-full"
-                viewBox="0 0 36 36"
-              >
-                <path
-                  className="text-zinc-700"
-                  d="M18 2.0845
-                    a 15.9155 15.9155 0 0 1 0 31.831
-                    a 15.9155 15.9155 0 0 1 0 -31.831"
-                  fill="none"
-                  stroke="currentColor"
-                  strokeWidth="2"
-                />
-                <path
-                  className="text-yellow-500"
-                  d="M18 2.0845
-                    a 15.9155 15.9155 0 0 1 0 31.831"
-                  fill="none"
-                  stroke="currentColor"
-                  strokeWidth="2"
-                  strokeDasharray={`${solvedPercent}, 100`}
-                />
-              </svg>
-              <div className="absolute inset-0 flex items-center justify-center text-sm font-bold">
-                {solvedPercent}%
-              </div>
+  return (
+    <div className="min-h-screen pt-28 pb-16 px-6 sm:px-10 md:px-16 lg:px-24">
+      <div className="max-w-6xl mx-auto space-y-8">
+        <Link
+          to="/playlists"
+          className="inline-flex items-center gap-1.5 text-sm font-medium text-[var(--ink-700)] hover:text-[var(--sky-600)] transition-colors"
+        >
+          <ArrowLeft className="w-4 h-4" />
+          All sheets
+        </Link>
+
+        {/* Header card */}
+        <div className="bg-white rounded-3xl border border-[var(--ink-200)] shadow-[var(--shadow-soft)] p-6 md:p-10">
+          <div className="flex flex-col md:flex-row md:items-center justify-between gap-6">
+            <div>
+              <span className="inline-flex items-center gap-2 text-xs uppercase tracking-[0.2em] font-semibold text-[var(--sky-600)] bg-[var(--sky-50)] px-2.5 py-1 rounded-full">
+                <Sparkles className="w-3 h-3" /> Sheet
+              </span>
+              <h1 className="font-jakarta text-3xl md:text-4xl font-extrabold text-[var(--ink-900)] mt-3 capitalize">
+                {currentPlaylist.name}
+              </h1>
+              <p className="text-[var(--ink-500)] text-sm md:text-base mt-2">
+                {total} problems · {solved} solved
+              </p>
+              {currentPlaylist.description && (
+                <p className="text-[var(--ink-700)] text-sm md:text-base mt-4 max-w-2xl leading-relaxed">
+                  {currentPlaylist.description}
+                </p>
+              )}
             </div>
-            <p className="text-sm text-gray-400 mt-1">
-              {solved}/{total} Solved
-            </p>
+
+            <div className="flex flex-col items-center">
+              <div className="relative w-24 h-24">
+                <svg
+                  className="absolute inset-0 w-full h-full -rotate-90"
+                  viewBox="0 0 36 36"
+                >
+                  <path
+                    className="text-[var(--ink-100)]"
+                    d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831"
+                    fill="none"
+                    stroke="currentColor"
+                    strokeWidth="3"
+                  />
+                  <path
+                    className="text-[var(--sky-500)]"
+                    d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831"
+                    fill="none"
+                    stroke="currentColor"
+                    strokeWidth="3"
+                    strokeLinecap="round"
+                    strokeDasharray={`${solvedPercent}, 100`}
+                  />
+                </svg>
+                <div className="absolute inset-0 flex items-center justify-center">
+                  <span className="font-jakarta font-extrabold text-xl text-[var(--ink-900)]">
+                    {solvedPercent}%
+                  </span>
+                </div>
+              </div>
+              <p className="text-xs text-[var(--ink-500)] mt-2">
+                Completion
+              </p>
+            </div>
           </div>
         </div>
 
-        {/* Description */}
-        {currentPlaylist.description && (
-          <p className="text-gray-300 text-base leading-relaxed max-w-3xl">
-            {currentPlaylist.description}
-          </p>
-        )}
-
-        {/* Difficulty Stats */}
-        <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 mb-8">
+        {/* Difficulty stats */}
+        <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
           {["EASY", "MEDIUM", "HARD"].map((level) => {
             const problemsByLevel = problemsWithSolved.filter(
               (p) => p.problem?.difficulty === level
             );
             const solvedByLevel = problemsByLevel.filter((p) => p.solved);
-
             return (
               <div
                 key={level}
-                className={`p-4 rounded-xl shadow bg-zinc-900 border-l-4 ${
+                className={`rounded-2xl p-5 bg-white border-l-4 shadow-[var(--shadow-soft)] ${
                   level === "EASY"
-                    ? "border-cyan-400"
+                    ? "border-emerald-400"
                     : level === "MEDIUM"
-                    ? "border-yellow-400"
-                    : "border-red-500"
+                    ? "border-amber-400"
+                    : "border-red-400"
                 }`}
               >
                 <h3
-                  className={`text-lg font-semibold mb-2 ${
-                    level === "EASY"
-                      ? "text-cyan-300"
-                      : level === "MEDIUM"
-                      ? "text-yellow-400"
-                      : "text-red-500"
-                  }`}
+                  className={`font-jakarta font-semibold mb-2 ${difficultyText[level]}`}
                 >
                   {level.charAt(0) + level.slice(1).toLowerCase()}
                 </h3>
-                <p className="text-sm text-gray-300">
+                <p className="text-sm text-[var(--ink-500)]">
                   Solved:{" "}
-                  <span className="font-medium text-white">
+                  <span className="font-jakarta font-semibold text-[var(--ink-900)]">
                     {solvedByLevel.length}/{problemsByLevel.length}
                   </span>
                 </p>
@@ -164,7 +179,7 @@ const PlaylistDetailsPage = () => {
             {currentPlaylist.tags.map((tag, i) => (
               <span
                 key={i}
-                className="bg-yellow-500/10 text-yellow-400 text-xs font-medium px-3 py-1 rounded-full"
+                className="bg-[var(--sky-50)] text-[var(--sky-700)] text-xs font-medium px-3 py-1.5 rounded-full border border-[var(--sky-200)]"
               >
                 {tag}
               </span>
@@ -172,43 +187,46 @@ const PlaylistDetailsPage = () => {
           </div>
         )}
 
-        {/* Problems List */}
-        <div className="flex flex-col gap-3">
-          {problemsWithSolved.map((problem, idx) => (
-            <div
-              key={idx}
-              className="flex items-center justify-between bg-zinc-900 hover:bg-zinc-800 px-5 py-4 rounded-xl shadow transition-all group"
-            >
-              <div className="flex items-center gap-3">
-                {problem.solved ? (
-                  <CheckCircle2 className="text-green-500 w-5 h-5" />
-                ) : (
-                  <Circle className="text-zinc-500 w-5 h-5" />
-                )}
-                <span className="text-base group-hover:underline">
-                  {idx + 1}.{" "}
+        {/* Problems list */}
+        <div className="bg-white rounded-2xl border border-[var(--ink-200)] shadow-[var(--shadow-soft)] overflow-hidden">
+          <div className="px-5 py-3 border-b border-[var(--ink-200)] bg-[var(--surface-container-low)]">
+            <h3 className="font-jakarta font-semibold text-[var(--ink-900)]">
+              Problems
+            </h3>
+          </div>
+          <ul>
+            {problemsWithSolved.map((problem, idx) => (
+              <li
+                key={idx}
+                className="flex items-center justify-between px-5 py-3.5 border-t border-[var(--ink-100)] first:border-t-0 hover:bg-[var(--surface-container-low)]/60 transition-colors"
+              >
+                <div className="flex items-center gap-3 min-w-0">
+                  {problem.solved ? (
+                    <CheckCircle2 className="text-emerald-500 w-5 h-5 flex-shrink-0" />
+                  ) : (
+                    <Circle className="text-[var(--ink-300)] w-5 h-5 flex-shrink-0" />
+                  )}
+                  <span className="text-sm text-[var(--ink-500)] font-mono-code">
+                    {String(idx + 1).padStart(2, "0")}
+                  </span>
                   <Link
                     to={`/problem/${problem.problem.id}`}
-                    className="hover:underline font-medium text-sm cursor-pointer"
+                    className="font-jakarta font-medium text-sm md:text-base text-[var(--ink-900)] hover:text-[var(--sky-600)] transition-colors truncate"
                   >
                     {problem.problem.title}
                   </Link>
+                </div>
+                <span
+                  className={`text-[11px] font-semibold uppercase tracking-wider px-2.5 py-1 rounded-full border flex-shrink-0 ${
+                    difficultyAccent[problem.problem.difficulty] ||
+                    "border-[var(--ink-200)] text-[var(--ink-500)] bg-[var(--surface-container-low)]"
+                  }`}
+                >
+                  {problem.problem.difficulty}
                 </span>
-              </div>
-
-              <span
-                className={`text-sm font-medium ${
-                  problem.problem.difficulty === "EASY"
-                    ? "text-cyan-400"
-                    : problem.problem.difficulty === "MEDIUM"
-                    ? "text-yellow-400"
-                    : "text-red-500"
-                }`}
-              >
-                {problem.problem.difficulty}
-              </span>
-            </div>
-          ))}
+              </li>
+            ))}
+          </ul>
         </div>
       </div>
     </div>

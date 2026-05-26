@@ -137,9 +137,9 @@ const Profile = ({ user }) => {
   ];
 
   return (
-    <div className="max-w-7xl mx-auto p-6 space-y-8 mt-20">
+    <div className="max-w-7xl mx-auto p-6 space-y-8 mt-24 text-[var(--ink-900)]">
       {/* Header Section */}
-      <div className="bg-[#131313] dark:from-gray-900 dark:to-gray-800 rounded-xl shadow-lg border border-gray-200 dark:border-gray-700">
+      <div className="bg-white rounded-2xl shadow-[var(--shadow-soft)] border border-[var(--ink-200)]">
         <div className="p-8">
           <div className="flex flex-col lg:flex-row items-center gap-8">
             {/* Profile Info */}
@@ -148,18 +148,18 @@ const Profile = ({ user }) => {
                 <img
                   src={authUser?.image || profile}
                   alt="Profile"
-                  className="w-24 h-24 rounded-full border-4 border-blue-500 shadow-lg object-cover"
+                  className="w-24 h-24 rounded-full border-4 border-[var(--sky-500)] shadow-lg object-cover"
                 />
               </div>
               <div className="space-y-2">
-                <h1 className="text-4xl font-bold bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent">
+                <h1 className="font-jakarta text-3xl md:text-4xl font-extrabold sky-gradient-text">
                   {authUser?.name || "John Doe"}
                 </h1>
-                <p className="text-gray-600 dark:text-gray-400 flex items-center gap-2">
+                <p className="text-[var(--ink-500)] flex items-center gap-2">
                   <Mail className="w-4 h-4" />
                   {authUser?.email || "sanket@example.com"}
                 </p>
-                <span className="inline-flex items-center px-3 py-1 rounded-full text-sm font-semibold bg-gray-100 dark:bg-gray-800 text-gray-800 dark:text-gray-200 mt-1">
+                <span className="inline-flex items-center px-3 py-1 rounded-full text-sm font-semibold bg-white border border-[var(--ink-200)] text-[var(--sky-700)] mt-1">
                   <Trophy className="w-4 h-4 mr-2" />
                   {rank}
                 </span>
@@ -168,29 +168,29 @@ const Profile = ({ user }) => {
 
             {/* Streak Cards */}
             <div className="flex flex-col sm:flex-row gap-4 ml-auto">
-              <div className="bg-gradient-to-r from-orange-100 to-red-100 dark:from-orange-900/20 dark:to-red-900/20 border border-orange-200 rounded-lg shadow-sm">
+              <div className="bg-white border border-[var(--ink-200)] rounded-lg shadow-[var(--shadow-soft)]">
                 <div className="p-4 text-center">
                   <div className="flex items-center justify-center gap-2 mb-1">
-                    <Flame className="w-5 h-5 text-orange-500" />
-                    <span className="font-semibold text-orange-700 dark:text-orange-300">
+                    <Flame className="w-5 h-5 text-[var(--sky-500)]" />
+                    <span className="font-semibold text-[var(--ink-700)]">
                       Current Streak
                     </span>
                   </div>
-                  <p className="text-2xl font-bold text-orange-600">
+                  <p className="text-2xl font-bold sky-gradient-text">
                     {authUser?.streakCount || 0}
                   </p>
                 </div>
               </div>
 
-              <div className="bg-gradient-to-r from-yellow-100 to-amber-100 dark:from-yellow-900/20 dark:to-amber-900/20 border border-yellow-200 rounded-lg shadow-sm">
+              <div className="bg-white border border-[var(--ink-200)] rounded-lg shadow-[var(--shadow-soft)]">
                 <div className="p-4 text-center">
                   <div className="flex items-center justify-center gap-2 mb-1">
-                    <Award className="w-5 h-5 text-yellow-600" />
-                    <span className="font-semibold text-yellow-700 dark:text-yellow-300">
+                    <Award className="w-5 h-5 text-[var(--sky-500)]" />
+                    <span className="font-semibold text-[var(--ink-700)]">
                       Best Streak
                     </span>
                   </div>
-                  <p className="text-2xl font-bold text-yellow-600">
+                  <p className="text-2xl font-bold sky-gradient-text">
                     {authUser?.longestCount || 0}
                   </p>
                 </div>
@@ -203,14 +203,14 @@ const Profile = ({ user }) => {
       {/* Statistics Grid */}
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
         {/* Progress Overview */}
-        <div className="bg-white dark:bg-gray-800 rounded-xl shadow-lg border border-gray-200 dark:border-gray-700 overflow-hidden">
-          <div className="p-6 border-b border-gray-200 dark:border-gray-700 bg-[#131313]">
+        <div className="bg-white rounded-2xl shadow-[var(--shadow-soft)] border border-[var(--ink-200)] overflow-hidden">
+          <div className="p-6 border-b border-[var(--ink-200)] bg-white">
             <h3 className="text-lg font-semibold flex items-center gap-2">
               <Target className="w-5 h-5" />
               Progress Overview
             </h3>
           </div>
-          <div className="p-6 space-y-6 bg-[#131313]">
+          <div className="p-6 space-y-6 bg-white">
             <div className="flex items-center justify-center ">
               <div className="w-40 h-40">
                 <CircularProgressbarWithChildren
@@ -260,32 +260,32 @@ const Profile = ({ user }) => {
         <div className="lg:col-span-2 space-y-6">
           {/* Quick Stats */}
           <div className="grid grid-cols-2 md:grid-cols-4 gap-4 ">
-            <div className="bg-white dark:bg-gray-800 rounded-xl shadow-lg border border-gray-200 dark:border-gray-700 overflow-hidden">
-              <div className="p-4 text-center bg-[#131313]">
+            <div className="bg-white rounded-2xl shadow-[var(--shadow-soft)] border border-[var(--ink-200)] overflow-hidden">
+              <div className="p-4 text-center bg-white">
                 <Code2 className="w-8 h-8 mx-auto mb-2 text-blue-500" />
                 <p className="text-2xl font-bold">{languagesUsed.length}</p>
                 <p className="text-sm text-gray-500">Languages</p>
               </div>
             </div>
 
-            <div className="bg-white dark:bg-gray-800 rounded-xl shadow-lg border border-gray-200 dark:border-gray-700 overflow-hidden">
-              <div className="p-4 text-center bg-[#131313]">
+            <div className="bg-white rounded-2xl shadow-[var(--shadow-soft)] border border-[var(--ink-200)] overflow-hidden">
+              <div className="p-4 text-center bg-white">
                 <Clock className="w-8 h-8 mx-auto mb-2 text-green-500 " />
                 <p className="text-2xl font-bold">{averageTime}</p>
                 <p className="text-sm text-gray-500">Avg Time</p>
               </div>
             </div>
 
-            <div className="bg-white dark:bg-gray-800 rounded-xl shadow-lg border border-gray-200 dark:border-gray-700 overflow-hidden">
-              <div className="p-4 text-center bg-[#131313]">
-                <TrendingUp className="w-8 h-8 mx-auto mb-2 text-purple-500" />
+            <div className="bg-white rounded-2xl shadow-[var(--shadow-soft)] border border-[var(--ink-200)] overflow-hidden">
+              <div className="p-4 text-center bg-white">
+                <TrendingUp className="w-8 h-8 mx-auto mb-2 text-[var(--sky-600)]" />
                 <p className="text-2xl font-bold">{totalSubmissions}</p>
                 <p className="text-sm text-gray-500">Submissions</p>
               </div>
             </div>
 
-            <div className="bg-white dark:bg-gray-800 rounded-xl shadow-lg border border-gray-200 dark:border-gray-700 overflow-hidden">
-              <div className="p-4 text-center bg-[#131313]">
+            <div className="bg-white rounded-2xl shadow-[var(--shadow-soft)] border border-[var(--ink-200)] overflow-hidden">
+              <div className="p-4 text-center bg-white">
                 <BookOpenCheck className="w-8 h-8 mx-auto mb-2 text-orange-500" />
                 <p className="text-2xl font-bold">{successRate}%</p>
                 <p className="text-sm text-gray-500">Success Rate</p>
@@ -294,19 +294,19 @@ const Profile = ({ user }) => {
           </div>
 
           {/* Languages Used */}
-          <div className="bg-white dark:bg-gray-800 rounded-xl shadow-lg border border-gray-200 dark:border-gray-700 overflow-hidden">
-            <div className="p-6 border-b border-gray-200 dark:border-gray-700 bg-[#131313]">
+          <div className="bg-white rounded-2xl shadow-[var(--shadow-soft)] border border-[var(--ink-200)] overflow-hidden">
+            <div className="p-6 border-b border-[var(--ink-200)] bg-white">
               <h3 className="text-lg font-semibold flex items-center gap-2">
                 <Languages className="w-5 h-5" />
                 Programming Languages
               </h3>
             </div>
-            <div className="p-6 bg-[#131313]">
+            <div className="p-6 bg-white">
               <div className="flex flex-wrap gap-2">
                 {languagesUsed.map((language, index) => (
                   <span
                     key={index}
-                    className="inline-flex items-center px-3 py-1 rounded-full text-sm font-medium bg-gray-100 dark:bg-gray-700 text-gray-800 dark:text-gray-200 border border-gray-300 dark:border-gray-600"
+                    className="inline-flex items-center px-3 py-1 rounded-full text-sm font-medium bg-[var(--surface-container-low)] text-[var(--ink-700)] border border-[var(--ink-200)]"
                   >
                     {language}
                   </span>
@@ -315,8 +315,8 @@ const Profile = ({ user }) => {
             </div>
           </div>
 
-          <div className="bg-white dark:bg-gray-800 rounded-xl shadow-lg border border-gray-200 dark:border-gray-700">
-            <div className="p-4 text-center bg-[#131313] rounded-xl">
+          <div className="bg-white rounded-2xl shadow-[var(--shadow-soft)] border border-[var(--ink-200)]">
+            <div className="p-4 text-center bg-white rounded-xl">
               <Code2 className="w-8 h-8 mx-auto mb-2 text-indigo-500" />
               <p className="text-2xl font-bold">{mostUsedLanguage}</p>
               <p className="text-sm text-gray-500">Most Used</p>
@@ -326,57 +326,57 @@ const Profile = ({ user }) => {
       </div>
 
       {/* Activity Heatmap */}
-      <div className="bg-white dark:bg-gray-800 rounded-xl shadow-lg border border-gray-200 dark:border-gray-700 overflow-hidden">
-        <div className="p-6 border-b border-gray-200 dark:border-gray-700 bg-[#131313]">
+      <div className="bg-white rounded-2xl shadow-[var(--shadow-soft)] border border-[var(--ink-200)] overflow-hidden">
+        <div className="p-6 border-b border-[var(--ink-200)] bg-white">
           <h3 className="text-lg font-semibold flex items-center gap-2">
             <Calendar className="w-5 h-5" />
             Activity Heatmap
           </h3>
         </div>
-        <div className="p-6 bg-[#131313]">
+        <div className="p-6 bg-white">
           <LoginHeatmap loginMap={loginMap} />
         </div>
       </div>
 
       {/* Solved Problems Table */}
-      <div className="bg-white dark:bg-gray-800 rounded-xl shadow-lg border border-gray-200 dark:border-gray-700 overflow-hidden">
-        <div className="p-6 border-b border-gray-200 dark:border-gray-700 bg-[#131313]">
+      <div className="bg-white rounded-2xl shadow-[var(--shadow-soft)] border border-[var(--ink-200)] overflow-hidden">
+        <div className="p-6 border-b border-[var(--ink-200)] bg-white">
           <h3 className="text-lg font-semibold flex items-center gap-2">
             <BookOpenCheck className="w-5 h-5" />
             Solved Problems ({solved})
           </h3>
         </div>
-        <div className="p-6 bg-[#131313] rounded-xl">
+        <div className="p-6 bg-white rounded-xl">
           {isProblemsLoading ? (
             <div className="flex items-center justify-center py-12">
               <Loader className="w-8 h-8 animate-spin" />
             </div>
           ) : (
-            <div className="rounded-lg border border-gray-200 dark:border-gray-700 overflow-hidden">
+            <div className="rounded-lg border border-[var(--ink-200)] overflow-hidden">
               <div className="overflow-x-auto">
                 <table className="w-full">
-                  <thead className="bg-gray-50 dark:bg-gray-700">
+                  <thead className="bg-[var(--surface-container-low)]">
                     <tr>
-                      <th className="px-4 py-3 text-left font-semibold text-gray-900 dark:text-gray-100">
+                      <th className="px-4 py-3 text-left font-semibold text-[var(--ink-900)]">
                         Title
                       </th>
-                      <th className="px-4 py-3 text-left font-semibold text-gray-900 dark:text-gray-100">
+                      <th className="px-4 py-3 text-left font-semibold text-[var(--ink-900)]">
                         Difficulty
                       </th>
-                      <th className="px-4 py-3 text-left font-semibold text-gray-900 dark:text-gray-100">
+                      <th className="px-4 py-3 text-left font-semibold text-[var(--ink-900)]">
                         Status
                       </th>
-                      <th className="px-4 py-3 text-left font-semibold text-gray-900 dark:text-gray-100">
+                      <th className="px-4 py-3 text-left font-semibold text-[var(--ink-900)]">
                         Date
                       </th>
                     </tr>
                   </thead>
-                  <tbody className="divide-y divide-gray-200 dark:divide-gray-700">
+                  <tbody className="divide-y divide-[var(--ink-100)]">
                     {solvedProblems.length ? (
                       solvedProblems.map((problem) => (
                         <tr key={problem.id} className="transition-colors">
                           <td className="px-4 py-3">
-                            <span className="font-medium text-gray-900 dark:text-gray-100 hover:text-blue-600 dark:hover:text-blue-400 cursor-pointer transition-colors">
+                            <span className="font-medium text-[var(--ink-900)] hover:text-blue-600 dark:hover:text-blue-400 cursor-pointer transition-colors">
                               {problem.title}
                             </span>
                           </td>
@@ -398,7 +398,7 @@ const Profile = ({ user }) => {
                             </span>
                           </td>
                           <td className="px-4 py-3">
-                            <span className="font-medium text-gray-900 dark:text-gray-100 hover:text-blue-600 dark:hover:text-blue-400 cursor-pointer transition-colors">
+                            <span className="font-medium text-[var(--ink-900)] hover:text-blue-600 dark:hover:text-blue-400 cursor-pointer transition-colors">
                               {new Date(
                                 problem.updatedAt || problem.createdAt
                               ).toLocaleDateString()}
