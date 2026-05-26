@@ -52,8 +52,7 @@ export default function Navbar() {
             <Sparkles className="w-5 h-5 text-white" strokeWidth={2.4} />
           </span>
           <span className="text-xl font-extrabold tracking-tight">
-            <span className="text-[var(--ink-900)]">code</span>
-            <span className="sky-gradient-text">leap</span>
+            <span className="text-[var(--ink-900)]">codeleap</span>
           </span>
         </Link>
 
@@ -63,11 +62,10 @@ export default function Navbar() {
             <Link
               key={item.to}
               to={item.to}
-              className={`relative px-4 py-2 text-sm font-medium rounded-full transition-all ${
-                isActive(item.to)
+              className={`relative px-4 py-2 text-sm font-medium rounded-full transition-all ${isActive(item.to)
                   ? "text-[var(--sky-600)] bg-[var(--sky-50)]"
                   : "text-[var(--ink-700)] hover:text-[var(--sky-600)] hover:bg-[var(--surface-container-low)]"
-              }`}
+                }`}
             >
               {item.label}
             </Link>
@@ -177,11 +175,10 @@ export default function Navbar() {
               key={item.to}
               to={item.to}
               onClick={() => setIsOpen(false)}
-              className={`block px-3 py-2.5 rounded-xl text-sm font-medium transition-colors ${
-                isActive(item.to)
+              className={`block px-3 py-2.5 rounded-xl text-sm font-medium transition-colors ${isActive(item.to)
                   ? "bg-[var(--sky-50)] text-[var(--sky-600)]"
                   : "text-[var(--ink-700)] hover:bg-[var(--surface-container-low)] hover:text-[var(--sky-600)]"
-              }`}
+                }`}
             >
               {item.label}
             </Link>

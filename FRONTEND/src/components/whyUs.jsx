@@ -196,7 +196,7 @@ export default function CodingJourney() {
           whileInView={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6 }}
           viewport={{ once: true, amount: 0.4 }}
-          className="text-center max-w-3xl mx-auto mb-20"
+          className="text-center max-w-5xl mx-auto mb-20"
         >
           <span className="inline-block text-xs uppercase tracking-[0.2em] font-semibold text-[var(--sky-600)] mb-3">
             Why Codeleap
@@ -222,9 +222,8 @@ export default function CodingJourney() {
                 className="grid grid-cols-1 md:grid-cols-2 gap-8 md:gap-12 items-center"
               >
                 <MotionWrapper
-                  className={`w-full h-72 md:h-96 ${
-                    mediaLeft ? "order-1" : "order-1 md:order-2"
-                  }`}
+                  className={`w-full h-72 md:h-96 ${mediaLeft ? "order-1" : "order-1 md:order-2"
+                    }`}
                   variants={mediaLeft ? leftVariant : rightVariant}
                   initial="hidden"
                   animate={inViews[i] ? "visible" : "hidden"}
@@ -235,9 +234,8 @@ export default function CodingJourney() {
                 </MotionWrapper>
 
                 <MotionWrapper
-                  className={`w-full ${
-                    mediaLeft ? "order-2" : "order-2 md:order-1"
-                  }`}
+                  className={`w-full ${mediaLeft ? "order-2" : "order-2 md:order-1"
+                    }`}
                   variants={mediaLeft ? rightVariant : leftVariant}
                   initial="hidden"
                   animate={inViews[i] ? "visible" : "hidden"}
@@ -265,11 +263,10 @@ export default function CodingJourney() {
                   {section.cta && (
                     <Link
                       to={section.cta.to}
-                      className={`inline-flex items-center gap-2 px-6 py-3 rounded-full text-sm font-semibold transition-all ${
-                        section.cta.outline
-                          ? "btn-ghost-sky"
-                          : "btn-sky"
-                      }`}
+                      className={`inline-flex items-center gap-2 px-6 py-3 rounded-full text-sm font-semibold transition-all ${section.cta.outline
+                        ? "btn-ghost-sky"
+                        : "btn-sky"
+                        }`}
                     >
                       {section.cta.label}
                       <ArrowRight size={16} />
