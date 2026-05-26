@@ -14,7 +14,7 @@ const Home = () => {
       <CodingJourney />
       <Reviews />
       <Comunitysection />
-      <CommunityCard />
+      {/* <CommunityCard /> */}
     </div>
   );
 };

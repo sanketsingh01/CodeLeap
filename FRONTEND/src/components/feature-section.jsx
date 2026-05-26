@@ -100,16 +100,15 @@ function UserBasedSecurity() {
     return (
         <>
             <div
-                className="relative mx-auto flex size-32 items-center justify-center rounded-full border bg-background shadow-xs outline outline-border outline-offset-4">
+                className="relative mx-auto flex size-32 items-center justify-center rounded-full border bg-background shadow-xs outline outline-border outline-offset-4 grayscale transition duration-300 ease-in-out group-hover:grayscale-0">
                 <CustomLockIcon className="size-24" />
                 <div
                     className="absolute inset-0 scale-120 bg-radial from-foreground/15 via-foreground/5 to-transparent blur-xl" />
             </div>
             <div className="relative mt-8 space-y-1.5 text-center">
-                <FeatureTitle>User-Based Security</FeatureTitle>
+                <FeatureTitle>Smart Practice</FeatureTitle>
                 <FeatureDescription>
-                    Grant specific permissions to users based on their roles and
-                    responsibilities.
+                    Personalized curriculum that focuses on your weak spots to ensure long-term mastery.
                 </FeatureDescription>
             </div>
         </>
@@ -119,7 +118,7 @@ function UserBasedSecurity() {
 function ReportsVisual() {
     return (
         <>
-            <div className="min-h-32">
+            <div className="min-h-32 grayscale transition duration-300 ease-in-out group-hover:grayscale-0">
                 <div className="absolute top-8 left-8 flex items-center gap-2">
                     <div
                         className="flex size-8 items-center justify-center rounded-full bg-primary/10 text-primary">
@@ -130,9 +129,9 @@ function ReportsVisual() {
                 <ReportsChartsSvg className="translate-x-[5%] -rotate-2 scale-150 text-[#F8FFE6]" />
             </div>
             <div className="relative z-10 mt-8 space-y-1.5 text-center">
-                <FeatureTitle>Reports & Analytics</FeatureTitle>
+                <FeatureTitle>Consistent Growth</FeatureTitle>
                 <FeatureDescription>
-                    Get detailed insights and analytics to make data-driven decisions
+                    With daily streaks, structured roadmaps make consistent practice feel effortless and rewarding.
                 </FeatureDescription>
             </div>
         </>
@@ -161,7 +160,7 @@ function DashboardVisual() {
             <div
                 className="mask-b-from-90% mask-r-from-90% relative aspect-video sm:aspect-auto">
                 <div
-                    className="absolute -right-1 -bottom-1 aspect-video max-h-50 rounded-tl-md border bg-card p-1 sm:max-h-42 md:aspect-square md:max-h-50 lg:aspect-16/12">
+                    className="absolute -right-1 -bottom-1 aspect-video max-h-50 rounded-tl-md border bg-card p-1 grayscale transition duration-300 ease-in-out group-hover:grayscale-0 sm:max-h-42 md:aspect-square md:max-h-50 lg:aspect-16/12">
                     <div
                         className="aspect-video h-full overflow-hidden rounded-tl-sm border *:pointer-events-none *:size-full *:shrink-0 *:select-none">
                         <img

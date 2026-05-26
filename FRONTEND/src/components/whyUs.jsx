@@ -13,6 +13,33 @@ import {
 import "../index.css";
 import { useMobile } from "./use-mobile.jsx";
 
+const companyLogos = [
+  {
+    name: "Google",
+    src: "https://cdn.simpleicons.org/google",
+  },
+  {
+    name: "Meta",
+    src: "https://cdn.simpleicons.org/meta",
+  },
+  {
+    name: "Amazon",
+    src: "https://cdn.simpleicons.org/amazon",
+  },
+  {
+    name: "Microsoft",
+    src: "https://cdn.simpleicons.org/microsoft",
+  },
+  {
+    name: "Netflix",
+    src: "https://cdn.simpleicons.org/netflix",
+  },
+  {
+    name: "Apple",
+    src: "https://cdn.simpleicons.org/apple",
+  },
+];
+
 const MotionWrapper = memo(
   ({
     children,
@@ -63,13 +90,18 @@ const sections = [
           <Building2 className="w-5 h-5 text-[var(--sky-500)]" />
         </div>
         <div className="grid grid-cols-2 gap-3 flex-1">
-          {["Google", "Meta", "Amazon", "Microsoft", "Netflix", "Apple"].map(
-            (c) => (
+          {companyLogos.map(
+            (company) => (
               <div
-                key={c}
-                className="rounded-xl border border-[var(--ink-200)] bg-[var(--surface-container-low)] px-3 py-3 flex items-center justify-center font-jakarta text-sm font-semibold text-[var(--ink-700)] hover:border-[var(--sky-300)] hover:text-[var(--sky-600)] transition-colors"
+                key={company.name}
+                className="rounded-xl border border-[var(--ink-200)] bg-[var(--surface-container-low)] px-3 py-3 flex items-center justify-center hover:border-[var(--sky-300)] transition-colors"
               >
-                {c}
+                <img
+                  src={company.src}
+                  alt={`${company.name} logo`}
+                  className="h-7 max-w-24 object-contain"
+                  loading="lazy"
+                />
               </div>
             )
           )}
@@ -138,13 +170,15 @@ const sections = [
           </span>
           <TrendingUp className="w-5 h-5 text-emerald-500" />
         </div>
-        <div className="flex items-end justify-between gap-2 flex-1 mt-2">
+        <div className="flex h-44 items-end justify-between gap-2 mt-2">
           {[40, 65, 50, 80, 70, 90, 75].map((h, i) => (
-            <div key={i} className="flex flex-col items-center gap-2 flex-1">
-              <div
-                className="w-full rounded-t-md bg-gradient-to-t from-[var(--sky-500)] to-[var(--sky-700)]"
-                style={{ height: `${h}%` }}
-              />
+            <div key={i} className="flex h-full flex-col items-center gap-2 flex-1">
+              <div className="flex h-full w-full items-end">
+                <div
+                  className="w-full rounded-t-md bg-emerald-400"
+                  style={{ height: `${h}%` }}
+                />
+              </div>
               <span className="text-[10px] text-[var(--ink-500)]">
                 {["M", "T", "W", "T", "F", "S", "S"][i]}
               </span>

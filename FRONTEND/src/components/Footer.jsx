@@ -42,11 +42,14 @@ const Footer = () => {
         <div className="col-span-2 md:col-span-3">
           <Link to="/" className="flex items-center gap-2 group">
             <span className="relative w-9 h-9 rounded-xl bg-gradient-to-br from-[var(--sky-500)] to-[var(--sky-700)] flex items-center justify-center shadow-md shadow-sky-200">
-              <Sparkles className="w-5 h-5 text-white" strokeWidth={2.4} />
+              <img
+                src="/CodeleapFavicon.svg"
+                alt="Codeleap logo"
+                className="w-5 h-5 object-contain"
+              />
             </span>
             <span className="font-jakarta text-xl font-extrabold tracking-tight">
-              <span className="text-[var(--ink-900)]">code</span>
-              <span className="sky-gradient-text">leap</span>
+              <span className="text-[var(--ink-900)]">codeleap</span>
             </span>
           </Link>
           <p className="mt-4 text-sm md:text-base text-[var(--ink-500)] max-w-md leading-relaxed">

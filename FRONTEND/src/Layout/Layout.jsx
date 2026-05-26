@@ -5,7 +5,6 @@ import { Loader } from "lucide-react";
 
 import Home from "../pages/Home.jsx";
 import FAQ from "../pages/FAQ.jsx";
-import About from "../pages/AboutUs.jsx";
 import Pricing from "../pages/Pricing.jsx";
 import LoginPage from "../pages/LoginPage.jsx";
 import SignUpPage from "../pages/SignUpPage.jsx";
@@ -82,7 +81,6 @@ const Layout = () => {
       <Routes>
         <Route path="/" element={<Home />} />
         <Route path="/FAQ" element={<FAQ />} />
-        <Route path="/About" element={<About />} />
         <Route path="/Pricing" element={<Pricing />} />
         <Route path="/Playlist/:id" element={<PlaylistDetailpage />} />
         <Route path="/profile" element={<Profile />} />

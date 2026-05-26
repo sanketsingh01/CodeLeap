@@ -6,7 +6,6 @@ import {
   User,
   Code,
   LogOut,
-  Sparkles,
 } from "lucide-react";
 import { motion } from "motion/react";
 import { Link, useLocation, useNavigate } from "react-router-dom";
@@ -19,7 +18,6 @@ const navItems = [
   { label: "Sheets", to: "/playlists" },
   { label: "Pricing", to: "/Pricing" },
   { label: "FAQ", to: "/FAQ" },
-  { label: "About", to: "/About" },
 ];
 
 export default function Navbar() {
@@ -49,7 +47,11 @@ export default function Navbar() {
         {/* Logo */}
         <Link to="/" className="flex items-center gap-2 group">
           <span className="relative w-9 h-9 rounded-xl bg-gradient-to-br from-[var(--sky-500)] to-[var(--sky-700)] flex items-center justify-center shadow-md shadow-sky-200">
-            <Sparkles className="w-5 h-5 text-white" strokeWidth={2.4} />
+            <img
+              src="/CodeleapFavicon.svg"
+              alt="Codeleap logo"
+              className="w-5 h-5 object-contain"
+            />
           </span>
           <span className="text-xl font-extrabold tracking-tight">
             <span className="text-[var(--ink-900)]">codeleap</span>
@@ -63,8 +65,8 @@ export default function Navbar() {
               key={item.to}
               to={item.to}
               className={`relative px-4 py-2 text-sm font-medium rounded-full transition-all ${isActive(item.to)
-                  ? "text-[var(--sky-600)] bg-[var(--sky-50)]"
-                  : "text-[var(--ink-700)] hover:text-[var(--sky-600)] hover:bg-[var(--surface-container-low)]"
+                ? "text-[var(--sky-600)] bg-[var(--sky-50)]"
+                : "text-[var(--ink-700)] hover:text-[var(--sky-600)] hover:bg-[var(--surface-container-low)]"
                 }`}
             >
               {item.label}
@@ -176,8 +178,8 @@ export default function Navbar() {
               to={item.to}
               onClick={() => setIsOpen(false)}
               className={`block px-3 py-2.5 rounded-xl text-sm font-medium transition-colors ${isActive(item.to)
-                  ? "bg-[var(--sky-50)] text-[var(--sky-600)]"
-                  : "text-[var(--ink-700)] hover:bg-[var(--surface-container-low)] hover:text-[var(--sky-600)]"
+                ? "bg-[var(--sky-50)] text-[var(--sky-600)]"
+                : "text-[var(--ink-700)] hover:bg-[var(--surface-container-low)] hover:text-[var(--sky-600)]"
                 }`}
             >
               {item.label}

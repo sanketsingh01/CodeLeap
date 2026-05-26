@@ -11,13 +11,17 @@ const Hero = () => {
     <section className="relative w-full overflow-hidden pt-32 pb-10 px-6 sm:px-10 md:px-16 lg:px-24">
 
       <div className="max-w-7xl mx-auto flex flex-col items-center text-center">
+        {/* pill box */}
+        <div className="flex justify-center">
+          <div className="rounded-lg px-4 py-1 bg-yellow-300 border-2">Built for true learners</div>
+        </div>
 
         {/* Headline */}
         <motion.h1
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.15, duration: 0.6 }}
-          className="text-5xl sm:text-6xl md:text-7xl lg:text-[70px] font-extrabold leading-[1.05] tracking-tight text-[var(--ink-900)] max-w-5xl"
+          className="mt-5 text-5xl sm:text-6xl md:text-7xl lg:text-[70px] font-extrabold leading-[1.05] tracking-tight text-[var(--ink-900)] max-w-5xl"
         >
           Ace your next{" "}
           <span className="sky-gradient-text animate-shine">tech interview</span>

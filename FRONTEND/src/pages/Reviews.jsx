@@ -17,6 +17,7 @@ import alexImg from "./assets/alex.webp";
 import priyaImg from "./assets/priya.webp";
 import marcusImg from "./assets/marcus.webp";
 import emmaImg from "./assets/emma.webp";
+import { TestimonialsSection } from "@/components/testimonials-section";
 
 const reviews = [
   {
@@ -93,92 +94,10 @@ const reviews = [
   },
 ];
 
-const TweetCard = ({ review }) => (
-  <div className="bg-white rounded-2xl border border-[var(--ink-200)] shadow-[var(--shadow-soft)] hover:shadow-[0_12px_32px_rgba(22,76,255,0.14)] hover:border-[var(--ink-200)] transition-all duration-300 p-6 w-[360px] flex-shrink-0">
-    {/* Header */}
-    <div className="flex items-start gap-3 mb-4">
-      <img
-        src={review.avatar || "/placeholder.svg"}
-        alt={review.name}
-        className="w-11 h-11 rounded-full ring-2 ring-[var(--sky-100)] flex-shrink-0 object-cover"
-      />
-      <div className="flex-1 min-w-0">
-        <div className="flex items-center gap-1.5">
-          <h3 className="font-jakarta font-semibold text-[var(--ink-900)] text-sm truncate">
-            {review.name}
-          </h3>
-          {review.verified && (
-            <CheckCircle
-              className="w-4 h-4 text-[var(--sky-500)] flex-shrink-0"
-              fill="currentColor"
-            />
-          )}
-        </div>
-        <div className="flex items-center gap-1.5 text-xs">
-          <span className="text-[var(--ink-500)] truncate">
-            {review.username}
-          </span>
-          <span className="text-[var(--ink-400)]">·</span>
-          <span className="text-[var(--ink-400)]">{review.time}</span>
-        </div>
-      </div>
-      <FaXTwitter className="w-4 h-4 text-[var(--ink-400)] flex-shrink-0 mt-1" />
-    </div>
-
-    {/* Stars */}
-    <div className="flex gap-0.5 mb-3">
-      {[...Array(5)].map((_, i) => (
-        <StarIcon
-          key={i}
-          className="w-4 h-4 text-amber-400"
-          fill="currentColor"
-        />
-      ))}
-    </div>
-
-    {/* Text */}
-    <p className="text-[var(--ink-700)] text-[15px] leading-relaxed font-inter mb-5">
-      {review.text}
-    </p>
-
-    {/* Engagement */}
-    <div className="flex items-center gap-6 text-[var(--ink-500)] text-xs pt-3 border-t border-[var(--ink-100)]">
-      <div className="flex items-center gap-1.5 hover:text-[var(--sky-500)] cursor-pointer transition-colors">
-        <MessageCircle className="w-4 h-4" />
-        <span>{review.replies}</span>
-      </div>
-      <div className="flex items-center gap-1.5 hover:text-emerald-500 cursor-pointer transition-colors">
-        <Repeat2 className="w-4 h-4" />
-        <span>{review.retweets}</span>
-      </div>
-      <div className="flex items-center gap-1.5 hover:text-[var(--sky-600)] cursor-pointer transition-colors">
-        <Heart className="w-4 h-4" />
-        <span>{review.likes}</span>
-      </div>
-    </div>
-  </div>
-);
-
 const Reviews = () => {
-  const [translateX, setTranslateX] = useState(0);
-  const cardWidth = 376;
-
-  useEffect(() => {
-    const interval = setInterval(() => {
-      setTranslateX((prev) => prev - 0.5);
-    }, 16);
-    return () => clearInterval(interval);
-  }, []);
-
-  useEffect(() => {
-    const resetPoint = -(reviews.length * cardWidth);
-    if (translateX <= resetPoint) setTranslateX(0);
-  }, [translateX, cardWidth]);
-
-  const infiniteReviews = [...reviews, ...reviews, ...reviews];
 
   return (
-    <section className="w-full py-24 overflow-hidden bg-[var(--surface-container-low)]">
+    <section className="w-full py-12 overflow-hidden bg-surface-low">
       {/* Header */}
       <div className="text-center mb-14 px-6">
         <motion.div
@@ -202,43 +121,10 @@ const Reviews = () => {
         </motion.div>
       </div>
 
-      {/* Carousel */}
-      <div className="relative w-full">
-        <div className="overflow-hidden w-full">
-          <div
-            className="flex gap-4 py-2 px-2"
-            style={{
-              transform: `translateX(${translateX}px)`,
-              width: "max-content",
-            }}
-          >
-            {infiniteReviews.map((review, index) => (
-              <TweetCard
-                key={`${review.username}-${index}`}
-                review={review}
-              />
-            ))}
-          </div>
-        </div>
-
-        <div className="absolute left-0 top-0 w-24 h-full bg-gradient-to-r from-[var(--surface-container-low)] to-transparent pointer-events-none z-10" />
-        <div className="absolute right-0 top-0 w-24 h-full bg-gradient-to-l from-[var(--surface-container-low)] to-transparent pointer-events-none z-10" />
+      <div className="min-h-screen place-content-center">
+        <TestimonialsSection />
       </div>
 
-      <motion.div
-        initial={{ opacity: 0, y: 20 }}
-        whileInView={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.6 }}
-        viewport={{ once: true }}
-        className="text-center mt-14 px-6"
-      >
-        <Link
-          to="/signup"
-          className="btn-sky inline-flex items-center gap-2 px-7 py-3.5 rounded-full text-base font-semibold"
-        >
-          Start Your Journey
-        </Link>
-      </motion.div>
     </section>
   );
 };
