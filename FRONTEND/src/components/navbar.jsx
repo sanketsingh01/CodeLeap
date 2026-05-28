@@ -18,6 +18,7 @@ const navItems = [
   { label: "Sheets", to: "/playlists" },
   { label: "Pricing", to: "/Pricing" },
   { label: "FAQ", to: "/FAQ" },
+  { label: "Contact Us", to: "/contactus" },
 ];
 
 export default function Navbar() {

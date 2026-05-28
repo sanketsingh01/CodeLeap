@@ -70,7 +70,7 @@ const Pricing = () => {
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6 }}
-          className="max-w-3xl mx-auto"
+          className="max-w-4xl mx-auto"
         >
           <span className="inline-flex items-center gap-2 text-xs uppercase tracking-[0.2em] font-semibold text-[var(--sky-600)] bg-white border border-[var(--ink-200)] px-3 py-1.5 rounded-full">
             <Sparkles className="w-3.5 h-3.5" />
@@ -96,11 +96,10 @@ const Pricing = () => {
               key={opt.id}
               type="button"
               onClick={() => setBilling(opt.id)}
-              className={`px-5 py-2 rounded-full text-sm font-semibold transition-all ${
-                billing === opt.id
+              className={`px-5 py-2 rounded-full text-sm font-semibold transition-all ${billing === opt.id
                   ? "bg-gradient-to-br from-[var(--sky-500)] to-[var(--sky-600)] text-white shadow-md"
                   : "text-[var(--ink-700)] hover:text-[var(--sky-600)]"
-              }`}
+                }`}
             >
               {opt.label}
             </button>
@@ -118,11 +117,10 @@ const Pricing = () => {
                 initial={{ opacity: 0, y: 30 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.5, delay: idx * 0.08 }}
-                className={`relative flex flex-col text-left rounded-3xl p-7 md:p-8 transition-all ${
-                  tier.highlight
+                className={`relative flex flex-col text-left rounded-3xl p-7 md:p-8 transition-all ${tier.highlight
                     ? "bg-white border-2 border-[var(--sky-500)] shadow-[0_20px_60px_-15px_rgba(22,76,255,0.45)] md:-translate-y-2"
                     : "bg-white border border-[var(--ink-200)] shadow-[var(--shadow-soft)] hover:border-[var(--sky-200)]"
-                }`}
+                  }`}
               >
                 {/* Sky glow ring for pro */}
                 {tier.highlight && (
@@ -136,11 +134,10 @@ const Pricing = () => {
 
                 <div className="flex items-center gap-3 mb-4">
                   <span
-                    className={`w-11 h-11 rounded-xl flex items-center justify-center ${
-                      tier.highlight
+                    className={`w-11 h-11 rounded-xl flex items-center justify-center ${tier.highlight
                         ? "bg-gradient-to-br from-[var(--sky-500)] to-[var(--sky-700)] text-white"
                         : "bg-[var(--sky-50)] text-[var(--sky-600)]"
-                    }`}
+                      }`}
                   >
                     <Icon className="w-5 h-5" />
                   </span>
@@ -161,9 +158,8 @@ const Pricing = () => {
                 </div>
 
                 <button
-                  className={`w-full inline-flex items-center justify-center gap-1.5 py-3 rounded-full text-sm font-semibold mb-7 transition-all ${
-                    tier.highlight ? "btn-sky" : "btn-ghost-sky"
-                  }`}
+                  className={`w-full inline-flex items-center justify-center gap-1.5 py-3 rounded-full text-sm font-semibold mb-7 transition-all ${tier.highlight ? "btn-sky" : "btn-ghost-sky"
+                    }`}
                 >
                   {tier.cta}
                   <ArrowRight className="w-4 h-4" />
@@ -176,11 +172,10 @@ const Pricing = () => {
                       className="flex items-start gap-2.5 text-sm text-[var(--ink-700)]"
                     >
                       <span
-                        className={`mt-0.5 w-4 h-4 rounded-full flex items-center justify-center flex-shrink-0 ${
-                          tier.highlight
+                        className={`mt-0.5 w-4 h-4 rounded-full flex items-center justify-center flex-shrink-0 ${tier.highlight
                             ? "bg-[var(--sky-500)] text-white"
                             : "bg-[var(--sky-50)] text-[var(--sky-600)]"
-                        }`}
+                          }`}
                       >
                         <Check className="w-3 h-3" strokeWidth={3} />
                       </span>

@@ -15,6 +15,7 @@ import AllPlaylistsPage from "../pages/PlaylistsPage.jsx";
 import PlaylistDetailpage from "../pages/PlaylistDetailpage.jsx";
 import Profile from "../pages/Profile.jsx";
 import NotFoundPage from "../pages/NotFoundPage.jsx";
+import ContactUsPage from "@/pages/ContactUs.jsx";
 import AdminRoute from "../components/AdminRoute.jsx";
 
 import { useAuthStore } from "../store/useAuthStore.js";
@@ -84,6 +85,7 @@ const Layout = () => {
         <Route path="/Pricing" element={<Pricing />} />
         <Route path="/Playlist/:id" element={<PlaylistDetailpage />} />
         <Route path="/profile" element={<Profile />} />
+        <Route path="/contactus" element={<ContactUsPage />} />
         <Route
           path="/playlists"
           element={authUser ? <AllPlaylistsPage /> : <Navigate to="/login" />}
