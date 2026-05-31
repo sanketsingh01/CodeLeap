@@ -1,5 +1,10 @@
 import axios from 'axios';
 
+const getJudge0Headers = () => ({
+  'x-rapidapi-key': process.env.RAPIDAPI_KEY,
+  'x-rapidapi-host': 'judge0-ce.p.rapidapi.com',
+});
+
 export const getJudge0LanguageId = (Language) => {
   const LanguageMap = {
     PYTHON: 71,
@@ -14,6 +19,7 @@ export const submitBatch = async (submissions) => {
   const { data } = await axios.post(
     `${process.env.JUDGE0_API_URL}/submissions/batch?base64_encoded=false`,
     { submissions },
+    { headers: getJudge0Headers() },
   );
 
   return data;
@@ -30,6 +36,7 @@ export const pollBatchResults = async (tokens) => {
           tokens: tokens.join(','),
           base64_encoded: false,
         },
+        headers: getJudge0Headers(),
       },
     );
 
