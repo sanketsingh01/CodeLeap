@@ -1,5 +1,7 @@
 # CodeLeap 🚀
 
+## Under Development, will released v2 very soon !
+
 <div align="center">
   <img src="logo.png" alt="CodeLeap Logo" width="200"/>
   
